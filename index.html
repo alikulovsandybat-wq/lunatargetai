@@ -240,7 +240,71 @@
   .about-visual h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; margin-bottom: 12px; }
   .about-visual p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
 
-  /* PRIVACY BANNER */
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; }
+  .price-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px; padding: 36px 28px; position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+    display: flex; flex-direction: column;
+  }
+  .price-card:hover { transform: translateY(-6px); border-color: rgba(255,107,53,0.3); }
+  .price-card.featured {
+    border-color: rgba(255,60,172,0.5);
+    background: rgba(255,60,172,0.07);
+    transform: scale(1.03);
+  }
+  .price-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+  .price-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--grad); color: var(--dark); font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 0.75rem; padding: 5px 16px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .price-tag { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+  .price-amount {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem;
+    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+  }
+  .price-cur { font-size: 1.4rem; }
+  .price-period { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 28px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 28px; }
+  .price-features li { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
+  .btn-price {
+    display: block; text-align: center; padding: 14px;
+    border-radius: 50px; font-family: 'Syne', sans-serif; font-weight: 700;
+    text-decoration: none; font-size: 0.95rem; transition: all 0.2s;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--white);
+  }
+  .btn-price:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
+  .featured-btn {
+    background: var(--grad); border: none; color: var(--dark);
+    box-shadow: 0 8px 30px rgba(255,60,172,0.4);
+    -webkit-text-fill-color: var(--dark);
+  }
+  .featured-btn:hover { box-shadow: 0 12px 40px rgba(255,60,172,0.6); }
+  .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+  .faq-item {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; overflow: hidden; transition: border-color 0.2s;
+  }
+  .faq-item.open { border-color: rgba(255,107,53,0.4); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    padding: 22px 28px; cursor: pointer; font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1rem; transition: color 0.2s;
+  }
+  .faq-item.open .faq-q { color: var(--yellow); }
+  .faq-arrow { font-size: 0.65rem; opacity: 0.5; flex-shrink: 0; transition: transform 0.3s; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); opacity: 1; }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.3s;
+    padding: 0 28px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 28px 22px; }
+  .faq-a p { color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 0.95rem; }
   .privacy-section {
     background: rgba(255,214,0,0.06); border: 1px solid rgba(255,214,0,0.2);
     border-radius: 24px; padding: 48px; margin: 0 5%; text-align: center;
@@ -316,7 +380,7 @@
       <h1><span data-i18n="hero_h1a">Launch Ads</span><br><span class="grad-text" data-i18n="hero_h1b">Without an Agency</span></h1>
       <p data-i18n="hero_p">Luna Ads lets you create, launch, and manage Facebook & Instagram advertising campaigns directly inside Telegram. Fast, simple, and powerful.</p>
       <div class="cta-group">
-        <a href="https://t.me/LunaAdsBot" class="btn-primary" target="_blank">
+        <a href="https://t.me/marketologluna_bot" class="btn-primary" target="_blank">
           <span>✈️</span> <span data-i18n="cta_main">Open in Telegram</span>
         </a>
         <a href="#how" class="btn-secondary">
@@ -405,7 +469,7 @@
         <div class="section-title" style="margin-bottom:24px" data-i18n="about_title">Advertising Made Simple</div>
         <p data-i18n="about_p1">Luna Ads is a Telegram-based tool that connects directly to the Facebook Marketing API. It allows business owners, entrepreneurs, and marketers to run ads without needing a separate dashboard or agency.</p>
         <p data-i18n="about_p2">We believe advertising should be accessible to everyone — from small businesses in Kazakhstan to global brands. That's why we built Luna Ads inside the app you already use every day.</p>
-        <a href="https://t.me/LunaAdsBot" class="btn-primary" target="_blank" style="margin-top:16px; display:inline-flex">
+        <a href="https://t.me/marketologluna_bot" class="btn-primary" target="_blank" style="margin-top:16px; display:inline-flex">
           🚀 <span data-i18n="cta_main">Open in Telegram</span>
         </a>
       </div>
@@ -417,7 +481,124 @@
     </div>
   </section>
 
-  <div class="privacy-section">
+  <!-- PRICING SECTION -->
+  <section class="section" id="pricing" style="padding-top:0">
+    <div style="text-align:center; margin-bottom:48px">
+      <div class="section-label" data-i18n="price_label">Pricing</div>
+      <div class="section-title" data-i18n="price_title">Choose Your Plan</div>
+      <p style="color:rgba(255,255,255,0.5); max-width:500px; margin:0 auto; font-size:0.95rem" data-i18n="price_sub">All plans include full access to Luna Ads. Cancel anytime.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- 1 MONTH -->
+      <div class="price-card">
+        <div class="price-tag" data-i18n="plan1_tag">Starter</div>
+        <div class="price-amount">25 000 <span class="price-cur">₸</span></div>
+        <div class="price-period" data-i18n="plan1_period">per month / $50</div>
+        <ul class="price-features">
+          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
+          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
+          <li data-i18n="pf3">✦ Real-time campaign stats</li>
+          <li data-i18n="pf4">✦ 24/7 support</li>
+        </ul>
+        <a href="https://lunatargetapp.lemonsqueezy.com/checkout/buy/88687c18-b8ff-4eba-b8c9-09a97cb23028" target="_blank" class="btn-price" data-i18n="btn_buy">Buy Now</a>
+      </div>
+
+      <!-- 3 MONTHS -->
+      <div class="price-card featured">
+        <div class="price-badge" data-i18n="plan2_badge">Most Popular</div>
+        <div class="price-tag" data-i18n="plan2_tag">Growth</div>
+        <div class="price-amount">60 000 <span class="price-cur">₸</span></div>
+        <div class="price-period" data-i18n="plan2_period">3 months / $120 — save 20%</div>
+        <ul class="price-features">
+          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
+          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
+          <li data-i18n="pf3">✦ Real-time campaign stats</li>
+          <li data-i18n="pf4">✦ 24/7 support</li>
+          <li data-i18n="pf5">✦ Priority processing</li>
+        </ul>
+        <a href="https://lunatargetapp.lemonsqueezy.com/checkout/buy/aa31b431-01f2-4b67-94e4-bdf52aceb43d" target="_blank" class="btn-price featured-btn" data-i18n="btn_buy">Buy Now</a>
+      </div>
+
+      <!-- 6 MONTHS -->
+      <div class="price-card">
+        <div class="price-tag" data-i18n="plan3_tag">Pro</div>
+        <div class="price-amount">120 000 <span class="price-cur">₸</span></div>
+        <div class="price-period" data-i18n="plan3_period">6 months / $250 — save 17%</div>
+        <ul class="price-features">
+          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
+          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
+          <li data-i18n="pf3">✦ Real-time campaign stats</li>
+          <li data-i18n="pf4">✦ 24/7 support</li>
+          <li data-i18n="pf5">✦ Priority processing</li>
+          <li data-i18n="pf6">✦ Best value — 6 months</li>
+        </ul>
+        <a href="https://lunatargetapp.lemonsqueezy.com/checkout/buy/f261d1a2-33a9-4a52-8942-116bbae0e939" target="_blank" class="btn-price" data-i18n="btn_buy">Buy Now</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="section" id="faq" style="padding-top:0">
+    <div style="text-align:center; margin-bottom:48px">
+      <div class="section-label" data-i18n="faq_label">FAQ</div>
+      <div class="section-title" data-i18n="faq_title">Frequently Asked Questions</div>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq1q">Do I need any technical skills to use Luna Ads?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq1a">No experience needed. Luna Ads guides you step by step through a simple Telegram chat — just answer a few questions and your ad is ready to launch.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq2q">Which platforms can I advertise on?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq2a">Luna Ads supports Facebook and Instagram ads — both are managed through the Facebook Marketing API from a single interface inside Telegram.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq3q">How much does Luna Ads cost?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq3a">Open the bot in Telegram to see current pricing plans. Ad spend goes directly to Facebook — Luna Ads charges only a small service fee.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq4q">Is my Facebook account safe?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq4a">Yes. Luna Ads uses official Facebook API access tokens. We never see or store your password. You can revoke access from your Facebook settings at any time.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq5q">What budget do I need to start?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq5a">You can start with as little as $1–$5 per day. Luna Ads works with any budget — from small businesses to large-scale campaigns.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq6q">Can I use Luna Ads from any country?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq6a">Yes! Luna Ads works worldwide. You can run ads targeting audiences in Kazakhstan, Uzbekistan, Russia, Europe, the USA, or anywhere else Facebook operates.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span data-i18n="faq7q">How quickly can I launch my first ad?</span>
+          <span class="faq-arrow">▼</span>
+        </div>
+        <div class="faq-a"><p data-i18n="faq7a">Most users launch their first campaign in under 5 minutes. Just open the bot, connect Facebook, fill in a few fields, and hit launch.</p></div>
+      </div>
+    </div>
+  </section>
+
+
     <h2 data-i18n="priv_h">Your Privacy Matters</h2>
     <p data-i18n="priv_p">Luna Ads only accesses the Facebook permissions you explicitly grant. We do not sell, share, or misuse your data. You can revoke access at any time.</p>
     <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
@@ -429,7 +610,7 @@
   <footer>
     <div class="logo">🚀 Luna Ads</div>
     <div class="footer-links">
-      <a href="https://t.me/LunaAdsBot" target="_blank">Telegram Bot</a>
+      <a href="https://t.me/marketologluna_bot" target="_blank">Telegram Bot</a>
       <a href="#" onclick="showPage('privacy')" data-i18n="priv_link">Privacy Policy</a>
       <a href="#" onclick="showPage('terms')" data-i18n="terms_link">Terms of Service</a>
     </div>
@@ -463,13 +644,13 @@
     <li>Deletion: Request deletion of all your data</li>
     <li>Revocation: Disconnect your Facebook account at any time</li>
   </ul>
-  <p>To exercise any of these rights, contact us via Telegram: <a href="https://t.me/LunaAdsBot" style="color:var(--yellow)">@LunaAdsBot</a></p>
+  <p>To exercise any of these rights, contact us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
   <h2>6. Security</h2>
   <p>We implement industry-standard security measures to protect your data. All communications are encrypted via HTTPS and Telegram's built-in encryption.</p>
   <h2>7. Changes to This Policy</h2>
   <p>We may update this policy from time to time. Continued use of Luna Ads after changes constitutes acceptance of the updated policy.</p>
   <h2>8. Contact</h2>
-  <p>Questions? Reach us via Telegram: <a href="https://t.me/LunaAdsBot" style="color:var(--yellow)">@LunaAdsBot</a></p>
+  <p>Questions? Reach us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
 </div>
 
 <!-- TERMS OF SERVICE PAGE -->
@@ -497,10 +678,17 @@
   <h2>7. Termination</h2>
   <p>We reserve the right to suspend or terminate access to Luna Ads for users who violate these Terms or Facebook's advertising policies.</p>
   <h2>8. Contact</h2>
-  <p>Questions about these Terms? Contact us via Telegram: <a href="https://t.me/LunaAdsBot" style="color:var(--yellow)">@LunaAdsBot</a></p>
+  <p>Questions about these Terms? Contact us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
 </div>
 
 <script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
 // PAGE ROUTING
 function showPage(page) {
   document.getElementById('main-page').style.display = 'none';
@@ -556,6 +744,22 @@ const i18n = {
     priv_h: 'Your Privacy Matters',
     priv_p: 'Luna Ads only accesses the Facebook permissions you explicitly grant. We do not sell, share, or misuse your data. You can revoke access at any time.',
     priv_link: 'Privacy Policy', terms_link: 'Terms of Service', back: 'Back',
+    faq_label: 'FAQ', faq_title: 'Frequently Asked Questions',
+    faq1q: 'Do I need any technical skills to use Luna Ads?', faq1a: 'No experience needed. Luna Ads guides you step by step through a simple Telegram chat — just answer a few questions and your ad is ready to launch.',
+    faq2q: 'Which platforms can I advertise on?', faq2a: 'Luna Ads supports Facebook and Instagram ads — both managed through the Facebook Marketing API from a single Telegram interface.',
+    faq3q: 'How much does Luna Ads cost?', faq3a: 'Open the bot in Telegram to see current pricing plans. Ad spend goes directly to Facebook — Luna Ads charges only a small service fee.',
+    faq4q: 'Is my Facebook account safe?', faq4a: 'Yes. Luna Ads uses official Facebook API tokens. We never see or store your password. You can revoke access from your Facebook settings at any time.',
+    faq5q: 'What budget do I need to start?', faq5a: 'You can start with as little as $1–$5 per day. Luna Ads works with any budget — from small businesses to large campaigns.',
+    faq6q: 'Can I use Luna Ads from any country?', faq6a: 'Yes! Luna Ads works worldwide — Kazakhstan, Uzbekistan, Russia, Europe, USA, or anywhere Facebook operates.',
+    faq7q: 'How quickly can I launch my first ad?', faq7a: 'Most users launch their first campaign in under 5 minutes. Open the bot, connect Facebook, fill in a few fields, and hit launch.',
+    price_label: 'Pricing', price_title: 'Choose Your Plan', price_sub: 'All plans include full access to Luna Ads. Cancel anytime.',
+    plan1_tag: 'Starter', plan1_period: 'per month / $50',
+    plan2_tag: 'Growth', plan2_period: '3 months / $120 — save 20%', plan2_badge: 'Most Popular',
+    plan3_tag: 'Pro', plan3_period: '6 months / $250 — save 17%',
+    pf1: '✦ Launch Facebook & Instagram ads', pf2: '✦ Full bot access in Telegram',
+    pf3: '✦ Real-time campaign stats', pf4: '✦ 24/7 support',
+    pf5: '✦ Priority processing', pf6: '✦ Best value — 6 months',
+    btn_buy: 'Buy Now',
   },
   ru: {
     badge: '✨ Реклама в Facebook и Instagram — прямо в Telegram',
@@ -584,6 +788,22 @@ const i18n = {
     priv_h: 'Твоя приватность важна',
     priv_p: 'Luna Ads запрашивает только те разрешения Facebook, которые ты явно предоставляешь. Мы не продаём и не передаём твои данные. Доступ можно отозвать в любое время.',
     priv_link: 'Политика конфиденциальности', terms_link: 'Условия использования', back: 'Назад',
+    faq_label: 'FAQ', faq_title: 'Часто задаваемые вопросы',
+    faq1q: 'Нужны ли технические знания для работы с Luna Ads?', faq1a: 'Нет, опыт не нужен. Luna Ads ведёт тебя шаг за шагом через простой чат в Telegram — просто ответь на несколько вопросов и реклама готова к запуску.',
+    faq2q: 'На каких платформах можно рекламироваться?', faq2a: 'Luna Ads поддерживает рекламу в Facebook и Instagram — обе платформы управляются через единый интерфейс в Telegram.',
+    faq3q: 'Сколько стоит Luna Ads?', faq3a: 'Открой бота в Telegram чтобы узнать актуальные тарифы. Рекламный бюджет уходит напрямую в Facebook — Luna Ads берёт небольшую сервисную комиссию.',
+    faq4q: 'Безопасен ли мой аккаунт Facebook?', faq4a: 'Да. Luna Ads использует официальные токены Facebook API. Мы никогда не видим и не сохраняем твой пароль. Доступ можно отозвать в настройках Facebook в любой момент.',
+    faq5q: 'С каким бюджетом можно начать?', faq5a: 'Можно начать от $1–$5 в день. Luna Ads работает с любым бюджетом — от малого бизнеса до масштабных кампаний.',
+    faq6q: 'Можно ли использовать Luna Ads из любой страны?', faq6a: 'Да! Luna Ads работает по всему миру — Казахстан, Узбекистан, Россия, Европа, США и везде, где работает Facebook.',
+    faq7q: 'Как быстро можно запустить первую рекламу?', faq7a: 'Большинство пользователей запускают первую кампанию менее чем за 5 минут. Открой бота, подключи Facebook, заполни несколько полей — и запускай.',
+    price_label: 'Тарифы', price_title: 'Выбери свой план', price_sub: 'Все планы включают полный доступ к Luna Ads.',
+    plan1_tag: 'Стартовый', plan1_period: 'в месяц / $50',
+    plan2_tag: 'Рост', plan2_period: '3 месяца / $120 — экономия 20%', plan2_badge: 'Популярный',
+    plan3_tag: 'Про', plan3_period: '6 месяцев / $250 — экономия 17%',
+    pf1: '✦ Реклама в Facebook и Instagram', pf2: '✦ Полный доступ к боту в Telegram',
+    pf3: '✦ Статистика в реальном времени', pf4: '✦ Поддержка 24/7',
+    pf5: '✦ Приоритетная обработка', pf6: '✦ Лучшая цена — 6 месяцев',
+    btn_buy: 'Купить',
   },
   kz: {
     badge: '✨ Facebook және Instagram жарнамасы — Telegram арқылы',
@@ -612,6 +832,22 @@ const i18n = {
     priv_h: 'Жеке деректеріңіз маңызды',
     priv_p: 'Luna Ads тек сіз берген Facebook рұқсаттарына ғана кіреді. Деректеріңізді сатпаймыз. Кез келген уақытта кіруді қайтарып алуға болады.',
     priv_link: 'Құпиялылық саясаты', terms_link: 'Қызмет көрсету шарттары', back: 'Артқа',
+    faq_label: 'FAQ', faq_title: 'Жиі қойылатын сұрақтар',
+    faq1q: 'Luna Ads пайдалану үшін техникалық білім қажет пе?', faq1a: 'Жоқ, тәжірибе қажет емес. Luna Ads сізді Telegram чаты арқылы қадамма-қадам бағыттайды — бірнеше сұраққа жауап беріп, жарнаманы іске қосыңыз.',
+    faq2q: 'Қай платформаларда жарнама жасауға болады?', faq2a: 'Luna Ads Facebook және Instagram жарнамасын қолдайды — екеуі де Telegram арқылы басқарылады.',
+    faq3q: 'Luna Ads қанша тұрады?', faq3a: 'Ағымдағы тарифтерді көру үшін Telegram ботын ашыңыз. Жарнама бюджеті тікелей Facebookқа кетеді.',
+    faq4q: 'Facebook аккаунтым қауіпсіз бе?', faq4a: 'Иә. Luna Ads ресми Facebook API токендерін пайдаланады. Біз сіздің құпия сөзіңізді ешқашан сақтамаймыз.',
+    faq5q: 'Қандай бюджетпен бастауға болады?', faq5a: 'Күніне $1–$5 деңгейінен бастауға болады. Luna Ads кез келген бюджетпен жұмыс істейді.',
+    faq6q: 'Luna Ads кез келген елден пайдалануға бола ма?', faq6a: 'Иә! Luna Ads бүкіл әлемде жұмыс істейді — Қазақстан, Өзбекстан, Ресей, Еуропа, АҚШ.',
+    faq7q: 'Бірінші жарнаманы қанша уақытта іске қосуға болады?', faq7a: 'Көптеген пайдаланушылар алғашқы науқанды 5 минутта іске қосады. Ботты ашып, Facebookты қосып, бірнеше өрісті толтырыңыз.',
+    price_label: 'Тарифтер', price_title: 'Жоспарыңызды таңдаңыз', price_sub: 'Барлық жоспарлар Luna Ads-қа толық кіруді қамтиды.',
+    plan1_tag: 'Бастамашы', plan1_period: 'айына / $50',
+    plan2_tag: 'Өсу', plan2_period: '3 ай / $120 — 20% үнемдеу', plan2_badge: 'Танымал',
+    plan3_tag: 'Про', plan3_period: '6 ай / $250 — 17% үнемдеу',
+    pf1: '✦ Facebook және Instagram жарнамасы', pf2: '✦ Telegramда толық кіру',
+    pf3: '✦ Нақты уақыттағы статистика', pf4: '✦ 24/7 қолдау',
+    pf5: '✦ Басымдықты өңдеу', pf6: '✦ Ең тиімді баға — 6 ай',
+    btn_buy: 'Сатып алу',
   },
   uz: {
     badge: '✨ Facebook va Instagram reklamalari — Telegram orqali',
@@ -640,6 +876,22 @@ const i18n = {
     priv_h: "Maxfiyligingiz muhim",
     priv_p: "Luna Ads faqat siz ruxsat bergan Facebook huquqlariga kiradi. Ma'lumotlaringizni sotmaymiz. Kirishni istalgan vaqtda bekor qilishingiz mumkin.",
     priv_link: "Maxfiylik siyosati", terms_link: "Foydalanish shartlari", back: "Orqaga",
+    faq_label: 'FAQ', faq_title: "Ko'p so'raladigan savollar",
+    faq1q: "Luna Ads ishlatish uchun texnik bilim kerakmi?", faq1a: "Yo'q, tajriba shart emas. Luna Ads sizni Telegram chat orqali bosqichma-bosqich yo'naltiradi — bir necha savolga javob bering va reklama tayyor.",
+    faq2q: "Qaysi platformalarda reklama qilish mumkin?", faq2a: "Luna Ads Facebook va Instagram reklamalarini qo'llab-quvvatlaydi — ikkalasi ham Telegram orqali boshqariladi.",
+    faq3q: "Luna Ads qancha turadi?", faq3a: "Joriy narxlarni ko'rish uchun Telegramdagi botni oching. Reklama byudjeti to'g'ridan-to'g'ri Facebookga ketadi.",
+    faq4q: "Facebook hisobim xavfsizmi?", faq4a: "Ha. Luna Ads rasmiy Facebook API tokenlaridan foydalanadi. Biz sizning parolingizni hech qachon saqlamaymiz.",
+    faq5q: "Qancha byudjet bilan boshlash mumkin?", faq5a: "Kuniga $1–$5 dan boshlash mumkin. Luna Ads istalgan byudjet bilan ishlaydi.",
+    faq6q: "Luna Ads istalgan mamlakatdan ishlatish mumkinmi?", faq6a: "Ha! Luna Ads butun dunyoda ishlaydi — Qozog'iston, O'zbekiston, Rossiya, Yevropa, AQSh.",
+    faq7q: "Birinchi reklamani qancha vaqtda ishga tushirish mumkin?", faq7a: "Ko'pchilik foydalanuvchilar birinchi kampaniyani 5 daqiqadan kam vaqtda ishga tushiradi. Botni oching, Facebookni ulang, bir necha maydonni to'ldiring.",
+    price_label: "Narxlar", price_title: "Rejangizni tanlang", price_sub: "Barcha rejalar Luna Ads ga to'liq kirishni o'z ichiga oladi.",
+    plan1_tag: "Boshlang'ich", plan1_period: "oyiga / $50",
+    plan2_tag: "O'sish", plan2_period: "3 oy / $120 — 20% tejash", plan2_badge: "Mashhur",
+    plan3_tag: "Pro", plan3_period: "6 oy / $250 — 17% tejash",
+    pf1: "✦ Facebook va Instagram reklamalari", pf2: "✦ Telegramda to'liq kirish",
+    pf3: "✦ Jonli statistika", pf4: "✦ 24/7 qo'llab-quvvatlash",
+    pf5: "✦ Ustuvor ishlov berish", pf6: "✦ Eng yaxshi narx — 6 oy",
+    btn_buy: "Sotib olish",
   }
 };
 
