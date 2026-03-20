@@ -1,228 +1,545 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Р¦РёС„СЂРѕРІРѕР№ РћС„РёСЃ вЂ” РР-РєРѕРјР°РЅРґР°</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #050508;
-    --surface: rgba(255, 255, 255, 0.03);
-    --border: rgba(255, 255, 255, 0.08);
-    --accent: #7c5cfc;
-    --text: #f0eeff;
-    --muted: rgba(240, 238, 255, 0.5);
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luna Ads - ИИ-отдел маркетинга</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geologica:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #071121;
+      --surface: rgba(12, 23, 45, 0.78);
+      --surface-soft: rgba(19, 34, 65, 0.84);
+      --border: rgba(151, 175, 255, 0.16);
+      --text: #f4f7ff;
+      --muted: rgba(244, 247, 255, 0.7);
+      --accent: #6f68ff;
+      --accent-2: #45a4ff;
+      --green: #67efc4;
+      --red: #ff8398;
+      --shadow: 0 32px 80px rgba(3, 8, 20, 0.45);
+      --radius: 28px;
+      --container: 1180px;
+    }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Geologica', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+    body {
+      min-width: 320px;
+      background:
+        radial-gradient(circle at top left, rgba(83, 106, 255, 0.3), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(0, 229, 192, 0.14), transparent 22%),
+        linear-gradient(180deg, #08172f 0%, #0a1430 38%, #091224 100%);
+      color: var(--text);
+      font-family: "Geologica", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--container), calc(100% - 32px)); margin: 0 auto; }
+    .section { padding: 88px 0; }
 
-  /* РђРЅРёРјР°С†РёСЏ РїРѕСЏРІР»РµРЅРёСЏ */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-  }
-  .reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: #99b8ff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
 
-  /* РЁР°РїРєР° / Hero */
-  .hero { padding: 140px 0 80px; text-align: center; }
-  
-  .badge-container {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: linear-gradient(90deg, #99b8ff, transparent);
+    }
 
-  .badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
+    h1, h2, h3, .result-price, .result-tag, .team-num {
+      font-family: "Bebas Neue", cursive;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
 
-  h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 600;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-  }
+    .hero { padding: 32px 0 56px; }
 
-  .hero-subtitle {
-    font-size: 1.2rem;
-    color: var(--muted);
-    max-width: 750px;
-    margin: 0 auto 40px;
-  }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 18px;
+      margin-bottom: 42px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(8, 17, 34, 0.72);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.16);
+    }
 
-  /* РЎРµС‚РєР° РєР°СЂС‚РѕС‡РµРє */
-  .benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    margin-bottom: 100px;
-  }
+    .logo { font-size: 28px; color: #fff; }
+    .logo span { color: #8db0ff; }
+    .nav-links { display: flex; gap: 26px; color: var(--muted); font-size: 14px; }
 
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 48px;
-    position: relative;
-    backdrop-filter: blur(10px);
-    transition: border-color 0.4s ease;
-  }
+    .nav-cta, .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      padding: 16px 26px;
+      font-size: 16px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
 
-  .card:hover {
-    border-color: var(--accent);
-  }
+    .nav-cta, .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      color: #fff;
+      box-shadow: 0 20px 48px rgba(75, 123, 255, 0.22);
+    }
 
-  .card-num {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--accent);
-    font-size: 2.5rem;
-    font-weight: 400;
-    display: block;
-    margin-bottom: 20px;
-  }
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
 
-  .card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
-    font-weight: 600;
-  }
+    .nav-cta:hover, .btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); }
 
-  .card p {
-    color: var(--muted);
-    font-size: 1rem;
-  }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 36px;
+      align-items: center;
+    }
 
-  /* Р‘Р»РѕРє СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ */
-  .results-section {
-    padding: 100px 0;
-    border-top: 1px solid var(--border);
-  }
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(3.6rem, 8vw, 7rem);
+      line-height: 0.92;
+      margin-bottom: 24px;
+    }
 
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 16px;
-    text-align: center;
-  }
+    .hero-sub {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.75;
+    }
 
-  .results-title {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 60px;
-  }
+    .hero-note { margin-top: 18px; font-size: 20px; font-weight: 600; }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
-  .results-placeholder {
-    width: 100%;
-    height: 400px;
-    border: 1px dashed var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
+    .hero-badge {
+      padding: 12px 18px;
+      border: 1px solid rgba(126, 151, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(11, 25, 52, 0.62);
+      color: #d6e3ff;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
 
-  @media (max-width: 768px) {
-    .hero { padding: 80px 0 40px; }
-    .card { padding: 32px; }
-  }
-</style>
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+
+    .hero-panel {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(10, 17, 35, 0.94) 0%, rgba(8, 14, 28, 0.95) 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .online {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .online::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 16px rgba(103, 239, 196, 0.8);
+    }
+
+    .panel-list, .stats-grid, .team-grid, .results-grid { display: grid; gap: 18px; }
+    .stats-grid, .team-grid, .results-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .panel-card, .card, .result-card, .cta-box {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel-card {
+      padding: 18px;
+      border-radius: 22px;
+    }
+
+    .panel-card.accent {
+      background: linear-gradient(180deg, rgba(79, 116, 255, 0.16) 0%, rgba(12, 23, 45, 0.92) 100%);
+      border-color: rgba(111, 147, 255, 0.28);
+    }
+
+    .panel-card strong { display: block; margin-bottom: 8px; font-size: 17px; }
+    .panel-card p, .card p, .section-copy, .cta-note { color: var(--muted); }
+
+    .card {
+      padding: 24px;
+      box-shadow: 0 18px 36px rgba(4, 8, 20, 0.12);
+    }
+
+    .stat-value {
+      margin-bottom: 12px;
+      color: var(--green);
+      font-family: "Bebas Neue", cursive;
+      font-size: 44px;
+      line-height: 0.95;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-family: "Geologica", sans-serif;
+      font-weight: 700;
+      letter-spacing: normal;
+    }
+
+    .section-head { margin-bottom: 30px; }
+
+    .section-title {
+      max-width: 760px;
+      margin-bottom: 14px;
+      font-size: clamp(2.6rem, 5vw, 4.6rem);
+      line-height: 0.95;
+    }
+
+    .section-copy { max-width: 760px; font-size: 16px; line-height: 1.75; }
+
+    .team-card { position: relative; overflow: hidden; }
+    .team-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
+    }
+
+    .team-num { margin-bottom: 12px; color: rgba(151, 184, 255, 0.65); font-size: 32px; line-height: 1; }
+    .team-role {
+      margin-bottom: 12px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .results {
+      background: rgba(7, 14, 28, 0.32);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .result-card {
+      padding: 24px;
+      background: var(--surface-soft);
+    }
+
+    .result-title {
+      margin-bottom: 18px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .result-box { padding: 18px; border-radius: 22px; }
+    .result-box.before { border: 1px solid rgba(255, 131, 152, 0.18); background: rgba(255, 131, 152, 0.08); }
+    .result-box.after { border: 1px solid rgba(103, 239, 196, 0.18); background: rgba(103, 239, 196, 0.08); }
+
+    .result-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .before .result-label { color: var(--red); }
+    .after .result-label { color: var(--green); }
+    .result-price { display: block; font-size: 52px; line-height: 0.9; }
+    .before .result-price { color: #ffd5dd; }
+    .after .result-price { color: #e0fff5; }
+
+    .result-meta {
+      display: block;
+      margin-top: 8px;
+      color: rgba(244, 247, 255, 0.62);
+      font-size: 15px;
+      font-style: normal;
+    }
+
+    .result-tag {
+      padding: 16px 18px;
+      border: 1px solid rgba(126, 151, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(9, 22, 48, 0.62);
+      color: var(--green);
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-side { min-width: 280px; }
+    .cta-note { margin-top: 12px; font-size: 14px; }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .stats-grid, .team-grid, .results-grid, .cta-box { grid-template-columns: 1fr; }
+      .nav { flex-wrap: wrap; justify-content: center; }
+    }
+
+    @media (max-width: 720px) {
+      .section { padding: 70px 0; }
+      .hero { padding-top: 20px; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: clamp(3rem, 16vw, 4.8rem); }
+      .hero-sub, .hero-note { font-size: 17px; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary, .nav-cta { width: 100%; }
+      .result-stats { grid-template-columns: 1fr; }
+      .card h3 { font-size: 24px; }
+    }
+  </style>
 </head>
 <body>
+  <header class="hero">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">AI-<span>Target</span></a>
+        <div class="nav-links">
+          <a href="#benefits">Преимущества</a>
+          <a href="#team">Команда</a>
+          <a href="#results">Результаты</a>
+          <a href="#cta">Запуск</a>
+        </div>
+        <a href="#cta" class="nav-cta">Начать</a>
+      </nav>
 
-<section class="hero container">
-  <div class="badge-container reveal">
-    <div class="badge">РўСЂРё СЃРѕС‚СЂСѓРґРЅРёРєР°</div>
-    <div class="badge">Р“СЂР°С„РёРє 24/7</div>
-    <div class="badge">Р­РєРѕРЅРѕРјРёСЏ Р¤РћРў РѕС‚ 50%</div>
-  </div>
-  
-  <h1 class="reveal">РћС‚РґРµР» РјР°СЂРєРµС‚РёРЅРіР° Р±РµР· Р·Р°СЂРїР»Р°С‚, РѕС‚РїСѓСЃРєРѕРІ Рё РѕС€РёР±РѕРє</h1>
-  
-  <p class="hero-subtitle reveal">
-    РЈСЃС‚Р°Р»Рё РѕС‚ Р±РµСЃРєРѕРЅРµС‡РЅРѕРіРѕ РЅР°Р№РјР° Рё РєРѕРЅС‚СЂРѕР»СЏ? РўСЂРё РР-Р°СЃСЃРёСЃС‚РµРЅС‚Р° СѓР¶Рµ Р·Р°РІС‚СЂР° РІРѕР·СЊРјСѓС‚ РЅР° СЃРµР±СЏ РІР°С€Сѓ СЂСѓС‚РёРЅСѓ: 
-    РјРіРЅРѕРІРµРЅРЅС‹Рµ РѕС‚РІРµС‚С‹ РІ WhatsApp/Direct 24/7, РєРѕРЅС‚РµРЅС‚ РІ РІР°С€РµРј СЃС‚РёР»Рµ Рё СЂРµРєР»Р°РјСѓ Р±РµР· СЃР»РёРІР° Р±СЋРґР¶РµС‚Р°.
-  </p>
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Luna Ads AI System</div>
+          <h1>ОТДЕЛ МАРКЕТИНГА БЕЗ ЗАРПЛАТ, ОТПУСКОВ И ОШИБОК</h1>
+          <p class="hero-sub">
+            Устали от бесконечного найма и контроля? Три ИИ-ассистента уже завтра возьмут на себя вашу рутину:
+            мгновенные ответы в WhatsApp/Direct 24/7, контент в вашем стиле и рекламу без слива бюджета.
+          </p>
+          <p class="hero-note">Ваш штат из 5 человек - в одном Telegram-чате.</p>
 
-  <div class="reveal" style="font-family: 'JetBrains Mono'; color: var(--accent); font-size: 0.9rem;">
-    // Р’Р°С€ С€С‚Р°С‚ РёР· 5 С‡РµР»РѕРІРµРє вЂ” РІ РѕРґРЅРѕРј Telegram-С‡Р°С‚Рµ
-  </div>
-</section>
+          <div class="hero-badges">
+            <span class="hero-badge">Три сотрудника</span>
+            <span class="hero-badge">График 24/7</span>
+            <span class="hero-badge">Экономия ФОТ от 50%</span>
+          </div>
 
-<div class="container benefits-grid">
-  <div class="card reveal">
-    <span class="card-num">70%</span>
-    <h3>РЎРІРѕР±РѕРґРЅРѕРіРѕ РІСЂРµРјРµРЅРё</h3>
-    <p>Р’РµСЃСЊ РѕРїРµСЂР°С†РёРѕРЅРЅС‹Р№ РјР°СЂРєРµС‚РёРЅРі Рё РїСЂРѕРґР°Р¶Рё СѓС…РѕРґСЏС‚ Рє РР. Р’С‹ Р·Р°РЅРёРјР°РµС‚РµСЃСЊ С‚РѕР»СЊРєРѕ СЃС‚СЂР°С‚РµРіРёРµР№ СЂР°Р·РІРёС‚РёСЏ.</p>
-  </div>
+          <div class="hero-actions">
+            <a href="#cta" class="btn-primary">Запустить ИИ-отдел</a>
+            <a href="#results" class="btn-secondary">Смотреть результаты</a>
+          </div>
+        </div>
 
-  <div class="card reveal">
-    <span class="card-num">40%</span>
-    <h3>Р РѕСЃС‚ РєРѕРЅРІРµСЂСЃРёРё</h3>
-    <p>Р’Р°С€Рё РєР»РёРµРЅС‚С‹ РїРѕР»СѓС‡Р°СЋС‚ РѕС‚РІРµС‚ Р·Р° 15 СЃРµРєСѓРЅРґ РІ WhatsApp/Direct вЂ” 24/7, Р±РµР· РІС‹С…РѕРґРЅС‹С….</p>
-  </div>
+        <div class="hero-panel">
+          <div class="panel-head">
+            <span>Telegram-чат команды</span>
+            <span class="online">online</span>
+          </div>
+          <div class="panel-list">
+            <div class="panel-card">
+              <strong>ИИ-продавец</strong>
+              <p>Отвечает клиенту за 15 секунд в WhatsApp/Direct и доводит диалог до записи.</p>
+            </div>
+            <div class="panel-card">
+              <strong>ИИ-контент</strong>
+              <p>Подготавливает посты, сторис и акции в вашем стиле без постоянного контроля.</p>
+            </div>
+            <div class="panel-card accent">
+              <strong>ИИ таргетолог</strong>
+              <p>Создает, запускает и оптимизирует рекламные кампании в Facebook и Instagram.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  <div class="card reveal">
-    <span class="card-num">5X</span>
-    <h3>Р­С„С„РµРєС‚РёРІРЅРµРµ С€С‚Р°С‚Р°</h3>
-    <p>РР-РєРѕРјР°РЅРґР° СЂР°Р±РѕС‚Р°РµС‚ Р±РµР· РІС‹С…РѕРґРЅС‹С…, РЅРµ РѕС€РёР±Р°РµС‚СЃСЏ РІ С†РµРЅРµ Рё РЅРµ Р·Р°Р±С‹РІР°РµС‚ РїСЂРѕ Р»РёРґ. РџРѕ С†РµРЅРµ РІ СЂР°Р·С‹ РЅРёР¶Рµ Р¤РћРў.</p>
-  </div>
-</div>
+  <section class="section" id="benefits">
+    <div class="container">
+      <div class="stats-grid">
+        <article class="card">
+          <div class="stat-value">70%</div>
+          <h3>Свободного времени владельца</h3>
+          <p>Весь операционный маркетинг и продажи уходят к ИИ. Вы занимаетесь только стратегией развития.</p>
+        </article>
+        <article class="card">
+          <div class="stat-value">до 40%</div>
+          <h3>Рост конверсии из заявки в запись</h3>
+          <p>Ваши клиенты получают ответ за 15 секунд в WhatsApp/Direct - 24/7, без выходных.</p>
+        </article>
+        <article class="card">
+          <div class="stat-value">в 5 раз</div>
+          <h3>Эффективнее штата</h3>
+          <p>ИИ-команда работает без выходных, не ошибается в цене и не забывает про лид. По цене, которая в разы ниже ФОТ ваших сотрудников.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-<section class="results-section container">
-  <span class="section-label reveal">РљР•Р™РЎР«</span>
-  <h2 class="results-title reveal">Р Р•Р—РЈР›Р¬РўРђРўР« РќРђРЁРРҐ РљР›РР•РќРўРћР’</h2>
-  
-  <div class="results-placeholder reveal">
-    РР С‚Р°СЂРіРµС‚РѕР»РѕРі СЃРѕР·РґР°РµС‚, Р·Р°РїСѓСЃРєР°РµС‚ Рё РѕРїС‚РёРјРёР·РёСЂСѓРµС‚ СЂРµРєР»Р°РјРЅС‹Рµ РєР°РјРїР°РЅРёРё РІ FB/IG
-  </div>
-</section>
+  <section class="section" id="team">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">ИИ-команда</div>
+        <h2 class="section-title">Три ИИ-ассистента уже завтра возьмут на себя вашу рутину</h2>
+        <p class="section-copy">Не нужно строить отдел с нуля. Вы сразу получаете связку из продаж, контента и трафика в одном процессе.</p>
+      </div>
 
-<script>
-  // Р¤СѓРЅРєС†РёСЏ РґР»СЏ Р°РЅРёРјР°С†РёРё РїСЂРё СЃРєСЂРѕР»Р»Рµ
-  const observerOptions = {
-    threshold: 0.1
-  };
+      <div class="team-grid">
+        <article class="card team-card">
+          <div class="team-num">01</div>
+          <div class="team-role">ИИ-продавец</div>
+          <h3>Отвечает и закрывает в запись</h3>
+          <p>Берет на себя WhatsApp и Instagram Direct, отвечает за секунды и доводит диалог до записи без участия администратора.</p>
+        </article>
+        <article class="card team-card">
+          <div class="team-num">02</div>
+          <div class="team-role">ИИ-контент-маркетолог</div>
+          <h3>Пишет и публикует контент в вашем стиле</h3>
+          <p>Готовит посты, сторис и тексты для акций, сохраняет tone of voice бренда и экономит часы вашей команды.</p>
+        </article>
+        <article class="card team-card">
+          <div class="team-num">03</div>
+          <div class="team-role">ИИ-таргетолог</div>
+          <h3>Запускает рекламу без слива бюджета</h3>
+          <p>Создает, запускает и оптимизирует рекламные кампании в Facebook и Instagram, чтобы быстрее заполнять свободные окна.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      }
-    });
-  }, observerOptions);
+  <section class="section results" id="results">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Кейсы</div>
+        <h2 class="section-title">Результаты наших клиентов</h2>
+        <p class="section-copy">Реальные сценарии бизнеса, где ИИ-команда снижает стоимость лида и помогает получать больше записей без расширения штата.</p>
+      </div>
 
-  document.querySelectorAll('.reveal').forEach(el => {
-    observer.observe(el);
-  });
-</script>
+      <div class="results-grid">
+        <article class="result-card">
+          <div class="result-title">Магазин мебели</div>
+          <div class="result-stats">
+            <div class="result-box before">
+              <span class="result-label">Было</span>
+              <span class="result-price">$3.2</span>
+              <span class="result-meta">за лид</span>
+            </div>
+            <div class="result-box after">
+              <span class="result-label">Стало</span>
+              <span class="result-price">$0.7</span>
+              <span class="result-meta">210 лидов/мес</span>
+            </div>
+          </div>
+          <div class="result-tag">Стоимость лида снижена в 4.5 раза за 7 дней</div>
+        </article>
 
+        <article class="result-card">
+          <div class="result-title">Салон красоты</div>
+          <div class="result-stats">
+            <div class="result-box before">
+              <span class="result-label">Было</span>
+              <span class="result-price">$2.8</span>
+              <span class="result-meta">за лид</span>
+            </div>
+            <div class="result-box after">
+              <span class="result-label">Стало</span>
+              <span class="result-price">$0.5</span>
+              <span class="result-meta">170 лидов/мес</span>
+            </div>
+          </div>
+          <div class="result-tag">Количество заявок выросло в 5.6 раза за 2 недели</div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-title">Интернет-магазин одежды</div>
+          <div class="result-stats">
+            <div class="result-box before">
+              <span class="result-label">Было</span>
+              <span class="result-price">$4.1</span>
+              <span class="result-meta">за лид</span>
+            </div>
+            <div class="result-box after">
+              <span class="result-label">Стало</span>
+              <span class="result-price">$0.9</span>
+              <span class="result-meta">110 лидов/мес</span>
+            </div>
+          </div>
+          <div class="result-tag">ROI рекламы вырос в 4.5 раза за 10 дней</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cta">
+    <div class="container">
+      <div class="cta-box">
+        <div>
+          <div class="eyebrow">Запуск</div>
+          <h2 class="section-title">Подключите ИИ-отдел маркетинга и начните получать больше записей</h2>
+          <p class="section-copy">Лендинг сделан отдельным HTML-файлом, чтобы не затрагивать ваше приложение. Его можно использовать как основу и дальше править под ваш оффер.</p>
+        </div>
+        <div class="cta-side">
+          <a href="#" class="btn-primary">Получить консультацию</a>
+          <div class="cta-note">Если хотите, следующим сообщением я могу ещё точечно переделать этот HTML под ваш бренд, WhatsApp, форму и реальные контакты.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
