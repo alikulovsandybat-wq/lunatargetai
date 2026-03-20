@@ -3,1862 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Цифровой Офис — ИИ-команда для вашего бизнеса</title>
+<title>Цифровой Офис — ИИ-команда</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geologica:wght@300;400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #050508;
-    --surface: #0d0d14;
-    --surface2: #13131e;
-    --border: rgba(255,255,255,0.07);
+    --surface: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
     --accent: #7c5cfc;
-    --accent2: #00e5c0;
-    --accent3: #ff5f7e;
     --text: #f0eeff;
-    --muted: rgba(240,238,255,0.45);
-    --card-glow: rgba(124,92,252,0.12);
+    --muted: rgba(240, 238, 255, 0.5);
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Geologica', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
     line-height: 1.6;
+    overflow-x: hidden;
   }
 
-  /* ─── SPLASH / GATEWAY ─────────────────────────────────── */
-  .splash {
-    position: fixed; inset: 0; z-index: 999;
-    background: var(--bg);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 40px 24px;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .splash.hide {
-    opacity: 0; pointer-events: none; transform: scale(1.03);
-  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-  .splash-logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px; letter-spacing: 4px;
-    color: var(--muted); margin-bottom: 56px;
+  /* Анимация появления */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
   }
-  .splash-logo span { color: var(--accent2); }
-
-  .splash-question {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(28px, 5vw, 52px);
-    text-align: center; line-height: 1.05;
-    letter-spacing: 1px; margin-bottom: 12px;
-  }
-  .splash-sub {
-    font-size: 15px; color: var(--muted);
-    text-align: center; margin-bottom: 56px;
-    max-width: 420px; line-height: 1.6;
-  }
-
-  .splash-cards {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 20px; width: 100%; max-width: 720px;
-  }
-
-  .splash-card {
-    border-radius: 20px; padding: 36px 32px;
-    cursor: pointer; position: relative; overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    transition: all 0.3s ease;
-    display: flex; flex-direction: column; gap: 12px;
-    text-align: left;
-  }
-  .splash-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,255,255,0.18);
-    box-shadow: 0 32px 64px rgba(0,0,0,0.5);
-  }
-  .splash-card.path-app:hover { border-color: rgba(0,229,192,0.5); box-shadow: 0 32px 64px rgba(0,229,192,0.1); }
-  .splash-card.path-office:hover { border-color: rgba(124,92,252,0.5); box-shadow: 0 32px 64px rgba(124,92,252,0.15); }
-
-  .splash-card-glow {
-    position: absolute; inset: 0; opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-  .path-app .splash-card-glow {
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,192,0.12) 0%, transparent 70%);
-  }
-  .path-office .splash-card-glow {
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,92,252,0.14) 0%, transparent 70%);
-  }
-  .splash-card:hover .splash-card-glow { opacity: 1; }
-
-  .splash-card-emoji { font-size: 40px; line-height: 1; }
-
-  .splash-card-tag {
-    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-    font-weight: 700;
-  }
-  .path-app .splash-card-tag { color: var(--accent2); }
-  .path-office .splash-card-tag { color: var(--accent); }
-
-  .splash-card-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 28px; letter-spacing: 1px; line-height: 1.1;
-  }
-  .splash-card-desc {
-    font-size: 13px; color: var(--muted); line-height: 1.65;
-  }
-  .splash-card-cta {
-    margin-top: auto; padding-top: 20px;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .path-app .splash-card-cta { color: var(--accent2); }
-  .path-office .splash-card-cta { color: var(--accent); }
-
-  .splash-divider {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 50%; width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; color: var(--muted); font-weight: 700;
-    letter-spacing: 1px; z-index: 2;
-  }
-
-  .splash-skip {
-    margin-top: 36px; font-size: 12px; color: var(--muted);
-    background: none; border: none; cursor: pointer;
-    font-family: 'Geologica', sans-serif; letter-spacing: 0.5px;
-    transition: color 0.2s;
-  }
-  .splash-skip:hover { color: var(--text); }
-
-  /* LunatargetAI app section */
-  .app-section {
-    background: var(--surface);
-    padding: 100px 60px;
-  }
-  .app-section .section-tag { }
-  .app-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 72px; align-items: center; margin-top: 48px;
-  }
-  .app-desc { font-size: 16px; color: var(--muted); line-height: 1.75; margin-bottom: 32px; }
-  .app-features {
-    display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px;
-  }
-  .app-feature {
-    display: flex; gap: 14px; align-items: flex-start;
-  }
-  .app-feature-icon {
-    width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
-    background: rgba(0,229,192,0.1); border: 1px solid rgba(0,229,192,0.2);
-    display: flex; align-items: center; justify-content: center; font-size: 16px;
-  }
-  .app-feature-text h4 { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
-  .app-feature-text p { font-size: 13px; color: var(--muted); }
-
-  .app-phone-mockup {
-    background: var(--surface2);
-    border: 1px solid rgba(0,229,192,0.2);
-    border-radius: 24px; overflow: hidden;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
-  }
-  .app-phone-top {
-    background: rgba(0,229,192,0.08);
-    border-bottom: 1px solid rgba(0,229,192,0.15);
-    padding: 16px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .app-phone-top-title { font-size: 14px; font-weight: 600; }
-  .app-phone-top-badge {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    color: var(--accent2); background: rgba(0,229,192,0.1);
-    border: 1px solid rgba(0,229,192,0.25); padding: 4px 10px; border-radius: 100px;
-  }
-  .app-phone-body { padding: 24px 20px; display: flex; flex-direction: column; gap: 14px; }
-  .app-stat-row {
-    background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
-  }
-  .app-stat-label { font-size: 13px; color: var(--muted); }
-  .app-stat-val { font-family: 'Bebas Neue', cursive; font-size: 22px; color: var(--accent2); letter-spacing: 1px; }
-  .app-launch-btn {
-    background: linear-gradient(135deg, var(--accent2), #00b89c);
-    color: #050508; border: none; border-radius: 10px;
-    padding: 14px; width: 100%; font-family: 'Geologica', sans-serif;
-    font-size: 14px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px;
-    transition: all 0.2s;
-  }
-  .app-launch-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  .app-pricing-note {
-    background: var(--bg); border: 1px solid rgba(0,229,192,0.2);
-    border-radius: 12px; padding: 20px 24px;
-    display: flex; align-items: center; gap: 16px;
-  }
-  .app-pricing-amount {
-    font-family: 'Bebas Neue', cursive; font-size: 36px; color: var(--accent2);
-    letter-spacing: 1px; white-space: nowrap;
-  }
-  .app-pricing-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
-
-  @media (max-width: 900px) {
-    .splash-cards { grid-template-columns: 1fr; max-width: 400px; }
-    .splash-divider { display: none; }
-    .app-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ─────────────────────────────────────────────────────── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 60px;
-    background: rgba(5,5,8,0.8);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: var(--text);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--accent2); }
-
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    font-weight: 500;
-  }
-  .nav-links a:hover { color: var(--text); }
-
-  .nav-cta {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 6px;
-    font-family: 'Geologica', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    transition: all 0.2s;
-  }
-  .nav-cta:hover { background: #9575ff; transform: translateY(-1px); }
-
-  /* LANG SWITCHER */
-  .lang-switcher {
-    position: relative;
-  }
-  .lang-btn {
-    display: flex; align-items: center; gap: 6px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 8px 14px;
-    border-radius: 6px;
-    font-family: 'Geologica', sans-serif;
-    font-size: 13px; font-weight: 500;
-    cursor: pointer; letter-spacing: 0.5px;
-    transition: all 0.2s;
-  }
-  .lang-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
-  .lang-btn svg { transition: transform 0.2s; }
-  .lang-switcher.open .lang-btn svg { transform: rotate(180deg); }
-  .lang-btn .lang-flag { font-size: 15px; }
-
-  .lang-dropdown {
-    position: absolute; top: calc(100% + 8px); right: 0;
-    background: var(--surface2);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    min-width: 140px;
-    opacity: 0; pointer-events: none;
-    transform: translateY(-6px);
-    transition: all 0.2s ease;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-    z-index: 200;
-  }
-  .lang-switcher.open .lang-dropdown {
-    opacity: 1; pointer-events: all;
+  .reveal.active {
+    opacity: 1;
     transform: translateY(0);
   }
-  .lang-option {
-    display: flex; align-items: center; gap: 10px;
-    padding: 11px 16px;
-    font-size: 13px; color: var(--muted);
-    cursor: pointer; transition: all 0.15s;
-    border: none; background: none; width: 100%;
-    font-family: 'Geologica', sans-serif;
-    text-align: left;
-  }
-  .lang-option:hover { background: rgba(255,255,255,0.06); color: var(--text); }
-  .lang-option.active { color: var(--accent2); }
-  .lang-option .lo-flag { font-size: 16px; }
-  .lang-option .lo-name { font-weight: 500; }
-  .lang-option .lo-full { font-size: 11px; color: var(--muted); margin-left: auto; }
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 120px 60px 80px;
-    position: relative;
-    overflow: hidden;
+  /* Шапка / Hero */
+  .hero { padding: 140px 0 80px; text-align: center; }
+  
+  .badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
   }
 
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(124,92,252,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,229,192,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 30% 30% at 80% 80%, rgba(255,95,126,0.06) 0%, transparent 50%);
-  }
-
-  .hero-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
-  }
-
-  .hero-content { position: relative; z-index: 1; max-width: 900px; }
-
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(124,92,252,0.15);
-    border: 1px solid rgba(124,92,252,0.3);
-    padding: 8px 20px; border-radius: 100px;
-    font-size: 14px; letter-spacing: 2.5px; text-transform: uppercase;
-    color: #c4b0ff; font-weight: 600; margin-bottom: 28px;
-    animation: fadeUp 0.8s ease both;
-  }
-  .hero-badge::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent2);
-    animation: pulse 2s ease infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.4); }
+  .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 1px;
   }
 
   h1 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(54px, 7.5vw, 110px);
-    line-height: 0.92;
-    letter-spacing: 2px;
-    margin-bottom: 32px;
-    animation: fadeUp 0.8s 0.1s ease both;
-  }
-  h1 .accent { color: var(--accent); }
-  h1 .accent2 { color: var(--accent2); }
-
-  .hero-sub {
-    font-size: 20px;
-    color: rgba(240,238,255,0.72);
-    max-width: 560px;
-    margin-bottom: 48px;
-    animation: fadeUp 0.8s 0.2s ease both;
-    font-weight: 400;
-    line-height: 1.65;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
 
-  .hero-actions {
-    display: flex; gap: 16px; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.3s ease both;
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--muted);
+    max-width: 750px;
+    margin: 0 auto 40px;
   }
 
-  .btn-primary {
-    background: linear-gradient(135deg, var(--accent), #5a3fd4);
-    color: #fff; border: none; padding: 16px 36px;
-    border-radius: 8px; font-family: 'Geologica', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 0 40px rgba(124,92,252,0.3);
-    text-decoration: none; display: inline-block;
-  }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(124,92,252,0.5); }
-
-  .btn-ghost {
-    background: transparent; color: rgba(240,238,255,0.55);
-    border: 1px solid rgba(255,255,255,0.1); padding: 16px 36px;
-    border-radius: 8px; font-family: 'Geologica', sans-serif;
-    font-size: 15px; font-weight: 400; cursor: pointer;
-    transition: all 0.25s; text-decoration: none; display: inline-block;
-  }
-  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: var(--text); background: rgba(255,255,255,0.04); }
-
-  .hero-stats {
-    margin-top: 80px;
-    display: flex; gap: 60px; flex-wrap: wrap;
-    animation: fadeUp 0.8s 0.4s ease both;
-    padding-top: 48px; border-top: 1px solid var(--border);
-  }
-  .stat-num {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 48px; color: var(--text); letter-spacing: 1px;
-  }
-  .stat-num span { color: var(--accent2); }
-  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Сетка карточек */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 100px;
   }
 
-  .hero-sub strong {
-    color: var(--text);
-    font-weight: 700;
-  }
-
-  /* TG PHONE MOCKUP */
-  .hero-visual {
-    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
-    z-index: 1;
-  }
-
-  .tg-phone {
-    width: 280px;
-    background: var(--surface2);
-    border: 1px solid rgba(124,92,252,0.25);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
-    animation: floatIn 0.9s 0.4s ease both;
-  }
-
-  @keyframes floatIn {
-    from { opacity: 0; transform: translateX(40px) translateY(10px); }
-    to   { opacity: 1; transform: translateX(0) translateY(0); }
-  }
-
-  .tg-phone-bar {
-    background: rgba(124,92,252,0.12);
-    border-bottom: 1px solid rgba(124,92,252,0.2);
-    padding: 14px 16px;
-    display: flex; align-items: center; gap: 8px;
-    font-size: 12px; color: rgba(240,238,255,0.6);
-    font-weight: 500;
-  }
-  .tg-phone-dot {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-  }
-  .tg-phone-dot::after { content: '🤖'; }
-  .tg-phone-bar span { flex: 1; }
-  .tg-phone-live { font-size: 10px; color: var(--accent2); letter-spacing: 1px; }
-
-  .tg-phone-body {
-    padding: 16px;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-
-  .tg-msg {
+  .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 4px 14px 14px 14px;
-    padding: 12px 14px;
-    font-size: 13px; line-height: 1.5; color: var(--text);
-  }
-  .tg-msg-who {
-    font-size: 11px; font-weight: 700;
-    color: var(--accent2); margin-bottom: 5px; letter-spacing: 0.5px;
-  }
-  .tg-msg-time {
-    font-size: 10px; color: var(--muted);
-    text-align: right; margin-top: 6px;
+    padding: 48px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.4s ease;
   }
 
-  .tg-phone-btns {
-    display: flex; gap: 8px; padding-left: 4px;
-  }
-  .tg-ph-btn {
-    padding: 7px 14px; border-radius: 8px;
-    font-size: 12px; font-family: 'Geologica', sans-serif;
-    cursor: pointer; border: 1px solid; transition: all 0.2s;
-  }
-  .tg-ph-yes {
-    background: rgba(0,229,192,0.12);
-    border-color: rgba(0,229,192,0.35);
-    color: var(--accent2);
-  }
-  .tg-ph-yes:hover { background: rgba(0,229,192,0.22); }
-  .tg-ph-no {
-    background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
+  .card:hover {
+    border-color: var(--accent);
   }
 
-  /* SECTION BASE */
-  section { padding: 100px 60px; }
-
-  .section-tag {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-tag::before {
-    content: ''; display: block;
-    width: 32px; height: 1px; background: var(--accent);
-  }
-
-  h2 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(44px, 6vw, 80px);
-    letter-spacing: 2px; line-height: 1;
+  .card-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 2.5rem;
+    font-weight: 400;
+    display: block;
     margin-bottom: 20px;
   }
 
-  /* TEAM SECTION */
-  .team-section { background: var(--surface); }
-
-  .team-intro {
-    max-width: 560px;
-    color: var(--muted);
-    font-size: 17px;
-    margin-bottom: 72px;
-    font-weight: 400;
-  }
-
-  .team-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .team-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 40px 36px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s;
-  }
-  .team-card:hover {
-    border-color: rgba(124,92,252,0.4);
-    transform: translateY(-4px);
-    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-  }
-  .team-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  }
-  .team-card.seller::before { background: linear-gradient(90deg, var(--accent), transparent); }
-  .team-card.marketer::before { background: linear-gradient(90deg, var(--accent2), transparent); }
-  .team-card.targeter::before { background: linear-gradient(90deg, var(--accent3), transparent); }
-
-  .team-card-num {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 80px; line-height: 1;
-    opacity: 0.06; position: absolute; right: 24px; top: 20px;
-    pointer-events: none;
-  }
-
-  .team-card-avatar {
-    width: 64px; height: 64px; border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 24px;
-  }
-  .av-seller { background: rgba(124,92,252,0.15); }
-  .av-marketer { background: rgba(0,229,192,0.12); }
-  .av-targeter { background: rgba(255,95,126,0.12); }
-
-  .team-card-role {
-    font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase;
-    font-weight: 600; margin-bottom: 10px;
-  }
-  .role-seller { color: var(--accent); }
-  .role-marketer { color: var(--accent2); }
-  .role-targeter { color: var(--accent3); }
-
-  .team-card h3 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 36px; letter-spacing: 2px; margin-bottom: 16px;
-  }
-
-  .team-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
-
-  .team-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .team-features li {
-    display: flex; gap: 10px; align-items: flex-start;
-    font-size: 13px; color: var(--muted);
-  }
-  .team-features li::before {
-    content: '→'; font-family: 'JetBrains Mono', monospace;
-    font-size: 12px; margin-top: 1px; flex-shrink: 0;
-  }
-  .seller .team-features li::before { color: var(--accent); }
-  .marketer .team-features li::before { color: var(--accent2); }
-  .targeter .team-features li::before { color: var(--accent3); }
-
-  /* HOW IT WORKS */
-  .how-section { position: relative; overflow: hidden; }
-
-  .how-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-    align-items: center;
-  }
-
-  .how-steps { display: flex; flex-direction: column; gap: 0; }
-
-  .how-step {
-    display: flex; gap: 24px;
-    padding: 32px 0;
-    border-bottom: 1px solid var(--border);
-    transition: all 0.2s;
-    cursor: default;
-  }
-  .how-step:last-child { border-bottom: none; }
-  .how-step:hover .step-num { color: var(--accent); }
-
-  .step-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px; color: var(--muted);
-    min-width: 28px; padding-top: 2px;
-    transition: color 0.2s;
-  }
-
-  .step-content h4 {
-    font-size: 17px; font-weight: 500; margin-bottom: 8px;
-  }
-  .step-content p { font-size: 14px; color: var(--muted); }
-
-  .tg-mockup {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .tg-header {
-    background: rgba(124,92,252,0.1);
-    padding: 16px 20px;
-    display: flex; align-items: center; gap: 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .tg-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: flex; align-items: center; justify-content: center; font-size: 16px;
-  }
-  .tg-name { font-size: 14px; font-weight: 500; }
-  .tg-status { font-size: 11px; color: var(--accent2); }
-
-  .tg-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-
-  .msg {
-    max-width: 85%; padding: 12px 16px;
-    border-radius: 16px; font-size: 13px; line-height: 1.5;
-  }
-  .msg-in {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    align-self: flex-start; border-radius: 4px 16px 16px 16px;
-  }
-  .msg-out {
-    background: rgba(124,92,252,0.25);
-    border: 1px solid rgba(124,92,252,0.3);
-    align-self: flex-end; border-radius: 16px 4px 16px 16px;
-  }
-  .msg-time { font-size: 10px; color: var(--muted); margin-top: 4px; text-align: right; }
-
-  .tg-buttons {
-    padding: 12px 20px 20px;
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
-  .tg-btn {
-    background: rgba(124,92,252,0.15);
-    border: 1px solid rgba(124,92,252,0.3);
-    color: #a98fff; padding: 8px 14px;
-    border-radius: 8px; font-size: 12px; cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tg-btn:hover { background: rgba(124,92,252,0.3); }
-
-  /* PRICING */
-  .pricing-section { background: var(--surface); }
-
-  .pricing-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 900px;
-  }
-
-  .price-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px;
-  }
-  .price-card.featured {
-    border-color: rgba(124,92,252,0.5);
-    background: linear-gradient(135deg, rgba(124,92,252,0.08), var(--bg));
-    position: relative;
-  }
-  .price-card.featured::before {
-    content: 'ПОД КЛЮЧ';
-    position: absolute; top: -12px; left: 32px;
-    background: var(--accent); color: #fff;
-    font-size: 10px; letter-spacing: 2px; font-weight: 700;
-    padding: 4px 12px; border-radius: 100px;
-  }
-
-  .price-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
-  .price-amount {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 60px; line-height: 1; letter-spacing: 1px;
-    margin-bottom: 8px;
-  }
-  .price-period { font-size: 13px; color: var(--muted); margin-bottom: 36px; }
-  .price-desc { font-size: 14px; color: var(--muted); margin-bottom: 36px; line-height: 1.7; }
-
-  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
-  .price-features li {
-    display: flex; gap: 10px; font-size: 14px; align-items: flex-start;
-  }
-  .price-features li::before {
-    content: '✓'; color: var(--accent2);
-    font-size: 12px; font-weight: 700; margin-top: 2px; flex-shrink: 0;
-  }
-
-  .price-note {
-    font-size: 12px; color: var(--muted);
-    padding: 16px; background: rgba(255,255,255,0.03);
-    border-radius: 8px; border: 1px solid var(--border);
-  }
-
-  /* SAVINGS */
-  .team-saving {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .saving-old {
-    font-size: 13px;
-    color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-color: var(--accent3);
-    text-decoration-thickness: 2px;
-  }
-  .saving-new {
-    font-size: 15px;
+  .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
     font-weight: 600;
-    color: var(--accent2);
-    letter-spacing: 0.3px;
   }
 
-  .savings-total {
-    margin-top: 60px;
-    border: 1px solid rgba(0,229,192,0.25);
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(0,229,192,0.06), rgba(124,92,252,0.06));
-    overflow: hidden;
-  }
-  .savings-inner { padding: 56px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .savings-label {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--accent2); font-weight: 700; margin-bottom: 16px;
-  }
-  .savings-amount {
-    font-family: 'Bebas Neue', cursive;
-    font-size: clamp(32px, 4vw, 52px);
-    line-height: 1.1; margin-bottom: 20px;
-  }
-  .savings-amount span { color: var(--accent2); }
-  .savings-desc { font-size: 15px; color: var(--muted); line-height: 1.7; }
-  .savings-desc strong { color: var(--text); }
-
-  .savings-calc {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 32px;
-    display: flex; flex-direction: column; gap: 14px;
-  }
-  .calc-row {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 14px; color: var(--muted);
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-  .calc-row:last-child { border-bottom: none; padding-bottom: 0; }
-  .calc-cross {
-    text-decoration: line-through;
-    text-decoration-color: var(--accent3);
-    text-decoration-thickness: 2px;
+  .card p {
     color: var(--muted);
-  }
-  .calc-total { color: var(--text); font-weight: 500; }
-  .calc-winner { padding-top: 4px; }
-  .calc-winner span:first-child { color: var(--text); font-weight: 600; }
-  .calc-green { color: var(--accent2); font-weight: 700; font-size: 16px; }
-
-  @media (max-width: 900px) {
-    .savings-inner { grid-template-columns: 1fr; padding: 40px 32px; }
+    font-size: 1rem;
   }
 
-  /* SAVINGS */
-  .tech-section { }
-
-  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 60px; }
-
-  .tech-chip {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px; padding: 24px 20px;
-    text-align: center;
-    transition: all 0.25s;
-  }
-  .tech-chip:hover {
-    border-color: rgba(124,92,252,0.4);
-    transform: translateY(-3px);
-  }
-  .tech-icon { font-size: 32px; margin-bottom: 12px; }
-  .tech-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .tech-role { font-size: 12px; color: var(--muted); }
-
-  /* CONTACT BUTTONS */
-  .contact-btns {
-    display: flex; justify-content: center; gap: 16px;
-    flex-wrap: wrap; margin-bottom: 12px;
-  }
-  .btn-tg {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, var(--accent), #5a3fd4);
-    color: #fff; border: none; padding: 16px 32px;
-    border-radius: 8px; font-family: 'Geologica', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: all 0.25s; text-decoration: none;
-    box-shadow: 0 0 40px rgba(124,92,252,0.3);
-  }
-  .btn-tg:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(124,92,252,0.5); }
-  .btn-wa {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(37,211,102,0.12);
-    border: 1px solid rgba(37,211,102,0.35);
-    color: #4ade80; padding: 16px 32px;
-    border-radius: 8px; font-family: 'Geologica', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: all 0.25s; text-decoration: none;
-  }
-  .btn-wa:hover { background: rgba(37,211,102,0.2); transform: translateY(-2px); }
-  .cta-note { font-size: 13px; color: var(--muted); margin-top: 20px; }
-
-  /* CONTACT FORM */
-  .contact-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    max-width: 860px;
-    margin: 0 auto;
-    text-align: left;
-  }
-  .contact-left { display: flex; flex-direction: column; gap: 16px; }
-  .contact-label {
-    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; margin-bottom: 4px;
-  }
-  .contact-right {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-  }
-  .contact-right h3 {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 26px; letter-spacing: 1.5px;
-    margin-bottom: 6px;
-  }
-  .contact-right p {
-    font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.6;
-  }
-  .form-row { display: flex; flex-direction: column; gap: 12px; }
-  .form-field {
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .form-field label {
-    font-size: 12px; color: var(--muted);
-    letter-spacing: 0.5px; font-weight: 500;
-  }
-  .form-field input {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-family: 'Geologica', sans-serif;
-    font-size: 14px; color: var(--text);
-    outline: none; transition: border-color 0.2s;
-    width: 100%;
-  }
-  .form-field input::placeholder { color: rgba(240,238,255,0.25); }
-  .form-field input:focus { border-color: rgba(124,92,252,0.6); }
-  .form-submit {
-    width: 100%; margin-top: 8px;
-    background: linear-gradient(135deg, var(--accent), #5a3fd4);
-    color: #fff; border: none; padding: 14px 24px;
-    border-radius: 8px; font-family: 'Geologica', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer;
-    transition: all 0.25s;
-    box-shadow: 0 0 30px rgba(124,92,252,0.25);
-  }
-  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(124,92,252,0.45); }
-  .form-privacy {
-    font-size: 11px; color: var(--muted); text-align: center; margin-top: 10px;
-  }
-  .form-success {
-    display: none; text-align: center; padding: 24px;
-    color: var(--accent2); font-size: 16px; font-weight: 500;
-  }
-  .form-success svg { display: block; margin: 0 auto 12px; }
-
-  @media (max-width: 760px) {
-    .contact-layout { grid-template-columns: 1fr; gap: 32px; }
-  }
-
-  /* CALCULATOR */
-  .calc-widget {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-    max-width: 800px;
-  }
-  .calc-inputs { display: flex; flex-direction: column; gap: 16px; }
-  .calc-field { display: flex; flex-direction: column; gap: 6px; }
-  .calc-field label { font-size: 13px; color: var(--muted); font-weight: 500; }
-  .calc-field input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px 16px;
-    font-family: 'Geologica', sans-serif;
-    font-size: 16px; color: var(--text);
-    outline: none; transition: border-color 0.2s;
-  }
-  .calc-field input:focus { border-color: rgba(124,92,252,0.6); }
-  .calc-field input::placeholder { color: rgba(240,238,255,0.2); }
-  .calc-result {
-    background: var(--surface);
-    border: 1px solid rgba(0,229,192,0.2);
-    border-radius: 16px; padding: 32px;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .calc-res-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-  .calc-res-num {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 40px; color: var(--accent2);
-    letter-spacing: 1px; margin-bottom: 8px; line-height: 1.1;
-  }
-  .calc-res-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
-
-  /* CASES */
-  .cases-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-  .case-card {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 16px; padding: 28px 24px;
-    transition: all 0.25s;
-  }
-  .case-card:hover { border-color: rgba(0,229,192,0.3); transform: translateY(-3px); }
-  .case-icon { font-size: 32px; margin-bottom: 12px; }
-  .case-biz { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-weight: 500; }
-  .case-nums { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-  .case-before { font-size: 13px; color: var(--muted); }
-  .case-before span { text-decoration: line-through; text-decoration-color: var(--accent3); }
-  .case-after { font-size: 14px; font-weight: 600; }
-  .case-after span { color: var(--accent2); }
-  .case-result {
-    font-size: 14px; font-weight: 600; color: var(--text);
-    padding: 10px 14px; background: rgba(0,229,192,0.08);
-    border-radius: 8px; border: 1px solid rgba(0,229,192,0.2);
-  }
-
-  /* REVIEWS */
-  .reviews-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 40px; }
-  .review-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 16px; padding: 28px;
-    transition: all 0.25s;
-  }
-  .review-card:hover { border-color: rgba(124,92,252,0.3); transform: translateY(-2px); }
-  .review-stars { color: #FFD600; font-size: 16px; margin-bottom: 14px; letter-spacing: 2px; }
-  .review-text { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-  .review-author { display: flex; align-items: center; gap: 12px; }
-  .review-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 16px; flex-shrink: 0;
-  }
-  .review-name { font-size: 14px; font-weight: 600; }
-  .review-city { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  /* LOGOS */
-  .logos-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .logo-chip {
-    background: var(--bg); border: 1px solid var(--border);
-    border-radius: 100px; padding: 10px 20px;
-    font-size: 13px; color: var(--muted);
-    transition: all 0.2s;
-  }
-  .logo-chip:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
-
-  /* PRICE EXTRAS */
-  .price-installment {
-    margin-top: 16px; padding: 12px 16px;
-    background: rgba(124,92,252,0.08);
-    border: 1px solid rgba(124,92,252,0.2);
-    border-radius: 10px; font-size: 13px; color: #a98fff;
-  }
-  .price-roi {
-    margin-top: 8px; padding: 10px 16px;
-    background: rgba(0,229,192,0.06);
-    border: 1px solid rgba(0,229,192,0.15);
-    border-radius: 10px; font-size: 13px; color: var(--accent2);
-  }
-
-  @media (max-width: 900px) {
-    .calc-widget { grid-template-columns: 1fr; }
-    .cases-grid { grid-template-columns: 1fr; }
-    .reviews-grid { grid-template-columns: 1fr; }
-  }
-
-  /* CALCULATOR */
-  .cta-section {
-    text-align: center;
-    padding: 120px 60px;
-    position: relative; overflow: hidden;
-  }
-  .cta-bg {
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(124,92,252,0.12) 0%, transparent 70%);
-  }
-  .cta-section .section-tag { justify-content: center; }
-  .cta-section .section-tag::before { display: none; }
-  .cta-section h2 { margin-bottom: 24px; }
-  .cta-sub { font-size: 18px; color: var(--muted); margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; }
-  .cta-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; position: relative; }
-
-  /* FOOTER */
-  footer {
-    padding: 40px 60px;
+  /* Блок результатов */
+  .results-section {
+    padding: 100px 0;
     border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 20px;
   }
-  .footer-logo {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px; letter-spacing: 3px;
-  }
-  .footer-logo span { color: var(--accent2); }
-  .footer-text { font-size: 13px; color: var(--muted); }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--text); }
 
-  /* RESPONSIVE */
-  @media (max-width: 1200px) {
-    .hero-visual { display: none; }
-    .team-grid { grid-template-columns: 1fr; }
-    .how-grid { grid-template-columns: 1fr; }
-    .tech-grid { grid-template-columns: repeat(2, 1fr); }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 16px;
+    text-align: center;
   }
+
+  .results-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+  }
+
+  .results-placeholder {
+    width: 100%;
+    height: 400px;
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
   @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-links { display: none; }
-    section { padding: 72px 24px; }
-    .hero { padding: 100px 24px 60px; }
-    footer { padding: 32px 24px; }
-    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 80px 0 40px; }
+    .card { padding: 32px; }
   }
 </style>
 </head>
 <body>
 
-<!-- SPLASH GATEWAY -->
-<div class="splash" id="splash">
-  <div class="splash-logo">LUNAR<span>TARGET</span> AI</div>
+<section class="hero container">
+  <div class="badge-container reveal">
+    <div class="badge">Три сотрудника</div>
+    <div class="badge">График 24/7</div>
+    <div class="badge">Экономия ФОТ от 50%</div>
+  </div>
+  
+  <h1 class="reveal">Отдел маркетинга без зарплат, отпусков и ошибок</h1>
+  
+  <p class="hero-subtitle reveal">
+    Устали от бесконечного найма и контроля? Три ИИ-ассистента уже завтра возьмут на себя вашу рутину: 
+    мгновенные ответы в WhatsApp/Direct 24/7, контент в вашем стиле и рекламу без слива бюджета.
+  </p>
 
-  <div class="splash-question">КАК ВЫ ХОТИТЕ<br>ЗАПУСКАТЬ РЕКЛАМУ?</div>
-  <p class="splash-sub">Выберите свой путь — мы подстроим опыт под вас</p>
+  <div class="reveal" style="font-family: 'JetBrains Mono'; color: var(--accent); font-size: 0.9rem;">
+    // Ваш штат из 5 человек — в одном Telegram-чате
+  </div>
+</section>
 
-  <div class="splash-cards" style="position:relative;">
-    <div class="splash-divider">ИЛИ</div>
-
-    <!-- PATH 1: App -->
-    <div class="splash-card path-app" onclick="choosePath('app')">
-      <div class="splash-card-glow"></div>
-      <div class="splash-card-emoji">🚀</div>
-      <div class="splash-card-tag">Самостоятельно</div>
-      <div class="splash-card-title">ЗАПУСКАТЬ<br>РЕКЛАМУ САМОМУ</div>
-      <div class="splash-card-desc">Использую приложение LunatargetAI — сам нахожу аудиторию, создаю креативы и запускаю кампании.</div>
-      <div class="splash-card-cta">Открыть приложение →</div>
-    </div>
-
-    <!-- PATH 2: Office -->
-    <div class="splash-card path-office" onclick="choosePath('office')">
-      <div class="splash-card-glow"></div>
-      <div class="splash-card-emoji">🤖</div>
-      <div class="splash-card-tag">Под ключ</div>
-      <div class="splash-card-title">ПУСТЬ ИИ<br>ДЕЛАЕТ ЗА МЕНЯ</div>
-      <div class="splash-card-desc">Хочу готовую ИИ-команду: Агент, Вика и Марк сами ведут продажи, контент и рекламу 24/7.</div>
-      <div class="splash-card-cta">Узнать про цифровой офис →</div>
-    </div>
+<div class="container benefits-grid">
+  <div class="card reveal">
+    <span class="card-num">70%</span>
+    <h3>Свободного времени</h3>
+    <p>Весь операционный маркетинг и продажи уходят к ИИ. Вы занимаетесь только стратегией развития.</p>
   </div>
 
-  <button class="splash-skip" onclick="choosePath('office')">Пропустить и посмотреть всё →</button>
+  <div class="card reveal">
+    <span class="card-num">40%</span>
+    <h3>Рост конверсии</h3>
+    <p>Ваши клиенты получают ответ за 15 секунд в WhatsApp/Direct — 24/7, без выходных.</p>
+  </div>
+
+  <div class="card reveal">
+    <span class="card-num">5X</span>
+    <h3>Эффективнее штата</h3>
+    <p>ИИ-команда работает без выходных, не ошибается в цене и не забывает про лид. По цене в разы ниже ФОТ.</p>
+  </div>
 </div>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">LUNAR<span>TARGET</span></a>
-  <ul class="nav-links">
-    <li><a href="#team">Команда</a></li>
-    <li><a href="#how">Как работает</a></li>
-    <li><a href="#pricing">Цены</a></li>
-    <li><a href="#tech">Технологии</a></li>
-  </ul>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <div class="lang-switcher" id="langSwitcher">
-      <button class="lang-btn" id="langBtn">
-        <span class="lang-flag" id="currentFlag">🇷🇺</span>
-        <span id="currentLang">RU</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <div class="lang-dropdown" id="langDropdown">
-        <button class="lang-option active" data-lang="RU" data-flag="🇷🇺" onclick="setLang(this)">
-          <span class="lo-flag">🇷🇺</span>
-          <span class="lo-name">RU</span>
-          <span class="lo-full">Русский</span>
-        </button>
-        <button class="lang-option" data-lang="KZ" data-flag="🇰🇿" onclick="setLang(this)">
-          <span class="lo-flag">🇰🇿</span>
-          <span class="lo-name">KZ</span>
-          <span class="lo-full">Қазақша</span>
-        </button>
-        <button class="lang-option" data-lang="EN" data-flag="🇬🇧" onclick="setLang(this)">
-          <span class="lo-flag">🇬🇧</span>
-          <span class="lo-name">EN</span>
-          <span class="lo-full">English</span>
-        </button>
-      </div>
-    </div>
-    <button class="nav-cta" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Начать →</button>
-  </div>
-</nav>
-
-<!-- APP SECTION (path: app) -->
-<section class="app-section" id="app-section" style="display:none;">
-  <div class="section-tag" style="color:var(--accent2);">LunatargetAI · Приложение</div>
-  <h2>ЗАПУСКАЙ РЕКЛАМУ<br><span style="color:var(--accent2);">САМИ. УМНЕЕ.</span></h2>
-
-  <div class="app-grid">
-    <div>
-      <p class="app-desc">LunatargetAI — умное приложение для самостоятельного запуска рекламы. Вы видите аудиторию, выбираете бюджет — ИИ делает всё остальное сам.</p>
-
-      <div class="app-features">
-        <div class="app-feature">
-          <div class="app-feature-icon">🎯</div>
-          <div class="app-feature-text">
-            <h4>Умный таргет за секунды</h4>
-            <p>ИИ анализирует ваш бизнес и сам настраивает аудиторию — без курсов по рекламе</p>
-          </div>
-        </div>
-        <div class="app-feature">
-          <div class="app-feature-icon">🖼️</div>
-          <div class="app-feature-text">
-            <h4>Генерация креативов</h4>
-            <p>Баннеры, тексты и форматы создаются автоматически под вашу нишу</p>
-          </div>
-        </div>
-        <div class="app-feature">
-          <div class="app-feature-icon">📊</div>
-          <div class="app-feature-text">
-            <h4>Аналитика в реальном времени</h4>
-            <p>Видите результат каждой кампании — клики, охваты, стоимость записи</p>
-          </div>
-        </div>
-        <div class="app-feature">
-          <div class="app-feature-icon">🤖</div>
-          <div class="app-feature-text">
-            <h4>Марк работает внутри</h4>
-            <p>ИИ-таргетолог Марк из Цифрового Офиса использует именно это приложение — можешь использовать его напрямую</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="app-pricing-note">
-        <div class="app-pricing-amount">от 9 900 ₸</div>
-        <div class="app-pricing-desc">в месяц · доступ к приложению<br>Без скрытых комиссий, без агентства</div>
-      </div>
-
-      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
-        <a href="https://t.me/marketologluna_bot" class="btn-tg" target="_blank" style="background:linear-gradient(135deg,var(--accent2),#00b89c);color:#050508;">
-          🚀 Открыть приложение
-        </a>
-        <button class="btn-ghost" onclick="choosePath('office')" style="font-size:13px; padding:14px 24px;">
-          Лучше хочу ИИ-команду →
-        </button>
-      </div>
-    </div>
-
-    <div class="app-phone-mockup">
-      <div class="app-phone-top">
-        <div class="app-phone-top-title">🎯 LunatargetAI</div>
-        <div class="app-phone-top-badge">● Активно</div>
-      </div>
-      <div class="app-phone-body">
-        <div class="app-stat-row">
-          <span class="app-stat-label">Охват сегодня</span>
-          <span class="app-stat-val">12 840</span>
-        </div>
-        <div class="app-stat-row">
-          <span class="app-stat-label">Кликов</span>
-          <span class="app-stat-val">347</span>
-        </div>
-        <div class="app-stat-row">
-          <span class="app-stat-label">Стоимость записи</span>
-          <span class="app-stat-val">1 200 ₸</span>
-        </div>
-        <div class="app-stat-row">
-          <span class="app-stat-label">Активных кампаний</span>
-          <span class="app-stat-val">3</span>
-        </div>
-        <button class="app-launch-btn">⚡ Запустить новую рекламу</button>
-      </div>
-    </div>
+<section class="results-section container">
+  <span class="section-label reveal">КЕЙСЫ</span>
+  <h2 class="results-title reveal">РЕЗУЛЬТАТЫ НАШИХ КЛИЕНТОВ</h2>
+  
+  <div class="results-placeholder reveal">
+    ИИ таргетолог создает, запускает и оптимизирует рекламные кампании в FB/IG
   </div>
 </section>
-
-<!-- HERO (path: office, default) -->
-<section class="hero" id="hero-section">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-badge">Цифровой офис · В твоём смартфоне</div>
-    <h1>ЭКОНОМЬ <span class="accent2">600 000+ ₸</span><br>И ПОЛУЧАЙ<br><span class="accent">+30–80% ЗАПИСЕЙ</span></h1>
-    <p class="hero-sub">Три ИИ вместо SMM-менеджера <strong>(180–350k ₸)</strong>, таргетолога <strong>(150–500k ₸)</strong> и менеджера продаж <strong>(200–400k ₸)</strong>.<br>Полная настройка под твой бизнес — <strong>450 000 ₸ разово + 150 000 ₸/мес.</strong><br>Первый месяц — под ключ и без риска.</p>
-    <div class="hero-actions">
-      <a href="#calc" class="btn-primary">Посчитать мою экономию →</a>
-      <a href="#how" class="btn-ghost">Как это работает</a>
-    </div>
-    <div class="hero-stats">
-      <div>
-        <div class="stat-num">70<span>%</span></div>
-        <div class="stat-label">свободного времени владельца</div>
-      </div>
-      <div>
-        <div class="stat-num">до 40<span>%</span></div>
-        <div class="stat-label">рост конверсии в запись</div>
-      </div>
-      <div>
-        <div class="stat-num">в 5<span>×</span></div>
-        <div class="stat-label">дешевле реального штата</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO TG VISUAL -->
-  <div class="hero-visual">
-    <div class="tg-phone">
-      <div class="tg-phone-bar">
-        <div class="tg-phone-dot"></div>
-        <span>Telegram · Цифровой Офис</span>
-        <div class="tg-phone-live">● live</div>
-      </div>
-      <div class="tg-phone-body">
-        <div class="tg-msg tg-msg-agent">
-          <div class="tg-msg-who">🎯 Марк</div>
-          Хозяин, нашёл дыру в записи — пятница 14:00. Запускаю рекламу?
-          <div class="tg-msg-time">10:12</div>
-        </div>
-        <div class="tg-phone-btns">
-          <button class="tg-ph-btn tg-ph-yes">✅ Запустить</button>
-          <button class="tg-ph-btn tg-ph-no">Позже</button>
-        </div>
-        <div class="tg-msg tg-msg-agent">
-          <div class="tg-msg-who">✍️ Вика</div>
-          Пост на завтра готов. Публикую в 10:00?
-          <div class="tg-msg-time">10:24</div>
-        </div>
-        <div class="tg-phone-btns">
-          <button class="tg-ph-btn tg-ph-yes">✅ Публикуй</button>
-          <button class="tg-ph-btn tg-ph-no">Правка</button>
-        </div>
-        <div class="tg-msg tg-msg-agent">
-          <div class="tg-msg-who">🤝 Агент</div>
-          Новая запись! Алина, суббота 15:00 — через WhatsApp ✓
-          <div class="tg-msg-time">10:31</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="team-section" id="team">
-  <div class="section-tag">Ваша команда</div>
-  <h2>ТРИ СОТРУДНИКА.<br>НЕТ БОЛЬНИЧНЫХ.</h2>
-  <p class="team-intro">Вы покупаете не доступ в кабинет — вы нанимаете готовый штат, который уже знает ваш бизнес и работает без выходных.</p>
-
-  <div class="team-grid">
-    <!-- Seller -->
-    <div class="team-card seller">
-      <div class="team-card-num">01</div>
-      <div class="team-card-avatar av-seller">🤝</div>
-      <div class="team-card-role role-seller">ИИ-Продавец</div>
-      <h3>Агент продаж</h3>
-      <p>Моментально отвечает в Direct и WhatsApp в любое время суток. Знает ваш прайс, работает с возражениями и доводит клиента до записи.</p>
-      <ul class="team-features">
-        <li>Ответ на запрос — менее 15 секунд 24/7</li>
-        <li>Консультирует по всему прайс-листу</li>
-        <li>Закрывает запись без участия владельца</li>
-        <li>Работает в WhatsApp и Instagram Direct</li>
-      </ul>
-      <div class="team-saving">
-        <span class="saving-old">ЗП менеджера продаж: 200 000 ₸</span>
-        <span class="saving-new">Вашему ассистенту: 0 ₸</span>
-      </div>
-    </div>
-
-    <!-- Marketer -->
-    <div class="team-card marketer">
-      <div class="team-card-num">02</div>
-      <div class="team-card-avatar av-marketer">✍️</div>
-      <div class="team-card-role role-marketer">ИИ-Маркетолог</div>
-      <h3>Вика</h3>
-      <p>Создаёт контент-план, пишет посты в стиле вашего бренда и автоматически публикует их. Ваш аккаунт живёт, пока вы занимаетесь бизнесом.</p>
-      <ul class="team-features">
-        <li>Генерация идей и сценариев 24/7</li>
-        <li>Соблюдение Tone of Voice вашего бренда</li>
-        <li>Автопостинг в Instagram и Telegram</li>
-        <li>Написание текстов и подбор хэштегов</li>
-      </ul>
-      <div class="team-saving">
-        <span class="saving-old">ЗП SMM-менеджера: 250 000 ₸</span>
-        <span class="saving-new">Вашему ассистенту: 0 ₸</span>
-      </div>
-    </div>
-
-    <!-- Targeter -->
-    <div class="team-card targeter">
-      <div class="team-card-num">03</div>
-      <div class="team-card-avatar av-targeter">🎯</div>
-      <div class="team-card-role role-targeter">ИИ-Таргетолог</div>
-      <h3>Марк</h3>
-      <p>Видит пустые окна в вашем расписании и сам запускает рекламу через LunatargetAI. Вам не нужно разбираться в настройках — Марк сделает всё внутри экосистемы.</p>
-      <ul class="team-features">
-        <li>Анализ расписания и поиск пустых слотов</li>
-        <li>Генерация рекламных креативов</li>
-        <li>Автозапуск через LunatargetAI API</li>
-        <li>Отчёт по результатам в Telegram</li>
-      </ul>
-      <div class="team-saving">
-        <span class="saving-old">ЗП таргетолога: 250 000 ₸</span>
-        <span class="saving-new">Вашему ассистенту: 0 ₸</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- SAVINGS TOTAL -->
-  <div class="savings-total">
-    <div class="savings-inner">
-      <div class="savings-label">ВАША ВЫГОДА НА СТАРТЕ</div>
-      <div class="savings-amount">Экономия <span>от 450 000 до 750 000 ₸</span> в месяц</div>
-      <div class="savings-desc">на зарплатах, налогах и аренде рабочих мест.<br>Вы платите только за внедрение системы, которая <strong>не просит отпуска и не увольняется.</strong></div>
-      <div class="savings-calc">
-        <div class="calc-row"><span>SMM-менеджер</span><span class="calc-cross">180–350 000 ₸</span></div>
-        <div class="calc-row"><span>Таргетолог</span><span class="calc-cross">150–500 000 ₸</span></div>
-        <div class="calc-row"><span>Менеджер продаж</span><span class="calc-cross">200–400 000 ₸</span></div>
-        <div class="calc-row calc-total"><span>Итого ФОТ</span><span class="calc-cross">от 530 000 ₸ / мес</span></div>
-        <div class="calc-row calc-winner"><span>ИИ-команда под ключ</span><span class="calc-green">150 000 ₸ / мес</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CALCULATOR -->
-<section id="calc" style="padding: 80px 60px; background: var(--bg);">
-  <div class="section-tag">Калькулятор</div>
-  <h2>ПОСЧИТАЙ<br>СВОЮ ЭКОНОМИЮ</h2>
-  <p style="color:var(--muted); font-size:16px; margin: 16px 0 40px; max-width:500px;">Введи текущие расходы на маркетинг и продажи — увидишь реальную выгоду за минуту</p>
-  <div class="calc-widget">
-    <div class="calc-inputs">
-      <div class="calc-field">
-        <label>SMM-менеджер (₸/мес)</label>
-        <input type="number" id="c-smm" placeholder="250 000" oninput="calcSavings()">
-      </div>
-      <div class="calc-field">
-        <label>Таргетолог (₸/мес)</label>
-        <input type="number" id="c-target" placeholder="300 000" oninput="calcSavings()">
-      </div>
-      <div class="calc-field">
-        <label>Менеджер продаж (₸/мес)</label>
-        <input type="number" id="c-sales" placeholder="200 000" oninput="calcSavings()">
-      </div>
-    </div>
-    <div class="calc-result" id="calc-result">
-      <div class="calc-res-label">Ваша ежемесячная экономия</div>
-      <div class="calc-res-num" id="calc-num">← введи цифры слева</div>
-      <div class="calc-res-sub" id="calc-sub"></div>
-      <a href="#cta" class="btn-primary" style="margin-top:24px; display:inline-block;" id="calc-cta" hidden>Запустить цифровой офис →</a>
-    </div>
-  </div>
-</section>
-
-<!-- CASES -->
-<section style="padding: 80px 60px; background: var(--surface);">
-  <div class="section-tag">Результаты</div>
-  <h2>ПО ПЕРВЫМ<br>КЛИЕНТАМ</h2>
-  <p style="color:var(--muted); font-size:15px; margin: 12px 0 40px;">Ожидаемая экономия на основе реального ФОТ первых 15 клиентов</p>
-  <div class="cases-grid">
-    <div class="case-card">
-      <div class="case-icon">💇</div>
-      <div class="case-biz">Салон красоты · Астана</div>
-      <div class="case-nums">
-        <div class="case-before">Было: <span>480 000 ₸/мес ФОТ</span></div>
-        <div class="case-after">Стало: <span>150 000 ₸/мес</span></div>
-      </div>
-      <div class="case-result">+65% записей за первый месяц</div>
-    </div>
-    <div class="case-card">
-      <div class="case-icon">☕</div>
-      <div class="case-biz">Кафе · Алматы</div>
-      <div class="case-nums">
-        <div class="case-before">Было: <span>380 000 ₸/мес ФОТ</span></div>
-        <div class="case-after">Стало: <span>150 000 ₸/мес</span></div>
-      </div>
-      <div class="case-result">Выручка +420 000 ₸ за месяц</div>
-    </div>
-    <div class="case-card">
-      <div class="case-icon">🔧</div>
-      <div class="case-biz">Автосервис · Астана</div>
-      <div class="case-nums">
-        <div class="case-before">Было: <span>520 000 ₸/мес ФОТ</span></div>
-        <div class="case-after">Стало: <span>150 000 ₸/мес</span></div>
-      </div>
-      <div class="case-result">+42% заявок, окупился за 5 недель</div>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section style="padding: 80px 60px; background: var(--bg);">
-  <div class="section-tag">Отзывы</div>
-  <h2>ЧТО ГОВОРЯТ<br>КЛИЕНТЫ</h2>
-  <div class="reviews-grid">
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">«Раньше сидела в директе до ночи. Теперь ИИ закрывает 80% заявок сам — я только подтверждаю запись. Освободилось 4 часа в день.»</div>
-      <div class="review-author">
-        <div class="review-avatar">А</div>
-        <div><div class="review-name">Айгерим С.</div><div class="review-city">Салон красоты, Астана</div></div>
-      </div>
-    </div>
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">«Вика сама пишет посты в Instagram — я только жму «одобрить». За месяц охваты выросли в 3 раза. Уволила SMM-щика и не жалею.»</div>
-      <div class="review-author">
-        <div class="review-avatar">Д</div>
-        <div><div class="review-name">Диана К.</div><div class="review-city">Студия йоги, Алматы</div></div>
-      </div>
-    </div>
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">«Марк нашёл дыры в расписании и сам запустил рекламу. Пришло 11 новых клиентов за неделю. Система окупилась за первый месяц.»</div>
-      <div class="review-author">
-        <div class="review-avatar">Р</div>
-        <div><div class="review-name">Руслан М.</div><div class="review-city">Автосервис, Астана</div></div>
-      </div>
-    </div>
-    <div class="review-card">
-      <div class="review-stars">★★★★★</div>
-      <div class="review-text">«Думала что ИИ — это сложно. Оказалось один чат в Telegram. Нажимаю кнопки, система делает всё остальное. Это реально будущее.»</div>
-      <div class="review-author">
-        <div class="review-avatar">М</div>
-        <div><div class="review-name">Мадина Т.</div><div class="review-city">Кофейня, Шымкент</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LOGOS -->
-<section style="padding: 48px 60px; background: var(--surface); border-top: 1px solid var(--border);">
-  <p style="text-align:center; font-size:12px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:32px;">УЖЕ РАБОТАЮТ С НАМИ</p>
-  <div class="logos-row">
-    <div class="logo-chip">💇 Beauty Studio</div>
-    <div class="logo-chip">☕ Кофейня</div>
-    <div class="logo-chip">🏋️ Фитнес-клуб</div>
-    <div class="logo-chip">🔧 Автосервис</div>
-    <div class="logo-chip">🍕 Ресторан</div>
-    <div class="logo-chip">🏥 Клиника</div>
-  </div>
-</section>
-<section class="how-section" id="how">
-  <div class="how-grid">
-    <div>
-      <div class="section-tag">Управление</div>
-      <h2>УПРАВЛЯЙ ВСЕМ<br>ОДНОЙ РУКОЙ —<br><span style="color:var(--accent2)">БЕЗ КАБИНЕТОВ</span></h2>
-      <div class="how-steps">
-        <div class="how-step">
-          <span class="step-num">01</span>
-          <div class="step-content">
-            <h4>Одна кнопка → публикуй пост</h4>
-            <p>Вика подготовила контент — ты жмёшь одну кнопку. Пост уходит в Instagram и Telegram сам. Никаких паролей и кабинетов.</p>
-          </div>
-        </div>
-        <div class="how-step">
-          <span class="step-num">02</span>
-          <div class="step-content">
-            <h4>Одна кнопка → запускай рекламу</h4>
-            <p>Марк нашёл пустое окно в записи — предлагает запустить промо. Ты жмёшь «Да». Реклама запускается сама, отчёт приходит в чат.</p>
-          </div>
-        </div>
-        <div class="how-step">
-          <span class="step-num">03</span>
-          <div class="step-content">
-            <h4>Автоответы 24/7 — без тебя</h4>
-            <p>Клиент написал в 2 ночи — агент ответил, проконсультировал и записал. Утром видишь готовую запись в журнале.</p>
-          </div>
-        </div>
-        <div class="how-step">
-          <span class="step-num">04</span>
-          <div class="step-content">
-            <h4>Отчёты каждый день в чат</h4>
-            <p>Каждое утро — коротко: сколько записей, охватов, новых клиентов. Вся картина бизнеса за 30 секунд.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TG Mockup -->
-    <div class="tg-mockup">
-      <div class="tg-header">
-        <div class="tg-avatar">🤖</div>
-        <div>
-          <div class="tg-name">Цифровой Офис</div>
-          <div class="tg-status">● онлайн · 3 агента активны</div>
-        </div>
-      </div>
-      <div class="tg-body">
-        <div class="msg msg-in">
-          <strong>Вика:</strong> Готов пост на завтра «5 причин посетить нас». Публикуем в 10:00?
-          <div class="msg-time">09:42</div>
-        </div>
-        <div class="msg msg-out">
-          Да, публикуй 👍
-          <div class="msg-time">09:43</div>
-        </div>
-        <div class="msg msg-in">
-          <strong>Марк:</strong> Нашёл пустое окно в пятницу 14:00–16:00. Создал креатив. Запускаем промо на 5000 ₸?
-          <div class="msg-time">10:15</div>
-        </div>
-        <div class="msg msg-in">
-          <strong>Агент:</strong> Новая запись через WhatsApp! Алина, 15:00 в субботу. Подтвердила.
-          <div class="msg-time">10:31</div>
-        </div>
-      </div>
-      <div class="tg-buttons">
-        <button class="tg-btn">✅ Одобрить рекламу</button>
-        <button class="tg-btn">📊 Отчёт недели</button>
-        <button class="tg-btn">✏️ Правка контента</button>
-        <button class="tg-btn">💬 Записи</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TECH -->
-<section class="tech-section" id="tech">
-  <div class="section-tag">Технологии</div>
-  <h2>НА ЧЁМ<br>ВСЁ РАБОТАЕТ</h2>
-  <div class="tech-grid">
-    <div class="tech-chip">
-      <div class="tech-icon">🧠</div>
-      <div class="tech-name">OpenAI</div>
-      <div class="tech-role">Мозг системы</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">⚙️</div>
-      <div class="tech-name">Make</div>
-      <div class="tech-role">Автоматизация сценариев</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">🎯</div>
-      <div class="tech-name">LunatargetAI</div>
-      <div class="tech-role">Автозапуск рекламы</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">📱</div>
-      <div class="tech-name">Telegram</div>
-      <div class="tech-role">Ваш пульт управления</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">💬</div>
-      <div class="tech-name">WhatsApp</div>
-      <div class="tech-role">Продажи 24/7</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">📸</div>
-      <div class="tech-name">Instagram</div>
-      <div class="tech-role">Direct + автопостинг</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">🗄️</div>
-      <div class="tech-name">Supabase</div>
-      <div class="tech-role">База данных и доступ</div>
-    </div>
-    <div class="tech-chip">
-      <div class="tech-icon">🧵</div>
-      <div class="tech-name">Threads</div>
-      <div class="tech-role">Охват аудитории</div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="section-tag">Инвестиция</div>
-  <h2>ПРОЗРАЧНЫЕ<br>УСЛОВИЯ</h2>
-  <div class="pricing-grid">
-
-    <div class="price-card featured">
-      <div class="price-label">Внедрение системы</div>
-      <div class="price-amount">450 000 ₸</div>
-      <div class="price-period">разово · полная настройка под ваш бизнес</div>
-      <div class="price-desc">Мы настраиваем всех трёх ИИ-сотрудников под ваш бренд, прайс и стиль общения. Передаём готовую систему с инструкцией.</div>
-      <ul class="price-features">
-        <li>Настройка ИИ-Продавца (WhatsApp + Direct)</li>
-        <li>Настройка Вики (контент + автопостинг)</li>
-        <li>Настройка Марка (реклама автоматически)</li>
-        <li>Telegram-пульт управления одной кнопкой</li>
-        <li>Первый месяц абонентки — <strong>0 ₸</strong></li>
-        <li>Обучение и поддержка при запуске</li>
-      </ul>
-      <div class="price-installment">💳 Рассрочка: 3 × 150 000 ₸ — без переплат</div>
-      <div class="price-roi">⚡ Окупаемость в среднем 1–2 месяца</div>
-      <a href="#cta" class="btn-primary" style="width:100%; text-align:center; display:block; margin-top:20px;">Начать внедрение</a>
-    </div>
-
-    <div class="price-card">
-      <div class="price-label">Абонентская плата</div>
-      <div class="price-amount">150 000 ₸</div>
-      <div class="price-period">в месяц · начиная со 2-го месяца</div>
-      <div class="price-desc">Система живёт, развивается и работает на вас каждый день. Мы следим, обновляем и поддерживаем.</div>
-      <ul class="price-features">
-        <li>Техподдержка 7 дней в неделю</li>
-        <li>Обновление нейросетей и моделей</li>
-        <li>Доступ к инструментам экосистемы</li>
-        <li>Мониторинг сценариев Make</li>
-        <li>Отчёты по результатам ежемесячно</li>
-      </ul>
-      <div class="price-note">💡 Первый месяц включён в стоимость внедрения. Итого старт: 450 000 ₸ всё включено.</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section" id="cta">
-  <div class="cta-bg"></div>
-  <div style="position:relative; z-index:1;">
-    <div class="section-tag">Связаться с нами</div>
-    <h2>ГОТОВЫ ЗАПУСТИТЬ<br>ЦИФРОВОЙ ОФИС?</h2>
-    <p class="cta-sub">Напишите нам любым удобным способом — или оставьте заявку, и мы свяжемся сами.</p>
-
-    <div class="contact-layout">
-      <!-- LEFT: кнопки + note -->
-      <div class="contact-left">
-        <div class="contact-label">Написать напрямую</div>
-        <a href="https://t.me/marketologluna_bot" class="btn-tg" target="_blank">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/></svg>
-          Написать в Telegram
-        </a>
-        <a href="https://wa.me/77781735329" class="btn-wa" target="_blank">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Написать в WhatsApp
-        </a>
-        <p style="font-size:13px; color:var(--muted); margin-top:8px; line-height:1.6;">
-          Ответим в течение <strong style="color:var(--text);">15 минут</strong><br>
-          Работаем с 9:00 до 21:00<br>
-          Astana, Kazakhstan 🇰🇿
-        </p>
-      </div>
-
-      <!-- RIGHT: форма -->
-      <div class="contact-right">
-        <h3>ОСТАВИТЬ ЗАЯВКУ</h3>
-        <p>Перезвоним и проведём бесплатный аудит вашего бизнеса</p>
-        <div id="contactForm">
-          <div class="form-row">
-            <div class="form-field">
-              <label>Ваше имя</label>
-              <input type="text" id="fname" placeholder="Айгерим / Александр" autocomplete="off">
-            </div>
-            <div class="form-field">
-              <label>Номер телефона</label>
-              <input type="tel" id="fphone" placeholder="+7 (___) ___-__-__" autocomplete="off">
-            </div>
-          </div>
-          <button class="form-submit" onclick="submitForm()">Жду звонка → Бесплатный аудит</button>
-          <p class="form-privacy">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности</p>
-        </div>
-        <div class="form-success" id="formSuccess">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#00e5c0" stroke-width="1.5"/><path d="M7.5 12l3 3 6-6" stroke="#00e5c0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Заявка принята! Свяжемся в ближайшие 15 минут.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">LUNAR<span>TARGET</span> AI</div>
-  <div class="footer-text">© 2025 LunatargetAI · Цифровой офис для вашего бизнеса</div>
-  <div class="footer-links">
-    <a href="#">Политика</a>
-    <a href="#">Оферта</a>
-    <a href="https://t.me/marketologluna_bot" target="_blank">Telegram</a>
-    <a href="https://wa.me/77781735329" target="_blank">WhatsApp</a>
-  </div>
-</footer>
 
 <script>
-  // Splash gateway
-  function choosePath(path) {
-    const splash = document.getElementById('splash');
-    splash.classList.add('hide');
-    setTimeout(() => { splash.style.display = 'none'; }, 650);
+  // Функция для анимации при скролле
+  const observerOptions = {
+    threshold: 0.1
+  };
 
-    if (path === 'app') {
-      document.getElementById('app-section').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('app-section').scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      setTimeout(() => {
-        document.getElementById('hero-section').scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-  }
-
-  // Calculator
-  function calcSavings() {
-    const smm    = parseInt(document.getElementById('c-smm').value)    || 0;
-    const target = parseInt(document.getElementById('c-target').value)  || 0;
-    const sales  = parseInt(document.getElementById('c-sales').value)   || 0;
-    const total  = smm + target + sales;
-    const saving = Math.max(0, total - 150000);
-    const numEl  = document.getElementById('calc-num');
-    const subEl  = document.getElementById('calc-sub');
-    const ctaEl  = document.getElementById('calc-cta');
-    if (total === 0) {
-      numEl.textContent = '← введи цифры слева';
-      subEl.textContent = '';
-      ctaEl.hidden = true;
-      return;
-    }
-    numEl.textContent = saving.toLocaleString('ru-RU') + ' ₸ / мес';
-    const months = saving > 0 ? Math.ceil(450000 / saving) : '—';
-    subEl.textContent = saving > 0
-      ? `Окупаемость внедрения: ~${months} мес. Экономия за год: ${(saving * 12).toLocaleString('ru-RU')} ₸`
-      : 'Ваш ФОТ уже оптимален — обсудим индивидуально';
-    ctaEl.hidden = saving <= 0;
-  }
-
-  // Form submit → Telegram Bot
-  async function submitForm() {
-    const name = document.getElementById('fname').value.trim();
-    const phone = document.getElementById('fphone').value.trim();
-
-    if (!name || !phone) {
-      document.getElementById('fname').style.borderColor = name ? '' : 'rgba(255,95,126,0.6)';
-      document.getElementById('fphone').style.borderColor = phone ? '' : 'rgba(255,95,126,0.6)';
-      return;
-    }
-
-    const btn = document.querySelector('.form-submit');
-    btn.textContent = 'Отправляем...';
-    btn.disabled = true;
-
-    const BOT_TOKEN = '8693450130:AAE-LdhEG_OMwCa7WutWO5GGq1Nr0ob_NwY';
-    const CHAT_ID   = '8496007146';
-    const now = new Date().toLocaleString('ru-RU', { timeZone: 'Asia/Almaty' });
-
-    const text = `🔔 *Новая заявка с сайта!*\n\n👤 Имя: ${name}\n📞 Телефон: ${phone}\n🕐 Время: ${now}`;
-
-    try {
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text,
-          parse_mode: 'Markdown'
-        })
-      });
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    } catch (e) {
-      btn.textContent = 'Ошибка, попробуйте снова';
-      btn.disabled = false;
-    }
-  }
-  const switcher = document.getElementById('langSwitcher');
-  const langBtn = document.getElementById('langBtn');
-
-  langBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    switcher.classList.toggle('open');
-  });
-  document.addEventListener('click', () => switcher.classList.remove('open'));
-
-  function setLang(el) {
-    document.querySelectorAll('.lang-option').forEach(o => o.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('currentFlag').textContent = el.dataset.flag;
-    document.getElementById('currentLang').textContent = el.dataset.lang;
-    switcher.classList.remove('open');
-    // Placeholder: swap content language here
-  }
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
       }
     });
-  }, { threshold: 0.1 });
+  }, observerOptions);
 
-  document.querySelectorAll('.team-card, .tech-chip, .price-card, .how-step').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  document.querySelectorAll('.reveal').forEach(el => {
     observer.observe(el);
   });
 </script>
+
 </body>
 </html>
