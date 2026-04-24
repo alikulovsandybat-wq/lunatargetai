@@ -1,951 +1,1223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luna Ads | Launch Facebook & Instagram Ads with AI via Telegram.</title>
-  <meta name="google-site-verification" content="c3ZgBxQ5Y87PXBgljx4i8AH089xrKp7rD3UoZFj8BZA" />
-  <meta name="facebook-domain-verification" content="53qm7oeu1ficxp8auyj3plqgzhovay" />
-  <meta name="description" content="Stop wasting time on Ads Manager. Luna Ads is the easiest way to launch & automate Facebook ads via Telegram with AI. Get professional results. No agency needed.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<title>С.А.К — Цифровой офис | ИИ-агенты для бизнеса</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700;900&family=Onest:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --yellow: #FFD600;
-    --orange: #FF6B35;
-    --pink: #FF3CAC;
-    --purple: #7B2FBE;
-    --dark: #0D0D0D;
-    --white: #FFFFFF;
-    --grad: linear-gradient(135deg, #FF3CAC 0%, #FF6B35 40%, #FFD600 100%);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-      body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--dark);
-    color: var(--white);
-    overflow-x: hidden;
-  }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#050508;
+  --white:#F0EEF8;
+  --accent:#B8FF00;
+  --accent2:#7B61FF;
+  --accent3:#00D4FF;
+  --gray:#0D0D14;
+  --gray2:#13131E;
+  --gray3:#1C1C2E;
+  --border:rgba(255,255,255,0.07);
+  --muted:#666680;
+  --font-h:'Unbounded',sans-serif;
+  --font-b:'Onest',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--font-b);overflow-x:hidden;cursor:none}
 
-  /* NAV */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: absolute; align-items: center; justify-content: space-between;
-    padding: 18px 5%;
-    background: rgba(13,13,13,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  .logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800; font-size: 1.5rem;
-    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-decoration: none;
-  }
-  /* LANGUAGE DROPDOWN */
-  .lang-switcher { position: relative; }
-  .lang-trigger {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
-    color: var(--white); padding: 8px 16px; border-radius: 20px;
-    cursor: pointer; font-size: 0.85rem; font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s; user-select: none;
-  }
-  .lang-trigger:hover { background: rgba(255,255,255,0.12); }
-  .lang-trigger .globe { font-size: 1rem; }
-  .lang-trigger .arrow { font-size: 0.6rem; opacity: 0.6; transition: transform 0.2s; }
-  .lang-switcher.open .arrow { transform: rotate(180deg); }
-  .lang-dropdown {
-    display: none; position: absolute; top: calc(100% + 8px); right: 0;
-    background: #1a1a2e; border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 14px; overflow: hidden; min-width: 160px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 200;
-  }
-  .lang-switcher.open .lang-dropdown { display: block; animation: dropIn 0.15s ease; }
-  @keyframes dropIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
-  .lang-option {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 18px; cursor: pointer; font-size: 0.9rem;
-    color: rgba(255,255,255,0.7); transition: all 0.15s;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .lang-option:last-child { border-bottom: none; }
-  .lang-option:hover { background: rgba(255,255,255,0.07); color: var(--white); }
-  .lang-option.active { background: rgba(255,214,0,0.1); color: var(--yellow); }
-  .lang-option .lang-code {
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem;
-    background: rgba(255,255,255,0.1); padding: 2px 7px; border-radius: 6px;
-    min-width: 36px; text-align: center;
-  }
-  .lang-option.active .lang-code { background: rgba(255,214,0,0.2); color: var(--yellow); }
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .2s;mix-blend-mode:difference}
+.cur.big{width:44px;height:44px}
+.cur-ring{width:36px;height:36px;border:1px solid rgba(184,255,0,0.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .3s,height .3s,opacity .3s}
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center;
-    padding: 120px 5% 80px;
-    position: relative; overflow: hidden;
-  }
-  .hero-bg {
-    position: absolute; inset: 0; z-index: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,60,172,0.18) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,107,53,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse 50% 40% at 20% 70%, rgba(123,47,190,0.15) 0%, transparent 60%);
-  }
-  .hero-orb {
-    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: float 8s ease-in-out infinite;
-  }
-  .orb1 { width: 400px; height: 400px; background: var(--pink); top: -100px; left: -100px; animation-delay: 0s; }
-  .orb2 { width: 300px; height: 300px; background: var(--orange); bottom: -50px; right: -50px; animation-delay: 3s; }
-  .orb3 { width: 250px; height: 250px; background: var(--yellow); bottom: 100px; left: 20%; animation-delay: 5s; }
-  @keyframes float {
-    0%,100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-30px) scale(1.05); }
-  }
-  .hero-content { position: relative; z-index: 1; max-width: 800px; }
-  .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-    padding: 8px 20px; border-radius: 30px; font-size: 0.85rem;
-    color: var(--yellow); letter-spacing: 0.05em; margin-bottom: 24px;
-    animation: fadeUp 0.6s ease both;
-  }
-  .hero h1 {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1.05;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-  .grad-text {
-    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .hero p {
-    font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.65);
-    max-width: 560px; margin: 0 auto 40px; line-height: 1.7;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-  .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s ease 0.3s both; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: var(--grad); color: var(--dark); font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 1rem; padding: 16px 32px;
-    border-radius: 50px; text-decoration: none; border: none; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 40px rgba(255,60,172,0.4);
-  }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 60px rgba(255,60,172,0.5); }
-  .btn-secondary {
-    display: inline-flex; align-items: center; gap: 10px;
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
-    color: var(--white); font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 1rem; padding: 16px 32px; border-radius: 50px;
-    text-decoration: none; transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+/* NEURAL CANVAS */
+#neural{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.55}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(5,5,8,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--font-h);font-weight:900;font-size:1.2rem;letter-spacing:-0.02em;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:8px}
+.nav-logo .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-links a:hover{color:var(--white)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-phone{font-size:0.8rem;color:var(--muted);text-decoration:none;transition:color .3s}
+.nav-phone:hover{color:var(--accent)}
+.nav-cta{background:var(--accent);color:var(--black);font-family:var(--font-h);font-weight:700;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:.55rem 1.3rem;border:none;border-radius:2px;cursor:none;text-decoration:none;transition:background .3s,transform .2s;display:inline-block}
+.nav-cta:hover{background:#cbff33;transform:scale(1.04)}
 
-  /* STATS */
-  .stats {
-    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
-    padding: 60px 5%;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
-    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:8rem 3rem 4rem;position:relative;z-index:1}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(184,255,0,0.25);background:rgba(184,255,0,0.05);padding:.35rem 1rem;border-radius:100px;margin-bottom:2rem;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent)}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite}
+h1{font-family:var(--font-h);font-size:clamp(2.8rem,5.5vw,5.5rem);font-weight:900;line-height:.96;letter-spacing:-.04em;margin-bottom:1.5rem}
+h1 .ac{color:var(--accent)}
+h1 .ac2{color:var(--accent2)}
+h1 .ac3{
+  background:linear-gradient(90deg,var(--accent3),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.hero-desc{font-size:1.05rem;line-height:1.75;color:rgba(240,238,248,.55);max-width:520px;margin-bottom:2.5rem}
+.hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:3.5rem}
+.btn-p{background:var(--accent);color:var(--black);font-family:var(--font-h);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border:none;border-radius:2px;cursor:none;text-decoration:none;display:inline-block;transition:background .3s,transform .2s}
+.btn-p:hover{background:#cbff33;transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--white);font-family:var(--font-h);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border:1px solid rgba(255,255,255,0.15);border-radius:2px;cursor:none;text-decoration:none;display:inline-block;transition:border-color .3s}
+.btn-o:hover{border-color:rgba(255,255,255,0.5)}
+.hero-stats{display:flex;gap:2.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.stat-n{font-family:var(--font-h);font-size:2rem;font-weight:900;color:var(--accent);display:block}
+.stat-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
 
-  /* VIDEO */
-  .video-wrapper {
-    max-width: 860px; margin: 0 auto;
-    border-radius: 24px; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 40px 100px rgba(255,60,172,0.15);
-    aspect-ratio: 16/9; background: rgba(255,255,255,0.03);
-  }
-  .video-wrapper iframe, .video-wrapper video {
-    width: 100%; height: 100%; display: block;
-  }
-  .video-placeholder {
-    width: 100%; height: 100%; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 12px;
-    min-height: 400px;
-  }
-  .video-play-icon {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: var(--grad); display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; color: var(--dark); font-weight: 700;
-    box-shadow: 0 8px 40px rgba(255,60,172,0.4);
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%,100% { transform: scale(1); box-shadow: 0 8px 40px rgba(255,60,172,0.4); }
-    50% { transform: scale(1.07); box-shadow: 0 12px 60px rgba(255,60,172,0.6); }
-  }
-  .video-placeholder p { color: rgba(255,255,255,0.5); font-size: 1rem; }
-  .section { padding: 100px 5%; }
-  .section-label {
-    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--yellow); margin-bottom: 16px;
-  }
-  .section-title {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 60px;
-  }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-  .step {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px; padding: 36px 28px;
-    transition: transform 0.3s, border-color 0.3s;
-    position: relative; overflow: hidden;
-  }
-  .step:hover { transform: translateY(-6px); border-color: rgba(255,107,53,0.4); }
-  .step-num {
-    font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
-    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    opacity: 0.3; position: absolute; top: 16px; right: 20px;
-  }
-  .step-icon { font-size: 2.2rem; margin-bottom: 16px; }
-  .step h3 { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 10px; font-size: 1.1rem; }
-  .step p { color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.6; }
+/* HERO CARD */
+.hero-card{background:var(--gray2);border:1px solid var(--border);border-radius:12px;padding:2rem;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:-50%;right:-50%;width:300px;height:300px;background:radial-gradient(circle,rgba(123,97,255,.15) 0%,transparent 70%);pointer-events:none}
+.hc-title{font-family:var(--font-h);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.hc-agent{display:flex;align-items:center;gap:.75rem;padding:.8rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;margin-bottom:.6rem;transition:background .3s,border-color .3s;cursor:none}
+.hc-agent:hover{background:rgba(184,255,0,.05);border-color:rgba(184,255,0,.2)}
+.hc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.hc-icon.g1{background:rgba(184,255,0,.12)}
+.hc-icon.g2{background:rgba(123,97,255,.12)}
+.hc-icon.g3{background:rgba(0,212,255,.12)}
+.hc-icon.g4{background:rgba(255,59,0,.12)}
+.hc-icon.g5{background:rgba(255,200,0,.12)}
+.hc-info{flex:1}
+.hc-name{font-size:.82rem;font-weight:500;margin-bottom:.15rem}
+.hc-status{font-size:.68rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.hc-status .on{width:5px;height:5px;background:#25D366;border-radius:50%;display:inline-block}
+.hc-metric{font-family:var(--font-h);font-size:.75rem;font-weight:700;color:var(--accent)}
+.hc-footer{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.hc-total{font-size:.72rem;color:var(--muted)}
+.hc-total strong{color:var(--accent);font-size:.9rem}
 
-  /* FEATURES */
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .feature {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 16px; padding: 28px;
-    transition: all 0.3s;
-  }
-  .feature:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,214,0,0.3); }
-  .feature-icon { font-size: 1.8rem; margin-bottom: 14px; }
-  .feature h3 { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 8px; }
-  .feature p { color: rgba(255,255,255,0.5); font-size: 0.9rem; line-height: 1.6; }
+/* MARQUEE */
+.mq-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.85rem 0;background:var(--gray);position:relative;z-index:1}
+.mq-track{display:flex;gap:0;white-space:nowrap;animation:mq 25s linear infinite}
+.mq-track span{font-family:var(--font-h);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:0 2rem;color:var(--muted)}
+.mq-track span.sep{color:var(--accent);padding:0 .5rem;font-size:1rem;vertical-align:middle}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-  /* ABOUT */
-  .about-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-  }
-  .about-text p { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 16px; }
-  .about-visual {
-    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px; padding: 40px; text-align: center;
-  }
-  .big-emoji { font-size: 5rem; display: block; margin-bottom: 20px; }
-  .about-visual h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; margin-bottom: 12px; }
-  .about-visual p { color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+/* SECTIONS */
+section{padding:6rem 3rem;position:relative;z-index:1}
+.sec-max{max-width:1200px;margin:0 auto}
+.sec-tag{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.8rem;display:block}
+h2{font-family:var(--font-h);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;line-height:1.05;letter-spacing:-.03em;margin-bottom:1rem}
+.sec-sub{font-size:.95rem;color:rgba(240,238,248,.5);line-height:1.75;max-width:520px}
 
-  /* PRICING */
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; }
-  .price-card {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 24px; padding: 36px 28px; position: relative;
-    transition: transform 0.3s, border-color 0.3s;
-    display: flex; flex-direction: column;
-  }
-  .price-card:hover { transform: translateY(-6px); border-color: rgba(255,107,53,0.3); }
-  .price-card.featured {
-    border-color: rgba(255,60,172,0.5);
-    background: rgba(255,60,172,0.07);
-    transform: scale(1.03);
-  }
-  .price-card.featured:hover { transform: scale(1.03) translateY(-6px); }
-  .price-badge {
-    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-    background: var(--grad); color: var(--dark); font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 0.75rem; padding: 5px 16px; border-radius: 20px;
-    white-space: nowrap;
-  }
-  .price-tag { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
-  .price-amount {
-    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem;
-    background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 4px;
-  }
-  .price-cur { font-size: 1.4rem; }
-  .price-period { color: rgba(255,255,255,0.4); font-size: 0.85rem; margin-bottom: 28px; }
-  .price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 28px; }
-  .price-features li { color: rgba(255,255,255,0.65); font-size: 0.9rem; }
-  .btn-price {
-    display: block; text-align: center; padding: 14px;
-    border-radius: 50px; font-family: 'Syne', sans-serif; font-weight: 700;
-    text-decoration: none; font-size: 0.95rem; transition: all 0.2s;
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); color: var(--white);
-  }
-  .btn-price:hover { background: rgba(255,255,255,0.14); transform: translateY(-2px); }
-  .featured-btn {
-    background: var(--grad); border: none; color: var(--dark);
-    box-shadow: 0 8px 30px rgba(255,60,172,0.4);
-    -webkit-text-fill-color: var(--dark);
-  }
-  .featured-btn:hover { box-shadow: 0 12px 40px rgba(255,60,172,0.6); }
-  .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
-  .faq-item {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px; overflow: hidden; transition: border-color 0.2s;
-  }
-  .faq-item.open { border-color: rgba(255,107,53,0.4); }
-  .faq-q {
-    display: flex; justify-content: space-between; align-items: center; gap: 16px;
-    padding: 22px 28px; cursor: pointer; font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 1rem; transition: color 0.2s;
-  }
-  .faq-item.open .faq-q { color: var(--yellow); }
-  .faq-arrow { font-size: 0.65rem; opacity: 0.5; flex-shrink: 0; transition: transform 0.3s; }
-  .faq-item.open .faq-arrow { transform: rotate(180deg); opacity: 1; }
-  .faq-a {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.35s ease, padding 0.3s;
-    padding: 0 28px;
-  }
-  .faq-item.open .faq-a { max-height: 200px; padding: 0 28px 22px; }
-  .faq-a p { color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 0.95rem; }
-  .privacy-section {
-    background: rgba(255,214,0,0.06); border: 1px solid rgba(255,214,0,0.2);
-    border-radius: 24px; padding: 48px; margin: 0 5%; text-align: center;
-  }
-  .privacy-section h2 { font-family: 'Syne', sans-serif; font-size: 1.8rem; margin-bottom: 16px; }
-  .privacy-section p { color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto 24px; line-height: 1.7; }
+/* ABOUT / WHY */
+#why{background:var(--gray)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:4rem}
+.why-card{background:var(--black);padding:2.5rem;border-left:2px solid transparent;transition:border-color .3s,background .3s;cursor:none}
+.why-card:hover{background:var(--gray2);border-left-color:var(--accent)}
+.why-num{font-family:var(--font-h);font-size:2.5rem;font-weight:900;color:var(--accent);opacity:.3;margin-bottom:.5rem}
+.why-title{font-family:var(--font-h);font-size:1.05rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.75rem}
+.why-desc{font-size:.88rem;color:rgba(240,238,248,.5);line-height:1.7}
 
-  /* FOOTER */
-  footer {
-    padding: 48px 5% 32px;
-    border-top: 1px solid rgba(255,255,255,0.07);
-    display: flex; flex-direction: column; align-items: center; gap: 20px;
-    text-align: center;
-  }
-  .footer-links { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; }
-  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--yellow); }
-  footer p { color: rgba(255,255,255,0.25); font-size: 0.8rem; }
+/* SERVICES */
+#services{background:var(--black)}
+.srv-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border)}
+.srv-card{background:var(--black);padding:2.5rem;position:relative;overflow:hidden;cursor:none;transition:background .4s}
+.srv-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(184,255,0,.04),transparent);opacity:0;transition:opacity .4s}
+.srv-card:hover{background:var(--gray2)}
+.srv-card:hover::after{opacity:1}
+.srv-icon{font-size:2rem;margin-bottom:1.5rem;display:block}
+.srv-num{font-family:var(--font-h);font-size:.6rem;font-weight:700;letter-spacing:.2em;color:var(--gray3);margin-bottom:.6rem}
+.srv-title{font-family:var(--font-h);font-size:1.05rem;font-weight:700;letter-spacing:-.01em;margin-bottom:1rem;line-height:1.25}
+.srv-desc{font-size:.85rem;color:rgba(240,238,248,.5);line-height:1.7;margin-bottom:1.5rem}
+.srv-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.srv-list li{font-size:.8rem;color:rgba(240,238,248,.6);display:flex;align-items:flex-start;gap:.5rem}
+.srv-list li::before{content:'→';color:var(--accent);font-size:.75rem;flex-shrink:0;margin-top:.05rem}
+.srv-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;border:1px solid rgba(255,255,255,.08);border-radius:2px;color:var(--muted)}
+.srv-card.hl{background:var(--accent);color:var(--black)}
+.srv-card.hl .srv-num{color:rgba(10,10,10,.4)}
+.srv-card.hl .srv-desc{color:rgba(10,10,10,.55)}
+.srv-card.hl .srv-list li{color:rgba(10,10,10,.65)}
+.srv-card.hl .srv-list li::before{color:var(--black)}
+.srv-card.hl .tag{border-color:rgba(10,10,10,.15);color:rgba(10,10,10,.5)}
+.srv-card.hl:hover{background:#cbff33}
+.srv-card.hl::after{display:none}
 
-  /* PRIVACY PAGE */
-  .legal-page { display: none; padding: 120px 5% 80px; max-width: 800px; margin: 0 auto; }
-  .legal-page.active { display: block; }
-  .legal-page h1 { font-family: 'Syne', sans-serif; font-size: 2.5rem; margin-bottom: 8px; }
-  .legal-page .updated { color: rgba(255,255,255,0.4); margin-bottom: 40px; font-size: 0.9rem; }
-  .legal-page h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; margin: 36px 0 12px; color: var(--yellow); }
-  .legal-page p, .legal-page li { color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 12px; }
-  .legal-page ul { padding-left: 20px; }
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--yellow); text-decoration: none; font-size: 0.9rem; margin-bottom: 32px;
-    cursor: pointer; background: none; border: none;
-  }
+/* BOTS */
+#bots{background:var(--gray)}
+.bots-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-top:4rem}
+.bots-left{}
+.bot-item{padding:1.8rem 0;border-bottom:1px solid var(--border);cursor:none}
+.bot-item:last-child{border-bottom:none}
+.bot-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.bot-platform{display:flex;align-items:center;gap:.6rem;font-family:var(--font-h);font-size:.85rem;font-weight:700}
+.bot-platform .dot{width:8px;height:8px;border-radius:50%}
+.bot-arrow{color:var(--muted);font-size:1.1rem;transition:transform .3s,color .3s}
+.bot-item:hover .bot-arrow{transform:translate(4px,-4px);color:var(--accent)}
+.bot-body{font-size:.88rem;color:rgba(240,238,248,.5);line-height:1.7;margin-bottom:1rem}
+.bot-feats{display:flex;flex-wrap:wrap;gap:.4rem}
+.bot-feat{font-size:.7rem;padding:.3rem .7rem;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;color:rgba(240,238,248,.5)}
 
-  /* MAIN WRAPPER */
-  #main-page { display: block; }
+.bots-right{position:sticky;top:100px}
+.chat-demo{background:var(--black);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.cd-header{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.cd-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent2),var(--accent3));display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--white);flex-shrink:0}
+.cd-name{font-size:.82rem;font-weight:500}
+.cd-status{font-size:.68rem;color:#25D366;display:flex;align-items:center;gap:.3rem}
+.cd-status::before{content:'';width:5px;height:5px;background:#25D366;border-radius:50%;display:inline-block}
+.cd-msgs{padding:1.2rem;display:flex;flex-direction:column;gap:.8rem;min-height:300px}
+.msg{max-width:80%;padding:.7rem 1rem;border-radius:10px;font-size:.82rem;line-height:1.5}
+.msg.in{background:var(--gray2);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:2px}
+.msg.out{background:var(--accent2);color:var(--white);align-self:flex-end;border-bottom-right-radius:2px}
+.msg.ai{background:linear-gradient(135deg,rgba(184,255,0,.12),rgba(123,97,255,.12));border:1px solid rgba(184,255,0,.2);align-self:flex-start;border-bottom-left-radius:2px}
+.msg-time{font-size:.62rem;color:var(--muted);margin-top:.2rem;display:block}
+.typing{display:flex;align-items:center;gap:.3rem;padding:.5rem .75rem;background:var(--gray2);border-radius:10px;width:fit-content;margin-top:.5rem}
+.typing span{width:5px;height:5px;background:var(--muted);border-radius:50%;animation:type .8s infinite}
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+@keyframes type{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
 
-  @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr; }
-    .stats { gap: 32px; }
-    .cta-group { flex-direction: column; align-items: center; }
-  }
+/* STACK */
+#stack{background:var(--black)}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border);margin-top:3rem}
+.stack-item{background:var(--black);padding:1.5rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;transition:background .3s;cursor:none}
+.stack-item:hover{background:var(--gray2)}
+.stack-item .ico{font-size:1.6rem}
+.stack-item .name{font-size:.72rem;color:rgba(240,238,248,.5);text-align:center}
+
+/* HOW */
+#how{background:var(--gray)}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4rem;position:relative}
+.how-grid::before{content:'';position:absolute;top:2rem;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.3}
+.how-step{padding:2rem;text-align:center;position:relative}
+.how-step-num{width:44px;height:44px;background:var(--black);border:1px solid rgba(184,255,0,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:.7rem;font-weight:700;color:var(--accent);margin:0 auto 1.5rem;position:relative;z-index:1}
+.how-step h3{font-family:var(--font-h);font-size:.85rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.6rem}
+.how-step p{font-size:.8rem;color:rgba(240,238,248,.45);line-height:1.65}
+
+/* PRICING */
+#pricing{background:var(--black)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);margin-top:4rem}
+.price-card{background:var(--black);padding:2.5rem;transition:background .3s}
+.price-card:hover{background:var(--gray2)}
+.price-card.pop{background:var(--gray2);border:1px solid rgba(184,255,0,.25)}
+.price-badge{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:block}
+.price-name{font-family:var(--font-h);font-size:1.3rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.5rem}
+.price-desc{font-size:.82rem;color:rgba(240,238,248,.45);margin-bottom:2rem;line-height:1.6}
+.price-from{font-size:.7rem;color:var(--muted);margin-bottom:.3rem}
+.price-val{font-family:var(--font-h);font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:2rem;line-height:1}
+.price-val span{font-size:.9rem;font-weight:400;color:var(--muted)}
+.price-feats{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:2.5rem}
+.price-feats li{font-size:.83rem;color:rgba(240,238,248,.6);display:flex;align-items:flex-start;gap:.5rem}
+.price-feats li::before{content:'✓';color:var(--accent);font-size:.8rem;flex-shrink:0;font-weight:700}
+.price-feats li.no{color:rgba(240,238,248,.25)}
+.price-feats li.no::before{content:'—';color:var(--muted)}
+.btn-price{display:block;text-align:center;padding:.85rem;border:1px solid rgba(255,255,255,.12);border-radius:2px;font-family:var(--font-h);font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--white);text-decoration:none;cursor:none;transition:background .3s,border-color .3s}
+.btn-price:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.3)}
+.btn-price.ac{background:var(--accent);color:var(--black);border-color:var(--accent)}
+.btn-price.ac:hover{background:#cbff33;border-color:#cbff33}
+
+/* FAQ */
+#faq{background:var(--gray)}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:4rem}
+.faq-item{padding:1.5rem 0;border-bottom:1px solid var(--border);cursor:none}
+.faq-q{font-family:var(--font-h);font-size:.9rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:start;gap:1rem}
+.faq-q span{color:var(--accent);font-size:1rem;flex-shrink:0}
+.faq-a{font-size:.85rem;color:rgba(240,238,248,.5);line-height:1.7}
+
+/* CTA */
+#cta{background:var(--gray2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;position:relative}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(184,255,0,.07) 0%,transparent 70%);pointer-events:none}
+.cta-inner{max-width:800px;margin:0 auto;text-align:center;position:relative}
+#cta h2{font-size:clamp(2rem,4vw,3.2rem)}
+#cta .sec-sub{margin:1.5rem auto 3rem;max-width:480px}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.cta-trust{display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap}
+.cta-trust-item{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--muted)}
+.cta-trust-item::before{content:'✓';color:var(--accent);font-weight:700}
+
+/* CONTACT */
+#contact{background:var(--black)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:4rem;align-items:start}
+.contact-info h3{font-family:var(--font-h);font-size:1.2rem;font-weight:700;margin-bottom:1rem;letter-spacing:-.01em}
+.contact-info p{font-size:.9rem;color:rgba(240,238,248,.5);line-height:1.75;margin-bottom:2rem}
+.contact-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.contact-list li{display:flex;align-items:center;gap:.75rem;font-size:.88rem;color:rgba(240,238,248,.65)}
+.contact-list li .ico{width:36px;height:36px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.contact-list a{color:inherit;text-decoration:none;transition:color .3s}
+.contact-list a:hover{color:var(--accent)}
+.contact-form{background:var(--gray2);border:1px solid var(--border);border-radius:8px;padding:2.5rem}
+.cf-title{font-family:var(--font-h);font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.cf-sub{font-size:.8rem;color:var(--muted);margin-bottom:2rem}
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.fg input,.fg textarea,.fg select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;padding:.75rem 1rem;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;transition:border-color .3s;resize:vertical;cursor:none}
+.fg select option{background:var(--gray2)}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(184,255,0,.4)}
+.fg textarea{min-height:100px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn-send{width:100%;background:var(--accent);color:var(--black);font-family:var(--font-h);font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.9rem;border:none;border-radius:2px;cursor:none;transition:background .3s;margin-top:.5rem}
+.btn-send:hover{background:#cbff33}
+
+/* FOOTER */
+footer{background:var(--gray);border-top:1px solid var(--border);padding:4rem 3rem 2rem;position:relative;z-index:1}
+.ft{max-width:1200px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:280px 1fr;gap:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+.ft-brand-logo{font-family:var(--font-h);font-weight:900;font-size:1.3rem;letter-spacing:-.02em;margin-bottom:1rem;display:block}
+.ft-brand-logo span{color:var(--accent)}
+.ft-tagline{font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+.ft-social{display:flex;gap:.75rem}
+.ft-soc{width:36px;height:36px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:none;transition:background .3s,border-color .3s;text-decoration:none;color:var(--white)}
+.ft-soc:hover{background:rgba(184,255,0,.1);border-color:rgba(184,255,0,.3)}
+.ft-links{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.ft-col h4{font-family:var(--font-h);font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.ft-col a{font-size:.85rem;color:rgba(240,238,248,.4);text-decoration:none;transition:color .3s}
+.ft-col a:hover{color:var(--white)}
+.ft-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.ft-copy{font-size:.75rem;color:rgba(240,238,248,.25)}
+
+/* FADE-UP */
+.fu{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fu.vis{opacity:1;transform:translateY(0)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--gray2);border:1px solid var(--border);border-radius:8px;padding:3rem;max-width:500px;width:90%;transform:translateY(20px);transition:transform .3s;position:relative;max-height:90vh;overflow-y:auto}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:none;transition:color .3s}
+.modal-close:hover{color:var(--white)}
+.modal h3{font-family:var(--font-h);font-size:1.3rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.3rem}
+.modal-sub{font-size:.83rem;color:var(--muted);margin-bottom:2rem}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .hero{padding:6rem 1.5rem 3rem}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .hero-stats{flex-wrap:wrap;gap:1.5rem}
+  section{padding:4rem 1.5rem}
+  .srv-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .bots-layout{grid-template-columns:1fr}
+  .bots-right{position:static}
+  .how-grid{grid-template-columns:1fr 1fr}
+  .price-grid{grid-template-columns:1fr}
+  .faq-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr}
+  .ft-links{grid-template-columns:repeat(2,1fr)}
+  .srv-header{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
- <div style="text-align: center; padding-top: 100px; padding-bottom: 20px; position: relative; z-index: 101;">
-    
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+
+<!-- NEURAL NETWORK CANVAS -->
+<canvas id="neural"></canvas>
+
+<!-- NAV -->
 <nav>
-  <a href="#" class="logo" onclick="showPage('main')">🚀 Luna Ads</a>
-  <div class="lang-switcher" id="langSwitcher">
-    <div class="lang-trigger" onclick="toggleLangMenu()">
-      <span class="globe">🌐</span>
-      <span id="currentLangLabel">EN</span>
-      <span class="arrow">▼</span>
-    </div>
-    <div class="lang-dropdown">
-      <div class="lang-option active" onclick="setLang('en')"><span class="lang-code">EN</span> English</div>
-      <div class="lang-option" onclick="setLang('ru')"><span class="lang-code">RU</span> Русский</div>
-      <div class="lang-option" onclick="setLang('kz')"><span class="lang-code">KZ</span> Қазақша</div>
-      <div class="lang-option" onclick="setLang('uz')"><span class="lang-code">UZ</span> O'zbekcha</div>
-    </div>
+  <a href="#" class="nav-logo"><div class="dot"></div>С.А.К</a>
+  <ul class="nav-links">
+    <li><a href="#why">О нас</a></li>
+    <li><a href="#services">Агенты</a></li>
+    <li><a href="#bots">Боты</a></li>
+    <li><a href="#how">Процесс</a></li>
+    <li><a href="#pricing">Тарифы</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="tel:+87053458458" class="nav-phone">+7 (705) 345-84-58</a>
+    <a href="#" class="nav-cta" onclick="openM();return false;">Связаться</a>
   </div>
 </nav>
 
-<!-- MAIN PAGE -->
-<div id="main-page">
-  <div style="background: linear-gradient(135deg, rgba(255,60,172,0.1), rgba(255,107,53,0.1)); border: 1px solid rgba(255,255,255,0.1); padding: 20px; text-align: center; border-radius: 15px; margin: 20px 5%; backdrop-filter: blur(10px);">
-  <p style="color: #FFFFFF; font-family: 'DM Sans', sans-serif; margin: 0; font-size: 1.1rem; line-height: 1.5;">
-    🚀 <strong>Global Launch is Loading...</strong><br>
-    Join us on Product Hunt this Tuesday, March 24! Early supporters get an exclusive <strong>30% launch discount</strong>.
-  </p>
-</div>
-
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-orb orb1"></div>
-    <div class="hero-orb orb2"></div>
-    <div class="hero-orb orb3"></div>
-    <div class="hero-content">
-      <div class="badge" data-i18n="badge">✨ Facebook & Instagram Ads — right in Telegram</div>
-      <h1><span data-i18n="hero_h1a">Launch Ads</span><br><span class="grad-text" data-i18n="hero_h1b">Without an Agency</span></h1>
-      <p data-i18n="hero_p">Luna Ads lets you create, launch, and manage Facebook & Instagram advertising campaigns directly inside Telegram. Fast, simple, and powerful.</p>
-      <div class="cta-group">
-        <a href="https://t.me/marketologluna_bot" class="btn-primary" target="_blank">
-          <span>✈️</span> <span data-i18n="cta_main">Open in Telegram</span>
-        </a>
-        <a href="#how" class="btn-secondary">
-          <span data-i18n="cta_learn">Learn How It Works</span> <span>↓</span>
-        </a>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner sec-max">
+    <div>
+      <div class="hero-badge fu">ИИ-автоматизация бизнеса · Казахстан</div>
+      <h1 class="fu">
+        Ваш бизнес<br>
+        управляет<br>
+        <span class="ac3">ИИ-команда</span>
+      </h1>
+      <p class="hero-desc fu">Мы строим цифровой офис из ИИ-агентов — для HR, бухгалтерии, тендеров, рекламы и соцсетей. Автоматизируем 70% рутины за 2 недели.</p>
+      <div class="hero-actions fu">
+        <a href="#contact" class="btn-p">Запустить проект</a>
+        <a href="#services" class="btn-o">Посмотреть агентов</a>
+      </div>
+      <div class="hero-stats fu">
+        <div><span class="stat-n">70%</span><div class="stat-l">Снижение рутины</div></div>
+        <div><span class="stat-n">2 нед</span><div class="stat-l">До первого MVP</div></div>
+        <div><span class="stat-n">24/7</span><div class="stat-l">Без остановки</div></div>
+        <div><span class="stat-n">10×</span><div class="stat-l">Рост скорости</div></div>
       </div>
     </div>
-  </section>
-   <div style="display: flex; justify-content: center; padding: 60px 0; background: rgba(255,255,255,0.03); margin-top: 40px;">
-      <a href="https://www.producthunt.com/products/luna-target-ai?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-luna-target-ai" target="_blank" rel="noopener noreferrer">
-    <img alt="Luna Target AI - Automate FB Ads 10x faster with Luna AI &amp; Telegram | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1101968&amp;theme=neutral&amp;t=1774023854451"></a>
- </div>
-
-  <div class="stats">
-    <div class="stat"><div class="stat-num">3 min</div><div class="stat-label" data-i18n="stat1">to launch your first ad</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label" data-i18n="stat2">inside Telegram</div></div>
-    <div class="stat"><div class="stat-num">0</div><div class="stat-label" data-i18n="stat3">agency fees</div></div>
-    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label" data-i18n="stat4">campaign management</div></div>
-  </div>
-
-  <!-- VIDEO SECTION -->
-  <section class="section" id="demo" style="padding-top:20px">
-    <div style="text-align:center; margin-bottom:40px">
-      <div class="section-label" data-i18n="video_label">Demo</div>
-      <div class="section-title" data-i18n="video_title">See How It Works</div>
-    </div>
-    <div class="video-wrapper">
-      <!-- 
-        ИНСТРУКЦИЯ: Замени src="YOUR_VIDEO_URL" на ссылку твоего видео.
-        Варианты:
-        1. YouTube: src="https://www.youtube.com/embed/ТВОЙ_ID_ВИДЕО"
-        2. Своё видео: замени <iframe> на <video src="video.mp4" controls></video>
-      -->
-      <iframe 
-        src="https://www.youtube.com/embed/Ut708SBTIug" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
-    </div>
-  </section>
-    <div class="section-label" data-i18n="how_label">How It Works</div>
-    <div class="section-title" data-i18n="how_title">3 Simple Steps</div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-icon">📱</div>
-        <h3 data-i18n="step1_h">Open Luna Ads</h3>
-        <p data-i18n="step1_p">Launch the bot in Telegram and connect your Facebook account with one tap.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-icon">🎯</div>
-        <h3 data-i18n="step2_h">Set Up Your Ad</h3>
-        <p data-i18n="step2_p">Choose your audience, budget, creative, and campaign goal — all through a simple chat interface.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-icon">🚀</div>
-        <h3 data-i18n="step3_h">Launch & Track</h3>
-        <p data-i18n="step3_p">Your campaign goes live on Facebook and Instagram. Monitor results right in the chat.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top:0" id="features">
-    <div class="section-label" data-i18n="feat_label">Features</div>
-    <div class="section-title" data-i18n="feat_title">Everything You Need</div>
-    <div class="features-grid">
-      <div class="feature"><div class="feature-icon">⚡</div><h3 data-i18n="f1h">Instant Launch</h3><p data-i18n="f1p">Create and publish a Facebook/Instagram ad in under 3 minutes.</p></div>
-      <div class="feature"><div class="feature-icon">🎯</div><h3 data-i18n="f2h">Smart Targeting</h3><p data-i18n="f2p">Reach the right audience by interest, location, age, and behavior.</p></div>
-      <div class="feature"><div class="feature-icon">📊</div><h3 data-i18n="f3h">Live Analytics</h3><p data-i18n="f3p">Get real-time stats on your campaigns without leaving Telegram.</p></div>
-      <div class="feature"><div class="feature-icon">💰</div><h3 data-i18n="f4h">Budget Control</h3><p data-i18n="f4p">Set daily or lifetime budgets. Pause or scale campaigns anytime.</p></div>
-      <div class="feature"><div class="feature-icon">🌍</div><h3 data-i18n="f5h">Global Reach</h3><p data-i18n="f5p">Advertise in any country — Kazakhstan, Russia, Europe, USA, and beyond.</p></div>
-      <div class="feature"><div class="feature-icon">🔒</div><h3 data-i18n="f6h">Secure & Private</h3><p data-i18n="f6p">Your data is protected. We never store your ad account credentials.</p></div>
-    </div>
-  </section>
-
-  <section class="section" id="about">
-    <div class="about-grid">
-      <div class="about-text">
-        <div class="section-label" data-i18n="about_label">About Luna Ads</div>
-        <div class="section-title" style="margin-bottom:24px" data-i18n="about_title">Advertising Made Simple</div>
-        <p data-i18n="about_p1">Luna Ads is a Telegram-based tool that connects directly to the Facebook Marketing API. It allows business owners, entrepreneurs, and marketers to run ads without needing a separate dashboard or agency.</p>
-        <p data-i18n="about_p2">We believe advertising should be accessible to everyone — from small businesses in Kazakhstan to global brands. That's why we built Luna Ads inside the app you already use every day.</p>
-        <a href="https://t.me/marketologluna_bot" class="btn-primary" target="_blank" style="margin-top:16px; display:inline-flex">
-          🚀 <span data-i18n="cta_main">Open in Telegram</span>
-        </a>
-      </div>
-      <div class="about-visual">
-        <span class="big-emoji">🌙</span>
-        <h3>Luna Ads</h3>
-        <p data-i18n="about_tagline">Your personal advertising manager, available 24/7 inside Telegram.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING SECTION -->
-  <section class="section" id="pricing" style="padding-top:0">
-    <div style="text-align:center; margin-bottom:48px">
-      <div class="section-label" data-i18n="price_label">Pricing</div>
-      <div class="section-title" data-i18n="price_title">Choose Your Plan</div>
-      <p style="color:rgba(255,255,255,0.5); max-width:500px; margin:0 auto; font-size:0.95rem" data-i18n="price_sub">All plans include full access to Luna Ads. Cancel anytime.</p>
-    </div>
-    <div class="pricing-grid">
-
-      <!-- 1 MONTH -->
-      <div class="price-card">
-        <div class="price-tag" data-i18n="plan1_tag">Starter</div>
-        <div class="price-amount">25 000 <span class="price-cur">₸</span></div>
-        <div class="price-period" data-i18n="plan1_period">per month / $50</div>
-        <ul class="price-features">
-          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
-          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
-          <li data-i18n="pf3">✦ Real-time campaign stats</li>
-          <li data-i18n="pf4">✦ 24/7 support</li>
-        </ul>
-        <a href="https://t.me/marketologluna_bot" target="_blank" class="btn-price" data-i18n="btn_buy">Open in Telegram</a>
-      </div>
-
-      <!-- 3 MONTHS -->
-      <div class="price-card featured">
-        <div class="price-badge" data-i18n="plan2_badge">Most Popular</div>
-        <div class="price-tag" data-i18n="plan2_tag">Growth</div>
-        <div class="price-amount">60 000 <span class="price-cur">₸</span></div>
-        <div class="price-period" data-i18n="plan2_period">3 months / $120 — save 20%</div>
-        <ul class="price-features">
-          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
-          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
-          <li data-i18n="pf3">✦ Real-time campaign stats</li>
-          <li data-i18n="pf4">✦ 24/7 support</li>
-          <li data-i18n="pf5">✦ Priority processing</li>
-        </ul>
-        <a href="https://t.me/marketologluna_bot" target="_blank" class="btn-price featured-btn" data-i18n="btn_buy">Open in Telegram</a>
-      </div>
-
-      <!-- 6 MONTHS -->
-      <div class="price-card">
-        <div class="price-tag" data-i18n="plan3_tag">Pro</div>
-        <div class="price-amount">120 000 <span class="price-cur">₸</span></div>
-        <div class="price-period" data-i18n="plan3_period">6 months / $250 — save 17%</div>
-        <ul class="price-features">
-          <li data-i18n="pf1">✦ Launch Facebook & Instagram ads</li>
-          <li data-i18n="pf2">✦ Full bot access in Telegram</li>
-          <li data-i18n="pf3">✦ Real-time campaign stats</li>
-          <li data-i18n="pf4">✦ 24/7 support</li>
-          <li data-i18n="pf5">✦ Priority processing</li>
-          <li data-i18n="pf6">✦ Best value — 6 months</li>
-        </ul>
-        <a href="https://t.me/marketologluna_bot" target="_blank" class="btn-price" data-i18n="btn_buy">Open in Telegram</a>
-      </div>
-
-    </div>
-  </section>
-
-
-  <section class="section" id="faq" style="padding-top:0">
-    <div style="text-align:center; margin-bottom:48px">
-      <div class="section-label" data-i18n="faq_label">FAQ</div>
-      <div class="section-title" data-i18n="faq_title">Frequently Asked Questions</div>
-    </div>
-    <div class="faq-list" id="faqList">
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq1q">Do I need any technical skills to use Luna Ads?</span>
-          <span class="faq-arrow">▼</span>
+    <div class="hero-card fu">
+      <div class="hc-title">ИИ-агенты · Онлайн прямо сейчас</div>
+      <div class="hc-agent">
+        <div class="hc-icon g1">🧠</div>
+        <div class="hc-info">
+          <div class="hc-name">HR-агент</div>
+          <div class="hc-status"><span class="on"></span>Обрабатывает резюме</div>
         </div>
-        <div class="faq-a"><p data-i18n="faq1a">No experience needed. Luna Ads guides you step by step through a simple Telegram chat — just answer a few questions and your ad is ready to launch.</p></div>
+        <div class="hc-metric">47 заявок</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq2q">Which platforms can I advertise on?</span>
-          <span class="faq-arrow">▼</span>
+      <div class="hc-agent">
+        <div class="hc-icon g2">📊</div>
+        <div class="hc-info">
+          <div class="hc-name">Бух-агент</div>
+          <div class="hc-status"><span class="on"></span>Формирует отчёт</div>
         </div>
-        <div class="faq-a"><p data-i18n="faq2a">Luna Ads supports Facebook and Instagram ads — both are managed through the Facebook Marketing API from a single interface inside Telegram.</p></div>
+        <div class="hc-metric">₸2.4М</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq3q">How much does Luna Ads cost?</span>
-          <span class="faq-arrow">▼</span>
+      <div class="hc-agent">
+        <div class="hc-icon g3">📋</div>
+        <div class="hc-info">
+          <div class="hc-name">Тендер-агент</div>
+          <div class="hc-status"><span class="on"></span>Мониторит площадки</div>
         </div>
-        <div class="faq-a"><p data-i18n="faq3a">Open the bot in Telegram to see current pricing plans. Ad spend goes directly to Facebook — Luna Ads charges only a small service fee.</p></div>
+        <div class="hc-metric">12 лотов</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq4q">Is my Facebook account safe?</span>
-          <span class="faq-arrow">▼</span>
+      <div class="hc-agent">
+        <div class="hc-icon g4">🎯</div>
+        <div class="hc-info">
+          <div class="hc-name">Таргет-агент</div>
+          <div class="hc-status"><span class="on"></span>Оптимизирует кампании</div>
         </div>
-        <div class="faq-a"><p data-i18n="faq4a">Yes. Luna Ads uses official Facebook API access tokens. We never see or store your password. You can revoke access from your Facebook settings at any time.</p></div>
+        <div class="hc-metric">ROAS 4.2</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq5q">What budget do I need to start?</span>
-          <span class="faq-arrow">▼</span>
+      <div class="hc-agent">
+        <div class="hc-icon g5">✨</div>
+        <div class="hc-info">
+          <div class="hc-name">Креатив-агент</div>
+          <div class="hc-status"><span class="on"></span>Генерит контент</div>
         </div>
-        <div class="faq-a"><p data-i18n="faq5a">You can start with as little as $1–$5 per day. Luna Ads works with any budget — from small businesses to large-scale campaigns.</p></div>
+        <div class="hc-metric">18 постов</div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq6q">Can I use Luna Ads from any country?</span>
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-a"><p data-i18n="faq6a">Yes! Luna Ads works worldwide. You can run ads targeting audiences in Kazakhstan, Uzbekistan, Russia, Europe, the USA, or anywhere else Facebook operates.</p></div>
+      <div class="hc-footer">
+        <div class="hc-total">Обработано сегодня: <strong>1 247 задач</strong></div>
+        <div style="width:8px;height:8px;background:#25D366;border-radius:50%;animation:blink 1.5s infinite"></div>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span data-i18n="faq7q">How quickly can I launch my first ad?</span>
-          <span class="faq-arrow">▼</span>
-        </div>
-        <div class="faq-a"><p data-i18n="faq7a">Most users launch their first campaign in under 5 minutes. Just open the bot, connect Facebook, fill in a few fields, and hit launch.</p></div>
-      </div>
-    </div>
-  </section>
-
-
-    <h2 data-i18n="priv_h">Your Privacy Matters</h2>
-    <p data-i18n="priv_p">Luna Ads only accesses the Facebook permissions you explicitly grant. We do not sell, share, or misuse your data. You can revoke access at any time.</p>
-    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap">
-      <button class="btn-secondary" onclick="showPage('privacy')" style="cursor:pointer" data-i18n="priv_link">Privacy Policy</button>
-      <button class="btn-secondary" onclick="showPage('terms')" style="cursor:pointer" data-i18n="terms_link">Terms of Service</button>
     </div>
   </div>
+</section>
 
-  <footer>
-     <footer style="padding: 60px 5% 40px; border-top: 1px solid rgba(255,255,255,0.07); text-align: center; background: rgba(0,0,0,0.3);">
-    <div class="logo">🚀 Luna Ads</div>
-    
-    <div style="margin: 30px auto; padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: inline-block; text-align: left; font-size: 0.9rem; color: rgba(255,255,255,0.6); max-width: 400px; line-height: 1.6;">
-      <p><strong>ИП Аликулов Сандыбат Мухамбеткалиулы</strong></p>
-      <p>ИИН: 800204301956</p>
-      <p>Адрес: Казахстан, г. Актобе, ул. Уалиханова 28А</p>
-      <p>Телефон: +7 777 159 0809</p>
-    </div>
-  
-    <div class="footer-links" style="display: flex; gap: 24px; justify-content: center; margin-bottom: 20px;">
-      <a href="https://t.me/marketologluna_bot" target="_blank" style="color: rgba(255,255,255,0.4); text-decoration: none;">Telegram Bot</a>
-      <a href="#" onclick="showPage('privacy')" style="color: rgba(255,255,255,0.4); text-decoration: none;">Privacy Policy</a>
-      <a href="mailto:support@lunatarget.ai" style="color: rgba(255,255,255,0.4); text-decoration: none;">Contact Support</a>
-    </div>
-    <p style="opacity: 0.3; font-size: 0.8rem;">&copy; 2026 Luna Ads. All rights reserved.</p>
-  </footer>
-    <div class="logo">🚀 Luna Ads</div>
-    <div class="footer-links">
-      <a href="https://t.me/marketologluna_bot" target="_blank">Telegram Bot</a>
-      <a href="#" onclick="showPage('privacy')" data-i18n="priv_link">Privacy Policy</a>
-      <a href="#" onclick="showPage('terms')" data-i18n="terms_link">Terms of Service</a>
-    </div>
-    <p>© 2025 Luna Ads. All rights reserved.</p>
-  </footer>
-
+<!-- MARQUEE -->
+<div class="mq-wrap">
+  <div class="mq-track" id="mq">
+    <span>ИИ-агенты для HR</span><span class="sep">◆</span>
+    <span>Умная бухгалтерия</span><span class="sep">◆</span>
+    <span>Тендеры и закупки</span><span class="sep">◆</span>
+    <span>Instagram автоматизация</span><span class="sep">◆</span>
+    <span>WhatsApp боты</span><span class="sep">◆</span>
+    <span>TikTok рост</span><span class="sep">◆</span>
+    <span>ИИ таргетолог</span><span class="sep">◆</span>
+    <span>Креатив-менеджер</span><span class="sep">◆</span>
+    <span>RAG-системы</span><span class="sep">◆</span>
+    <span>LLM-интеграции</span><span class="sep">◆</span>
+    <span>GPT / Claude / Gemini</span><span class="sep">◆</span>
+    <span>Цифровой офис</span><span class="sep">◆</span>
+    <span>ИИ-агенты для HR</span><span class="sep">◆</span>
+    <span>Умная бухгалтерия</span><span class="sep">◆</span>
+    <span>Тендеры и закупки</span><span class="sep">◆</span>
+    <span>Instagram автоматизация</span><span class="sep">◆</span>
+    <span>WhatsApp боты</span><span class="sep">◆</span>
+    <span>TikTok рост</span><span class="sep">◆</span>
+    <span>ИИ таргетолог</span><span class="sep">◆</span>
+    <span>Креатив-менеджер</span><span class="sep">◆</span>
+    <span>RAG-системы</span><span class="sep">◆</span>
+    <span>LLM-интеграции</span><span class="sep">◆</span>
+    <span>GPT / Claude / Gemini</span><span class="sep">◆</span>
+    <span>Цифровой офис</span><span class="sep">◆</span>
+  </div>
 </div>
 
-<!-- PRIVACY POLICY PAGE -->
-<div id="privacy-page" class="legal-page">
-  <button class="back-btn" onclick="showPage('main')">← <span data-i18n="back">Back</span></button>
-  <h1>Privacy Policy</h1>
-  <p class="updated">Last updated: March 2025</p>
-    <div style="background: rgba(255,255,255,0.05); padding: 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin: 24px 0; font-size: 0.95rem; line-height: 1.6;">
-    <p style="color: var(--yellow); font-weight: bold; margin-bottom: 8px; font-family: 'Syne', sans-serif;">Operator Information:</p>
-    <p><strong>Individual Entrepreneur:</strong> Alikulov Sandybat Mukhambetkaliuly</p>
-    <p><strong>IIN:</strong> 800204301956</p>
-    <p><strong>Address:</strong> 28A Ualikhanov St., Aktobe, Kazakhstan</p>
-    <p><strong>Phone:</strong> +7 777 159 0809</p>
-  </div>                                           
-  <p>Luna Ads ("we", "our", "us") is committed to protecting your personal information. This Privacy Policy explains what data we collect, how we use it, and your rights regarding your data.</p>
-  <h2>1. Data We Collect</h2>
-  <ul>
-    <li>Telegram user ID and username (to identify your account)</li>
-    <li>Facebook access tokens (temporarily, to execute ad operations on your behalf)</li>
-    <li>Ad campaign settings you configure through the bot</li>
-    <li>Basic usage data (commands used, errors encountered)</li>
-  </ul>
-  <h2>2. How We Use Your Data</h2>
-  <p>We use your data solely to provide the Luna Ads service — creating and managing Facebook/Instagram advertising campaigns on your behalf. We do not sell, rent, or share your personal data with third parties for marketing purposes.</p>
-  <h2>3. Facebook Data</h2>
-  <p>Luna Ads uses the Facebook Marketing API. When you connect your Facebook account, we request only the minimum necessary permissions to run ads. Your Facebook credentials are never stored on our servers. Access tokens are used in real-time and discarded.</p>
-  <h2>4. Data Retention</h2>
-  <p>We retain your campaign configuration data for up to 90 days to provide service continuity. You may request deletion at any time by messaging the bot with /deletedata.</p>
-  <h2>5. Your Rights</h2>
-  <ul>
-    <li>Access: Request a copy of your data</li>
-    <li>Deletion: Request deletion of all your data</li>
-    <li>Revocation: Disconnect your Facebook account at any time</li>
-  </ul>
-  <p>To exercise any of these rights, contact us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
-  <h2>6. Security</h2>
-  <p>We implement industry-standard security measures to protect your data. All communications are encrypted via HTTPS and Telegram's built-in encryption.</p>
-  <h2>7. Changes to This Policy</h2>
-  <p>We may update this policy from time to time. Continued use of Luna Ads after changes constitutes acceptance of the updated policy.</p>
-  <h2>8. Contact</h2>
-  <p>Questions? Reach us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
-</div>
+<!-- WHY -->
+<section id="why">
+  <div class="sec-max">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem" class="fu">
+      <div>
+        <span class="sec-tag">Почему С.А.К</span>
+        <h2>Не просто боты —<br>полноценный цифровой офис</h2>
+      </div>
+      <p class="sec-sub">Большинство компаний внедряют одиночный чат-бот и называют это автоматизацией. Мы строим систему агентов, которые работают вместе как слаженная команда.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card fu">
+        <div class="why-num">01</div>
+        <div class="why-title">Обучены на ваших данных</div>
+        <p class="why-desc">Каждый агент дообучается на регламентах, скриптах и документах вашей компании. Не универсальный — ваш собственный.</p>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">02</div>
+        <div class="why-title">Интеграция в существующие системы</div>
+        <p class="why-desc">Подключаем к вашей CRM, 1С, Bitrix24, мессенджерам и телефонии через API. Никакой замены — только расширение.</p>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">03</div>
+        <div class="why-title">Прозрачная аналитика</div>
+        <p class="why-desc">Каждый агент ведёт журнал действий. Вы видите что делал агент, когда, какой результат — в реальном времени на дашборде.</p>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">04</div>
+        <div class="why-title">Локальный провайдер</div>
+        <p class="why-desc">Работаем в Казахстане, знаем местную специфику: тендерные площадки goszakup.gov.kz, местные мессенджеры, налоговое законодательство РК.</p>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">05</div>
+        <div class="why-title">Быстрый старт: MVP за 2 недели</div>
+        <p class="why-desc">Первая рабочая версия агента — через 14 дней. Без многомесячных проектов и неопределённых сроков.</p>
+      </div>
+      <div class="why-card fu">
+        <div class="why-num">06</div>
+        <div class="why-title">Поддержка и развитие</div>
+        <p class="why-desc">Не бросаем после запуска. Регулярно обновляем модели, расширяем функционал и оптимизируем агентов по реальным метрикам.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- TERMS OF SERVICE PAGE -->
-<div id="terms-page" class="legal-page">
-  <button class="back-btn" onclick="showPage('main')">← <span data-i18n="back">Back</span></button>
-  <h1>Terms of Service</h1>
-  <p class="updated">Last updated: March 2025</p>
-  <p>By using Luna Ads, you agree to these Terms of Service. Please read them carefully.</p>
-  <h2>1. Service Description</h2>
-  <p>Luna Ads is a Telegram-based tool that enables users to create and manage Facebook and Instagram advertising campaigns via the Facebook Marketing API.</p>
-  <h2>2. Eligibility</h2>
-  <ul>
-    <li>You must be at least 18 years old</li>
-    <li>You must have a valid Facebook account and comply with Facebook's advertising policies</li>
-    <li>You are responsible for all ad content you create through Luna Ads</li>
-  </ul>
-  <h2>3. Acceptable Use</h2>
-  <p>You agree not to use Luna Ads to run ads that violate Facebook's Community Standards, promote illegal products or services, contain misleading or deceptive content, or infringe on any third-party rights.</p>
-  <h2>4. Ad Spend & Payments</h2>
-  <p>All ad spend is billed directly by Facebook to your Facebook ad account. Luna Ads does not handle payments for ad spend. Any fees for Luna Ads subscription (if applicable) are separate from Facebook's charges.</p>
-  <h2>5. Disclaimer of Warranties</h2>
-  <p>Luna Ads is provided "as is" without warranties of any kind. We do not guarantee specific advertising results or campaign performance.</p>
-  <h2>6. Limitation of Liability</h2>
-  <p>Luna Ads is not liable for any indirect, incidental, or consequential damages arising from the use of our service or from Facebook's platform decisions.</p>
-  <h2>7. Termination</h2>
-  <p>We reserve the right to suspend or terminate access to Luna Ads for users who violate these Terms or Facebook's advertising policies.</p>
-  <h2>8. Contact</h2>
-  <p>Questions about these Terms? Contact us via Telegram: <a href="https://t.me/marketologluna_bot" style="color:var(--yellow)">@LunaAdsBot</a></p>
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-max">
+    <div class="srv-header fu">
+      <div>
+        <span class="sec-tag">ИИ-агенты</span>
+        <h2>Пять агентов для<br>пяти отделов вашего бизнеса</h2>
+      </div>
+      <p class="sec-sub">Каждый агент — специализированный ИИ-сотрудник, обученный на лучших практиках своей области. Подключается к вашим инструментам и работает автономно.</p>
+    </div>
+    <div class="srv-grid">
+
+      <div class="srv-card fu">
+        <span class="srv-icon">🧠</span>
+        <div class="srv-num">01 · HR</div>
+        <div class="srv-title">ИИ-агент для HR и рекрутинга</div>
+        <p class="srv-desc">Берёт на себя всю рутину подбора персонала: от разбора входящих резюме до онбординга нового сотрудника.</p>
+        <ul class="srv-list">
+          <li>Автоматический скрининг и ранжирование кандидатов</li>
+          <li>Первичные собеседования в WhatsApp/Telegram</li>
+          <li>Оформление документов при найме и увольнении</li>
+          <li>Ответы на вопросы сотрудников 24/7</li>
+          <li>Контроль KPI и автоматические напоминания</li>
+          <li>Адаптация (онбординг) новых сотрудников</li>
+        </ul>
+        <div class="srv-tags">
+          <span class="tag">HH.kz</span><span class="tag">Telegram</span><span class="tag">WhatsApp</span><span class="tag">Bitrix24</span>
+        </div>
+      </div>
+
+      <div class="srv-card fu">
+        <span class="srv-icon">📊</span>
+        <div class="srv-num">02 · Бухгалтерия</div>
+        <div class="srv-title">ИИ-агент для бухгалтерии</div>
+        <p class="srv-desc">Автоматизирует финансовую рутину: счета, акты, отчёты — без ошибок человеческого фактора.</p>
+        <ul class="srv-list">
+          <li>Обработка входящих счетов и актов (OCR + AI)</li>
+          <li>Формирование платёжных поручений и напоминаний</li>
+          <li>Автоматические ежемесячные отчёты</li>
+          <li>Контроль дебиторской и кредиторской задолженности</li>
+          <li>Сверка с банковскими выписками</li>
+          <li>Интеграция с 1С и казахстанскими системами учёта</li>
+        </ul>
+        <div class="srv-tags">
+          <span class="tag">1С</span><span class="tag">OCR</span><span class="tag">КФН РК</span><span class="tag">API банков</span>
+        </div>
+      </div>
+
+      <div class="srv-card hl fu">
+        <span class="srv-icon">📋</span>
+        <div class="srv-num">03 · Тендеры</div>
+        <div class="srv-title">ИИ-агент для тендеров и закупок</div>
+        <p class="srv-desc">Мониторит все государственные и коммерческие тендеры в Казахстане. Готовит заявки и анализирует конкурентов.</p>
+        <ul class="srv-list">
+          <li>Мониторинг goszakup.gov.kz и ETS-площадок</li>
+          <li>Автоматические уведомления о подходящих лотах</li>
+          <li>Подготовка тендерной документации</li>
+          <li>Анализ конкурентов и ценовой разведки</li>
+          <li>Контроль дедлайнов и статуса заявок</li>
+          <li>Управление базой поставщиков</li>
+        </ul>
+        <div class="srv-tags">
+          <span class="tag">Goszakup</span><span class="tag">ETS</span><span class="tag">B2B Center</span>
+        </div>
+      </div>
+
+      <div class="srv-card fu">
+        <span class="srv-icon">🎯</span>
+        <div class="srv-num">04 · Маркетинг</div>
+        <div class="srv-title">ИИ Таргетолог-аналитик</div>
+        <p class="srv-desc">Управляет рекламными кампаниями, анализирует аудитории и оптимизирует бюджет без участия человека.</p>
+        <ul class="srv-list">
+          <li>Автонастройка и запуск рекламных кампаний</li>
+          <li>A/B тестирование аудиторий и креативов</li>
+          <li>Оптимизация ставок в режиме реального времени</li>
+          <li>Сквозная аналитика: Meta, Google, TikTok Ads</li>
+          <li>Еженедельные отчёты с рекомендациями</li>
+          <li>Lookalike-аудитории и ретаргетинг</li>
+        </ul>
+        <div class="srv-tags">
+          <span class="tag">Meta Ads</span><span class="tag">Google Ads</span><span class="tag">TikTok Ads</span>
+        </div>
+      </div>
+
+      <div class="srv-card fu">
+        <span class="srv-icon">✨</span>
+        <div class="srv-num">05 · Контент</div>
+        <div class="srv-title">ИИ Креатив-менеджер</div>
+        <p class="srv-desc">Создаёт контент-планы, пишет тексты, генерирует идеи для роликов — в вашем стиле и для вашей аудитории.</p>
+        <ul class="srv-list">
+          <li>Ежемесячный контент-план под каждую платформу</li>
+          <li>Тексты для постов, Stories, Reels на русском и казахском</li>
+          <li>Сценарии для TikTok/YouTube Shorts</li>
+          <li>Брифы для дизайнеров и видеографов</li>
+          <li>Генерация рекламных заголовков и CTА</li>
+          <li>Анализ конкурентного контента</li>
+        </ul>
+        <div class="srv-tags">
+          <span class="tag">Instagram</span><span class="tag">TikTok</span><span class="tag">Telegram</span>
+        </div>
+      </div>
+
+      <div class="srv-card fu" style="background:var(--gray2);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:1rem;min-height:300px">
+        <div style="width:56px;height:56px;border:1px solid rgba(184,255,0,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem">🔧</div>
+        <div>
+          <div style="font-family:var(--font-h);font-size:1rem;font-weight:700;margin-bottom:.5rem">Кастомный агент</div>
+          <p style="font-size:.82rem;color:rgba(240,238,248,.4);line-height:1.6;margin-bottom:1.5rem">Специфическая задача под ваш бизнес? Разработаем агента под любой процесс.</p>
+        </div>
+        <a href="#" class="btn-p" onclick="openM();return false;">Обсудить проект</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BOTS -->
+<section id="bots">
+  <div class="sec-max">
+    <span class="sec-tag">ИИ-боты для соцсетей</span>
+    <h2 class="fu">Автоматизация<br>в каждом мессенджере</h2>
+    <div class="bots-layout">
+      <div class="bots-left">
+        <div class="bot-item fu">
+          <div class="bot-head">
+            <div class="bot-platform">
+              <div class="dot" style="background:#E1306C"></div>Instagram Bot
+            </div>
+            <span class="bot-arrow">↗</span>
+          </div>
+          <p class="bot-body">ИИ-бот в Direct отвечает на вопросы, квалифицирует лидов, записывает клиентов и обрабатывает комментарии — пока вы занимаетесь бизнесом. Подключается к вашему аккаунту за 1 день.</p>
+          <div class="bot-feats">
+            <span class="bot-feat">Автоответы в Direct 24/7</span>
+            <span class="bot-feat">Квалификация лидов</span>
+            <span class="bot-feat">Реакция на комментарии</span>
+            <span class="bot-feat">Запись клиентов</span>
+            <span class="bot-feat">Интеграция с CRM</span>
+          </div>
+        </div>
+        <div class="bot-item fu">
+          <div class="bot-head">
+            <div class="bot-platform">
+              <div class="dot" style="background:#25D366"></div>WhatsApp Bot
+            </div>
+            <span class="bot-arrow">↗</span>
+          </div>
+          <p class="bot-body">Умный чат-бот через официальный WhatsApp Business API. Ведёт клиента по воронке продаж, отправляет напоминания, принимает оплату и передаёт горячих лидов менеджеру.</p>
+          <div class="bot-feats">
+            <span class="bot-feat">WhatsApp Business API</span>
+            <span class="bot-feat">Воронка продаж</span>
+            <span class="bot-feat">Рассылки без блокировки</span>
+            <span class="bot-feat">Приём оплат</span>
+            <span class="bot-feat">Мультиагентный режим</span>
+            <span class="bot-feat">Поддержка казахского языка</span>
+          </div>
+        </div>
+        <div class="bot-item fu">
+          <div class="bot-head">
+            <div class="bot-platform">
+              <div class="dot" style="background:#69C9D0"></div>TikTok Bot
+            </div>
+            <span class="bot-arrow">↗</span>
+          </div>
+          <p class="bot-body">Автоматизирует вовлечённость: отвечает на комментарии, анализирует тренды и хэштеги, делает аудит аккаунта конкурентов для стратегии роста.</p>
+          <div class="bot-feats">
+            <span class="bot-feat">Автоответы на комментарии</span>
+            <span class="bot-feat">Анализ трендов</span>
+            <span class="bot-feat">Конкурентный анализ</span>
+            <span class="bot-feat">Генерация хэштегов</span>
+            <span class="bot-feat">Аудит аккаунта</span>
+          </div>
+        </div>
+        <div class="bot-item fu">
+          <div class="bot-head">
+            <div class="bot-platform">
+              <div class="dot" style="background:var(--accent)"></div>Telegram Bot
+            </div>
+            <span class="bot-arrow">↗</span>
+          </div>
+          <p class="bot-body">Многофункциональный бот для Telegram: служба поддержки, продажи, база знаний компании и автоматические уведомления клиентам.</p>
+          <div class="bot-feats">
+            <span class="bot-feat">Поддержка клиентов</span>
+            <span class="bot-feat">Inline-каталог товаров</span>
+            <span class="bot-feat">База знаний (RAG)</span>
+            <span class="bot-feat">Автоуведомления</span>
+            <span class="bot-feat">Интеграция с оплатой</span>
+          </div>
+        </div>
+      </div>
+      <div class="bots-right fu">
+        <div class="chat-demo">
+          <div class="cd-header">
+            <div class="cd-avatar">ИИ</div>
+            <div>
+              <div class="cd-name">С.А.К Ассистент</div>
+              <div class="cd-status">онлайн · отвечает мгновенно</div>
+            </div>
+          </div>
+          <div class="cd-msgs" id="chatMsgs">
+            <div class="msg in">Здравствуйте! Хочу узнать про ваши услуги<span class="msg-time">10:24</span></div>
+            <div class="msg ai">Привет! 👋 Я ИИ-ассистент С.А.К. Расскажите — какой отдел вашего бизнеса требует автоматизации больше всего?<span class="msg-time">10:24</span></div>
+            <div class="msg in">HR и подбор персонала — вручную разбираем сотни резюме<span class="msg-time">10:25</span></div>
+            <div class="msg ai">Понял! HR-агент — наше самое популярное решение. Он автоматически:
+✅ Скринит резюме по вашим критериям
+✅ Проводит первичное собеседование в WhatsApp
+✅ Ранжирует кандидатов по оценке
+
+Хотите, подберу тариф под вашу компанию?<span class="msg-time">10:25</span></div>
+            <div class="msg in">Да, интересно! У нас 50 сотрудников<span class="msg-time">10:26</span></div>
+          </div>
+          <div style="padding:.8rem 1.2rem;border-top:1px solid var(--border);display:flex;gap:.6rem">
+            <div style="flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:100px;padding:.5rem 1rem;font-size:.8rem;color:var(--muted)">Написать сообщение...</div>
+            <div style="width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;flex-shrink:0;font-size:.9rem">→</div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;background:var(--gray2);border:1px solid var(--border);border-radius:8px;padding:1.5rem">
+          <div style="font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Этот бот обработал сегодня</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div style="text-align:center">
+              <div style="font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:var(--accent)">247</div>
+              <div style="font-size:.72rem;color:var(--muted)">Сообщений</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:var(--accent2)">38</div>
+              <div style="font-size:.72rem;color:var(--muted)">Лидов передано</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:var(--accent3)">1.2с</div>
+              <div style="font-size:.72rem;color:var(--muted)">Среднее время ответа</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:var(--font-h);font-size:1.5rem;font-weight:900;color:#25D366">96%</div>
+              <div style="font-size:.72rem;color:var(--muted)">Решено без менеджера</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="sec-max">
+    <span class="sec-tag fu">Технологии</span>
+    <h2 class="fu">Работаем с лучшими<br>ИИ-платформами</h2>
+    <div class="stack-grid fu">
+      <div class="stack-item"><div class="ico">🤖</div><div class="name">OpenAI GPT-4o</div></div>
+      <div class="stack-item"><div class="ico">🧬</div><div class="name">Anthropic Claude</div></div>
+      <div class="stack-item"><div class="ico">💎</div><div class="name">Google Gemini</div></div>
+      <div class="stack-item"><div class="ico">🔗</div><div class="name">LangChain</div></div>
+      <div class="stack-item"><div class="ico">🐍</div><div class="name">Python / FastAPI</div></div>
+      <div class="stack-item"><div class="ico">🗄️</div><div class="name">PostgreSQL pgvector</div></div>
+      <div class="stack-item"><div class="ico">🐳</div><div class="name">Docker / K8s</div></div>
+      <div class="stack-item"><div class="ico">📦</div><div class="name">Redis</div></div>
+      <div class="stack-item"><div class="ico">📍</div><div class="name">Pinecone / Weaviate</div></div>
+      <div class="stack-item"><div class="ico">📱</div><div class="name">WhatsApp Business API</div></div>
+      <div class="stack-item"><div class="ico">🔌</div><div class="name">REST / gRPC / Webhooks</div></div>
+      <div class="stack-item"><div class="ico">📊</div><div class="name">Bitrix24 / 1С</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="sec-max">
+    <span class="sec-tag fu">Как мы работаем</span>
+    <h2 class="fu" style="text-align:center">От первого звонка<br>до живого агента</h2>
+    <div class="how-grid fu">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <h3>Аудит процессов</h3>
+        <p>60-минутная встреча. Изучаем ваш бизнес, находим узкие места, определяем ROI автоматизации. Бесплатно.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <h3>Проектирование</h3>
+        <p>Составляем ТЗ, выбираем модели (GPT, Claude, Gemini), проектируем архитектуру агента и интеграции.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <h3>Разработка MVP</h3>
+        <p>2 недели — и первая рабочая версия готова. Настраиваем промпты, RAG-систему и бизнес-логику.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <h3>Интеграция</h3>
+        <p>Подключаем к CRM, мессенджерам, телефонии и другим системам через API. Тестируем на реальных данных.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">05</div>
+        <h3>Запуск</h3>
+        <p>Деплоим в продакшн с мониторингом, логированием и fallback-сценариями на случай нештатных ситуаций.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">06</div>
+        <h3>Обучение команды</h3>
+        <p>Учим вашу команду управлять агентом: корректировать промпты, читать дашборд, расширять функционал.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">07</div>
+        <h3>Поддержка</h3>
+        <p>Ежемесячное техническое сопровождение, обновление моделей и оптимизация на основе реальных метрик.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">08</div>
+        <h3>Масштабирование</h3>
+        <p>По мере роста бизнеса расширяем агента: новые сценарии, новые каналы, новые интеграции.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="sec-max">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem" class="fu">
+      <div>
+        <span class="sec-tag">Тарифы</span>
+        <h2>Прозрачные цены<br>без скрытых платежей</h2>
+      </div>
+      <p class="sec-sub">Все тарифы включают первоначальную настройку, интеграции и обучение команды. Оплата в тенге, договор с юридическим лицом РК.</p>
+    </div>
+    <div class="price-grid fu">
+      <div class="price-card">
+        <span class="price-badge">Старт</span>
+        <div class="price-name">Один агент</div>
+        <p class="price-desc">Идеально для малого бизнеса, который хочет автоматизировать один конкретный процесс.</p>
+        <div class="price-from">от</div>
+        <div class="price-val">150 000 <span>₸/мес</span></div>
+        <ul class="price-feats">
+          <li>1 ИИ-агент на выбор</li>
+          <li>Интеграция с 1 каналом (WhatsApp или Telegram)</li>
+          <li>База знаний до 100 документов</li>
+          <li>Дашборд с базовой аналитикой</li>
+          <li>Поддержка 5×10 (Пн–Пт)</li>
+          <li class="no">Кастомные интеграции с CRM</li>
+          <li class="no">Многоканальность</li>
+          <li class="no">Приоритетная поддержка</li>
+        </ul>
+        <a href="#" class="btn-price" onclick="openM();return false;">Выбрать тариф</a>
+      </div>
+      <div class="price-card pop">
+        <span class="price-badge">Популярный · Рекомендуем</span>
+        <div class="price-name">Цифровой офис</div>
+        <p class="price-desc">Полная автоматизация ключевых отделов. Для среднего бизнеса с несколькими процессами.</p>
+        <div class="price-from">от</div>
+        <div class="price-val">450 000 <span>₸/мес</span></div>
+        <ul class="price-feats">
+          <li>3 ИИ-агента на выбор</li>
+          <li>Интеграция со всеми мессенджерами</li>
+          <li>База знаний до 1000 документов</li>
+          <li>Полный дашборд + аналитика</li>
+          <li>Интеграция с CRM / Bitrix24 / 1С</li>
+          <li>Fine-tuning на данных компании</li>
+          <li>Поддержка 7×12</li>
+          <li class="no">SLA 99.9% uptime</li>
+        </ul>
+        <a href="#" class="btn-price ac" onclick="openM();return false;">Выбрать тариф</a>
+      </div>
+      <div class="price-card">
+        <span class="price-badge">Enterprise</span>
+        <div class="price-name">Под ключ</div>
+        <p class="price-desc">Индивидуальная разработка. Для крупного бизнеса с уникальными требованиями и высокой нагрузкой.</p>
+        <div class="price-from"></div>
+        <div class="price-val" style="font-size:1.5rem">По запросу</div>
+        <ul class="price-feats">
+          <li>Неограниченное число агентов</li>
+          <li>Кастомные интеграции с любыми системами</li>
+          <li>Развертывание на вашей инфраструктуре</li>
+          <li>Собственная LLM или приватное облако</li>
+          <li>SLA 99.9% + приоритетная поддержка 24/7</li>
+          <li>Выделенный менеджер проекта</li>
+          <li>Обучение команды on-site</li>
+          <li>Quarterly business review</li>
+        </ul>
+        <a href="#" class="btn-price" onclick="openM();return false;">Обсудить проект</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="sec-max">
+    <span class="sec-tag fu">Частые вопросы</span>
+    <h2 class="fu">Отвечаем на главные<br>вопросы перед запуском</h2>
+    <div class="faq-grid fu">
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">Как быстро будет готов первый агент? <span>+</span></div>
+          <p class="faq-a">MVP первого агента — через 14 рабочих дней после подписания договора и предоставления доступов. Полная версия с кастомными интеграциями — 3–6 недель.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Нужно ли менять существующие системы? <span>+</span></div>
+          <p class="faq-a">Нет. Мы интегрируемся в ваши текущие инструменты через API: CRM, 1С, мессенджеры. Ничего не нужно менять или переучивать команду.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Что если агент даст неверный ответ? <span>+</span></div>
+          <p class="faq-a">У каждого агента есть fallback-сценарий: при неуверенности он передаёт вопрос живому сотруднику. Все действия логируются и доступны для аудита.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Мои данные в безопасности? <span>+</span></div>
+          <p class="faq-a">Да. Работаем по NDA, данные клиентов не используются для обучения публичных моделей. По запросу — развёртывание на вашей инфраструктуре.</p>
+        </div>
+      </div>
+      <div>
+        <div class="faq-item">
+          <div class="faq-q">Поддерживает ли агент казахский язык? <span>+</span></div>
+          <p class="faq-a">Да. Все агенты работают на русском и казахском языках. Поддерживается автоопределение языка и переключение в рамках одного диалога.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Нужно ли платить за ChatGPT/Claude отдельно? <span>+</span></div>
+          <p class="faq-a">Нет. Стоимость API-вызовов к языковым моделям включена в тариф. Вы платите одну фиксированную сумму без сюрпризов.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Можно ли протестировать перед покупкой? <span>+</span></div>
+          <p class="faq-a">Да. После первой консультации проводим бесплатную демонстрацию на реальных данных вашего бизнеса. Договор — только после того, как вы убедитесь в ценности.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Как оплатить? Есть ли договор? <span>+</span></div>
+          <p class="faq-a">Работаем официально: договор с юридическим лицом РК, оплата в тенге по безналичному расчёту. Поквартальная или ежемесячная оплата на выбор.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <span class="sec-tag fu">Готовы начать?</span>
+    <h2 class="fu">Запустите цифровой офис<br>за 2 недели</h2>
+    <p class="sec-sub fu">Первая консультация — бесплатно. Расскажем какие агенты подойдут именно вашему бизнесу и посчитаем ROI автоматизации.</p>
+    <div class="cta-actions fu">
+      <a href="#" class="btn-p" onclick="openM();return false;">Получить консультацию</a>
+      <a href="https://wa.me/87053458458" class="btn-o">Написать в WhatsApp</a>
+    </div>
+    <div class="cta-trust fu">
+      <span class="cta-trust-item">Бесплатная демо</span>
+      <span class="cta-trust-item">Договор с ТОО</span>
+      <span class="cta-trust-item">Оплата в тенге</span>
+      <span class="cta-trust-item">MVP за 14 дней</span>
+      <span class="cta-trust-item">Поддержка 7×12</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-max">
+    <div class="contact-grid">
+      <div class="contact-info fu">
+        <span class="sec-tag">Контакты</span>
+        <h3>Свяжитесь с нами</h3>
+        <p>Работаем с бизнесом по всему Казахстану и СНГ. Встречи в Астане и онлайн через Zoom или WhatsApp.</p>
+        <ul class="contact-list">
+          <li><div class="ico">📍</div><span>г. Астана, ул. Сыганак 2А, оф. 28</span></li>
+          <li><div class="ico">📞</div><a href="tel:+87053458458">+7 (705) 345-84-58</a></li>
+          <li><div class="ico">✉️</div><a href="mailto:support@lunatargetai.com">support@lunatargetai.com</a></li>
+          <li><div class="ico">💬</div><a href="https://wa.me/87053458458">WhatsApp · быстрый ответ</a></li>
+          <li><div class="ico">🏢</div><span>ИП Алмагамбетова К.Ж.</span></li>
+          <li><div class="ico">🪪</div><span>ИИН: 800530400759</span></li>
+        </ul>
+        <div style="margin-top:2rem;padding:1.5rem;background:var(--gray2);border:1px solid var(--border);border-radius:8px">
+          <div style="font-family:var(--font-h);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem">Часы работы</div>
+          <div style="font-size:.88rem;color:rgba(240,238,248,.6);line-height:2">
+            Пн–Пт: 09:00 – 19:00 (UTC+5)<br>
+            Сб: 10:00 – 15:00<br>
+            <span style="color:var(--accent)">ИИ-боты работают 24/7</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form fu">
+        <div class="cf-title">Оставьте заявку</div>
+        <p class="cf-sub">Свяжемся в течение 2 часов в рабочее время</p>
+        <div class="fg-row">
+          <div class="fg"><label>Имя</label><input type="text" placeholder="Ваше имя"></div>
+          <div class="fg"><label>Компания</label><input type="text" placeholder="ТОО / ИП / ..."></div>
+        </div>
+        <div class="fg"><label>Телефон / WhatsApp</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="email@company.kz"></div>
+        <div class="fg">
+          <label>Что интересует?</label>
+          <select>
+            <option>ИИ-агент для HR и рекрутинга</option>
+            <option>ИИ-агент для бухгалтерии</option>
+            <option>ИИ-агент для тендеров/закупок</option>
+            <option>ИИ Таргетолог-аналитик</option>
+            <option>ИИ Креатив-менеджер</option>
+            <option>Instagram / WhatsApp / TikTok бот</option>
+            <option>Несколько услуг / Цифровой офис</option>
+            <option>Кастомный агент (обсудить)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Расскажите о задаче</label><textarea placeholder="Кратко опишите текущую проблему или задачу..."></textarea></div>
+        <button class="btn-send" id="sendBtn">Отправить заявку →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">
+    <div class="ft-top">
+      <div>
+        <span class="ft-brand-logo">С.<span>А</span>.К</span>
+        <p class="ft-tagline">Цифровой офис нового поколения. Автоматизируем бизнес с помощью ИИ-агентов. Казахстан и СНГ.</p>
+        <div class="ft-social">
+          <a href="#" class="ft-soc">in</a>
+          <a href="#" class="ft-soc">tg</a>
+          <a href="#" class="ft-soc">ig</a>
+          <a href="#" class="ft-soc">tk</a>
+        </div>
+      </div>
+      <div class="ft-links">
+        <div class="ft-col">
+          <h4>ИИ-агенты</h4>
+          <ul>
+            <li><a href="#services">HR-агент</a></li>
+            <li><a href="#services">Бух-агент</a></li>
+            <li><a href="#services">Тендер-агент</a></li>
+            <li><a href="#services">Таргет-агент</a></li>
+            <li><a href="#services">Креатив-агент</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Боты</h4>
+          <ul>
+            <li><a href="#bots">Instagram Bot</a></li>
+            <li><a href="#bots">WhatsApp Bot</a></li>
+            <li><a href="#bots">TikTok Bot</a></li>
+            <li><a href="#bots">Telegram Bot</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Компания</h4>
+          <ul>
+            <li><a href="#why">О нас</a></li>
+            <li><a href="#how">Процесс</a></li>
+            <li><a href="#pricing">Тарифы</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Контакты</h4>
+          <ul>
+            <li><a href="tel:+87053458458">+7 (705) 345-84-58</a></li>
+            <li><a href="mailto:support@lunatargetai.com">support@lunatargetai.com</a></li>
+            <li><a href="https://wa.me/87053458458">WhatsApp</a></li>
+            <li><a href="#">г. Астана, Сыганак 2А, оф. 28</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <p class="ft-copy">© 2025 <span style="color:var(--accent)">С.А.К</span> — Цифровой офис · ИП Алмагамбетова К.Ж. · ИИН 800530400759</p>
+      <p class="ft-copy">г. Астана, ул. Сыганак 2А, оф. 28</p>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeM()">✕</button>
+    <h3>Оставить заявку</h3>
+    <p class="modal-sub">Свяжемся в течение 2 часов · Первая консультация бесплатно</p>
+    <div class="fg"><label>Имя и компания</label><input type="text" placeholder="Иван · ТОО Алтын"></div>
+    <div class="fg"><label>WhatsApp / Телефон</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+    <div class="fg"><label>Что интересует?</label>
+      <select>
+        <option>ИИ-агент для HR</option>
+        <option>ИИ-агент для бухгалтерии</option>
+        <option>ИИ-агент для тендеров</option>
+        <option>ИИ Таргетолог</option>
+        <option>ИИ Креатив-менеджер</option>
+        <option>Боты (Instagram/WhatsApp/TikTok)</option>
+        <option>Несколько услуг</option>
+      </select>
+    </div>
+    <div class="fg"><label>Комментарий</label><textarea placeholder="Кратко опишите задачу..." style="min-height:80px"></textarea></div>
+    <button class="btn-send" id="mSendBtn">Отправить заявку →</button>
+  </div>
 </div>
 
 <script>
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-
-// PAGE ROUTING
-function showPage(page) {
-  document.getElementById('main-page').style.display = 'none';
-  document.getElementById('privacy-page').classList.remove('active');
-  document.getElementById('terms-page').classList.remove('active');
-  if (page === 'main') {
-    document.getElementById('main-page').style.display = 'block';
-    window.scrollTo(0,0);
-  } else if (page === 'privacy') {
-    document.getElementById('privacy-page').classList.add('active');
-    window.scrollTo(0,0);
-  } else if (page === 'terms') {
-    document.getElementById('terms-page').classList.add('active');
-    window.scrollTo(0,0);
-  }
-}
-
-// LANGUAGE DROPDOWN
-function toggleLangMenu() {
-  document.getElementById('langSwitcher').classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  const sw = document.getElementById('langSwitcher');
-  if (sw && !sw.contains(e.target)) sw.classList.remove('open');
+// CURSOR
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}animRing();
+document.querySelectorAll('a,button,.srv-card,.why-card,.hc-agent,.bot-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('big');ring.style.opacity='0'});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('big');ring.style.opacity='1'});
 });
 
-// TRANSLATIONS
-const i18n = {
-  en: {
-    badge: '✨ Facebook & Instagram Ads — right in Telegram',
-    hero_h1a: 'Launch Ads', hero_h1b: 'Without an Agency',
-    hero_p: 'Luna Ads lets you create, launch, and manage Facebook & Instagram advertising campaigns directly inside Telegram. Fast, simple, and powerful.',
-    cta_main: 'Open in Telegram', cta_learn: 'Learn How It Works',
-    stat1: 'to launch your first ad', stat2: 'inside Telegram', stat3: 'agency fees', stat4: 'campaign management',
-    video_label: 'Demo', video_title: 'See How It Works',
-    video_placeholder: 'Your demo video will appear here',
-    video_hint: 'Replace the src in the code with your YouTube or video link',
-    how_label: 'How It Works', how_title: '3 Simple Steps',
-    step1_h: 'Open Luna Ads', step1_p: 'Launch the bot in Telegram and connect your Facebook account with one tap.',
-    step2_h: 'Set Up Your Ad', step2_p: 'Choose your audience, budget, creative, and goal — all through a simple chat interface.',
-    step3_h: 'Launch & Track', step3_p: 'Your campaign goes live on Facebook and Instagram. Monitor results right in the chat.',
-    feat_label: 'Features', feat_title: 'Everything You Need',
-    f1h: 'Instant Launch', f1p: 'Create and publish a Facebook/Instagram ad in under 3 minutes.',
-    f2h: 'Smart Targeting', f2p: 'Reach the right audience by interest, location, age, and behavior.',
-    f3h: 'Live Analytics', f3p: 'Get real-time stats on your campaigns without leaving Telegram.',
-    f4h: 'Budget Control', f4p: 'Set daily or lifetime budgets. Pause or scale campaigns anytime.',
-    f5h: 'Global Reach', f5p: 'Advertise in any country — Kazakhstan, Russia, Europe, USA, and beyond.',
-    f6h: 'Secure & Private', f6p: 'Your data is protected. We never store your ad account credentials.',
-    about_label: 'About Luna Ads', about_title: 'Advertising Made Simple',
-    about_p1: 'Luna Ads is a Telegram-based tool that connects directly to the Facebook Marketing API. It allows business owners, entrepreneurs, and marketers to run ads without needing a separate dashboard or agency.',
-    about_p2: 'We believe advertising should be accessible to everyone — from small businesses in Kazakhstan to global brands.',
-    about_tagline: 'Your personal advertising manager, available 24/7 inside Telegram.',
-    priv_h: 'Your Privacy Matters',
-    priv_p: 'Luna Ads only accesses the Facebook permissions you explicitly grant. We do not sell, share, or misuse your data. You can revoke access at any time.',
-    priv_link: 'Privacy Policy', terms_link: 'Terms of Service', back: 'Back',
-    faq_label: 'FAQ', faq_title: 'Frequently Asked Questions',
-    faq1q: 'Do I need any technical skills to use Luna Ads?', faq1a: 'No experience needed. Luna Ads guides you step by step through a simple Telegram chat — just answer a few questions and your ad is ready to launch.',
-    faq2q: 'Which platforms can I advertise on?', faq2a: 'Luna Ads supports Facebook and Instagram ads — both managed through the Facebook Marketing API from a single Telegram interface.',
-    faq3q: 'How much does Luna Ads cost?', faq3a: 'Open the bot in Telegram to see current pricing plans. Ad spend goes directly to Facebook — Luna Ads charges only a small service fee.',
-    faq4q: 'Is my Facebook account safe?', faq4a: 'Yes. Luna Ads uses official Facebook API tokens. We never see or store your password. You can revoke access from your Facebook settings at any time.',
-    faq5q: 'What budget do I need to start?', faq5a: 'You can start with as little as $1–$5 per day. Luna Ads works with any budget — from small businesses to large campaigns.',
-    faq6q: 'Can I use Luna Ads from any country?', faq6a: 'Yes! Luna Ads works worldwide — Kazakhstan, Uzbekistan, Russia, Europe, USA, or anywhere Facebook operates.',
-    faq7q: 'How quickly can I launch my first ad?', faq7a: 'Most users launch their first campaign in under 5 minutes. Open the bot, connect Facebook, fill in a few fields, and hit launch.',
-    price_label: 'Pricing', price_title: 'Choose Your Plan', price_sub: 'All plans include full access to Luna Ads. Cancel anytime.',
-    plan1_tag: 'Starter', plan1_period: 'per month / $50',
-    plan2_tag: 'Growth', plan2_period: '3 months / $120 — save 20%', plan2_badge: 'Most Popular',
-    plan3_tag: 'Pro', plan3_period: '6 months / $250 — save 17%',
-    pf1: '✦ Launch Facebook & Instagram ads', pf2: '✦ Full bot access in Telegram',
-    pf3: '✦ Real-time campaign stats', pf4: '✦ 24/7 support',
-    pf5: '✦ Priority processing', pf6: '✦ Best value — 6 months',
-    btn_buy: 'Open in Telegram',
-  },
-  ru: {
-    badge: '✨ Реклама в Facebook и Instagram — прямо в Telegram',
-    hero_h1a: 'Запускай рекламу', hero_h1b: 'Без агентства',
-    hero_p: 'Luna Ads позволяет создавать, запускать и управлять рекламными кампаниями в Facebook и Instagram прямо в Telegram. Быстро, просто и эффективно.',
-    cta_main: 'Открыть в Telegram', cta_learn: 'Как это работает',
-    stat1: 'до запуска первой рекламы', stat2: 'внутри Telegram', stat3: 'комиссии агентствам', stat4: 'управление кампаниями',
-    video_label: 'Демо', video_title: 'Смотри как это работает',
-    video_placeholder: 'Здесь будет твоё демо-видео',
-    video_hint: 'Замени src в коде на ссылку своего YouTube или видео',
-    how_label: 'Как это работает', how_title: '3 простых шага',
-    step1_h: 'Открой Luna Ads', step1_p: 'Запусти бота в Telegram и подключи аккаунт Facebook одним нажатием.',
-    step2_h: 'Настрой рекламу', step2_p: 'Выбери аудиторию, бюджет, креатив и цель — всё через простой чат-интерфейс.',
-    step3_h: 'Запусти и следи', step3_p: 'Кампания запускается в Facebook и Instagram. Следи за результатами прямо в чате.',
-    feat_label: 'Возможности', feat_title: 'Всё что нужно',
-    f1h: 'Мгновенный запуск', f1p: 'Создай и запусти рекламу в Facebook/Instagram менее чем за 3 минуты.',
-    f2h: 'Умный таргетинг', f2p: 'Достигай нужной аудитории по интересам, геолокации, возрасту и поведению.',
-    f3h: 'Аналитика в реальном времени', f3p: 'Получай актуальную статистику по кампаниям, не выходя из Telegram.',
-    f4h: 'Контроль бюджета', f4p: 'Устанавливай дневные или суммарные бюджеты. Останавливай и масштабируй в любой момент.',
-    f5h: 'Глобальный охват', f5p: 'Рекламируй в любой стране — Казахстан, Россия, Европа, США и весь мир.',
-    f6h: 'Безопасность и приватность', f6p: 'Твои данные защищены. Мы никогда не сохраняем данные твоего рекламного аккаунта.',
-    about_label: 'О Luna Ads', about_title: 'Реклама без сложностей',
-    about_p1: 'Luna Ads — это инструмент внутри Telegram, который напрямую подключается к Facebook Marketing API. Он позволяет владельцам бизнеса, предпринимателям и маркетологам запускать рекламу без агентств.',
-    about_p2: 'Мы верим, что реклама должна быть доступна каждому — от малого бизнеса в Казахстане до мировых брендов.',
-    about_tagline: 'Твой личный рекламный менеджер — доступен 24/7 прямо в Telegram.',
-    priv_h: 'Твоя приватность важна',
-    priv_p: 'Luna Ads запрашивает только те разрешения Facebook, которые ты явно предоставляешь. Мы не продаём и не передаём твои данные. Доступ можно отозвать в любое время.',
-    priv_link: 'Политика конфиденциальности', terms_link: 'Условия использования', back: 'Назад',
-    faq_label: 'FAQ', faq_title: 'Часто задаваемые вопросы',
-    faq1q: 'Нужны ли технические знания для работы с Luna Ads?', faq1a: 'Нет, опыт не нужен. Luna Ads ведёт тебя шаг за шагом через простой чат в Telegram — просто ответь на несколько вопросов и реклама готова к запуску.',
-    faq2q: 'На каких платформах можно рекламироваться?', faq2a: 'Luna Ads поддерживает рекламу в Facebook и Instagram — обе платформы управляются через единый интерфейс в Telegram.',
-    faq3q: 'Сколько стоит Luna Ads?', faq3a: 'Открой бота в Telegram чтобы узнать актуальные тарифы. Рекламный бюджет уходит напрямую в Facebook — Luna Ads берёт небольшую сервисную комиссию.',
-    faq4q: 'Безопасен ли мой аккаунт Facebook?', faq4a: 'Да. Luna Ads использует официальные токены Facebook API. Мы никогда не видим и не сохраняем твой пароль. Доступ можно отозвать в настройках Facebook в любой момент.',
-    faq5q: 'С каким бюджетом можно начать?', faq5a: 'Можно начать от $1–$5 в день. Luna Ads работает с любым бюджетом — от малого бизнеса до масштабных кампаний.',
-    faq6q: 'Можно ли использовать Luna Ads из любой страны?', faq6a: 'Да! Luna Ads работает по всему миру — Казахстан, Узбекистан, Россия, Европа, США и везде, где работает Facebook.',
-    faq7q: 'Как быстро можно запустить первую рекламу?', faq7a: 'Большинство пользователей запускают первую кампанию менее чем за 5 минут. Открой бота, подключи Facebook, заполни несколько полей — и запускай.',
-    price_label: 'Тарифы', price_title: 'Выбери свой план', price_sub: 'Все планы включают полный доступ к Luna Ads.',
-    plan1_tag: 'Стартовый', plan1_period: 'в месяц / $50',
-    plan2_tag: 'Рост', plan2_period: '3 месяца / $120 — экономия 20%', plan2_badge: 'Популярный',
-    plan3_tag: 'Про', plan3_period: '6 месяцев / $250 — экономия 17%',
-    pf1: '✦ Реклама в Facebook и Instagram', pf2: '✦ Полный доступ к боту в Telegram',
-    pf3: '✦ Статистика в реальном времени', pf4: '✦ Поддержка 24/7',
-    pf5: '✦ Приоритетная обработка', pf6: '✦ Лучшая цена — 6 месяцев',
-    btn_buy: 'Открыть в Telegram',
-  },
-  kz: {
-    badge: '✨ Facebook және Instagram жарнамасы — Telegram арқылы',
-    hero_h1a: 'Жарнама жасаңыз', hero_h1b: 'Агентсіз',
-    hero_p: 'Luna Ads сізге Facebook және Instagram жарнамаларын тікелей Telegram арқылы жасауға, іске қосуға және басқаруға мүмкіндік береді.',
-    cta_main: 'Telegramда ашу', cta_learn: 'Қалай жұмыс істейді',
-    stat1: 'бірінші жарнаманы іске қосу', stat2: 'Telegram ішінде', stat3: 'агенттік комиссия', stat4: 'науқанды басқару',
-    video_label: 'Демо', video_title: 'Қалай жұмыс істейтінін көріңіз',
-    video_placeholder: 'Демо бейнеңіз осында болады',
-    video_hint: 'Кодтағы src-ті YouTube немесе бейне сілтемеңізге ауыстырыңыз',
-    how_label: 'Қалай жұмыс істейді', how_title: '3 қарапайым қадам',
-    step1_h: 'Luna Ads ашыңыз', step1_p: 'Telegramдағы ботты іске қосып, Facebook аккаунтын бір рет басу арқылы қосыңыз.',
-    step2_h: 'Жарнаманы баптаңыз', step2_p: 'Аудитория, бюджет, креатив және мақсатты таңдаңыз — бәрі чат арқылы.',
-    step3_h: 'Іске қосыңыз', step3_p: 'Науқан Facebook және Instagramда іске қосылады. Нәтижелерді чатта бақылаңыз.',
-    feat_label: 'Мүмкіндіктер', feat_title: 'Қажет нәрсенің бәрі',
-    f1h: 'Жылдам іске қосу', f1p: '3 минутта Facebook/Instagram жарнамасын жасаңыз.',
-    f2h: 'Ақылды таргетинг', f2p: 'Қызығушылық, орын, жас бойынша дұрыс аудиторияға жетіңіз.',
-    f3h: 'Тікелей аналитика', f3p: 'Telegramнан шықпай-ақ науқан статистикасын алыңыз.',
-    f4h: 'Бюджет бақылауы', f4p: 'Күнделікті бюджет белгілеңіз. Кез келген уақытта тоқтатыңыз.',
-    f5h: 'Жаһандық қамту', f5p: 'Кез келген елде жарнама жасаңыз — Қазақстан, Ресей, Еуропа, АҚШ.',
-    f6h: 'Қауіпсіздік', f6p: 'Деректеріңіз қорғалған. Жарнама аккаунтының деректерін сақтамаймыз.',
-    about_label: 'Luna Ads туралы', about_title: 'Қарапайым жарнама',
-    about_p1: 'Luna Ads — Facebook Marketing API-мен тікелей байланысатын Telegram боты. Бизнес иелері мен маркетологтарға агентсіз жарнама іске қосуға мүмкіндік береді.',
-    about_p2: 'Жарнама баршаға қолжетімді болуы керек деп санаймыз — Қазақстандағы шағын бизнестен бастап дүниежүзілік брендтерге дейін.',
-    about_tagline: 'Жеке жарнама менеджеріңіз — 24/7 Telegram-да.',
-    priv_h: 'Жеке деректеріңіз маңызды',
-    priv_p: 'Luna Ads тек сіз берген Facebook рұқсаттарына ғана кіреді. Деректеріңізді сатпаймыз. Кез келген уақытта кіруді қайтарып алуға болады.',
-    priv_link: 'Құпиялылық саясаты', terms_link: 'Қызмет көрсету шарттары', back: 'Артқа',
-    faq_label: 'FAQ', faq_title: 'Жиі қойылатын сұрақтар',
-    faq1q: 'Luna Ads пайдалану үшін техникалық білім қажет пе?', faq1a: 'Жоқ, тәжірибе қажет емес. Luna Ads сізді Telegram чаты арқылы қадамма-қадам бағыттайды — бірнеше сұраққа жауап беріп, жарнаманы іске қосыңыз.',
-    faq2q: 'Қай платформаларда жарнама жасауға болады?', faq2a: 'Luna Ads Facebook және Instagram жарнамасын қолдайды — екеуі де Telegram арқылы басқарылады.',
-    faq3q: 'Luna Ads қанша тұрады?', faq3a: 'Ағымдағы тарифтерді көру үшін Telegram ботын ашыңыз. Жарнама бюджеті тікелей Facebookқа кетеді.',
-    faq4q: 'Facebook аккаунтым қауіпсіз бе?', faq4a: 'Иә. Luna Ads ресми Facebook API токендерін пайдаланады. Біз сіздің құпия сөзіңізді ешқашан сақтамаймыз.',
-    faq5q: 'Қандай бюджетпен бастауға болады?', faq5a: 'Күніне $1–$5 деңгейінен бастауға болады. Luna Ads кез келген бюджетпен жұмыс істейді.',
-    faq6q: 'Luna Ads кез келген елден пайдалануға бола ма?', faq6a: 'Иә! Luna Ads бүкіл әлемде жұмыс істейді — Қазақстан, Өзбекстан, Ресей, Еуропа, АҚШ.',
-    faq7q: 'Бірінші жарнаманы қанша уақытта іске қосуға болады?', faq7a: 'Көптеген пайдаланушылар алғашқы науқанды 5 минутта іске қосады. Ботты ашып, Facebookты қосып, бірнеше өрісті толтырыңыз.',
-    price_label: 'Тарифтер', price_title: 'Жоспарыңызды таңдаңыз', price_sub: 'Барлық жоспарлар Luna Ads-қа толық кіруді қамтиды.',
-    plan1_tag: 'Бастамашы', plan1_period: 'айына / $50',
-    plan2_tag: 'Өсу', plan2_period: '3 ай / $120 — 20% үнемдеу', plan2_badge: 'Танымал',
-    plan3_tag: 'Про', plan3_period: '6 ай / $250 — 17% үнемдеу',
-    pf1: '✦ Facebook және Instagram жарнамасы', pf2: '✦ Telegramда толық кіру',
-    pf3: '✦ Нақты уақыттағы статистика', pf4: '✦ 24/7 қолдау',
-    pf5: '✦ Басымдықты өңдеу', pf6: '✦ Ең тиімді баға — 6 ай',
-    btn_buy: 'Telegramда ашу',
-  },
-  uz: {
-    badge: '✨ Facebook va Instagram reklamalari — Telegram orqali',
-    hero_h1a: 'Reklama yuboring', hero_h1b: 'Agentsiz',
-    hero_p: "Luna Ads sizga Facebook va Instagram reklama kampaniyalarini to'g'ridan-to'g'ri Telegram orqali yaratish, ishga tushirish va boshqarish imkonini beradi.",
-    cta_main: "Telegramda ochish", cta_learn: "Qanday ishlaydi",
-    stat1: "birinchi reklamani ishga tushirish", stat2: "Telegram ichida", stat3: "agentlik komissiyasi", stat4: "kampaniyani boshqarish",
-    video_label: "Demo", video_title: "Qanday ishlashini ko'ring",
-    video_placeholder: "Demo videongiz shu yerda bo'ladi",
-    video_hint: "Kodidagi src ni YouTube yoki video havolangizga almashtiring",
-    how_label: "Qanday ishlaydi", how_title: "3 ta oddiy qadam",
-    step1_h: "Luna Ads ni oching", step1_p: "Telegramdagi botni ishga tushiring va Facebook hisobingizni bir marta bosib ulang.",
-    step2_h: "Reklamani sozlang", step2_p: "Auditoriya, byudjet, kreativ va maqsadni tanlang — barchasi oddiy chat orqali.",
-    step3_h: "Ishga tushiring", step3_p: "Kampaniya Facebook va Instagramda jonlanadi. Natijalarni chatda kuzating.",
-    feat_label: "Imkoniyatlar", feat_title: "Kerakli hamma narsa",
-    f1h: "Tezkor ishga tushirish", f1p: "3 daqiqadan kam vaqtda Facebook/Instagram reklamasini yarating.",
-    f2h: "Aqlli targeting", f2p: "Qiziqishlar, joylashuv, yosh va xulq-atvor bo'yicha to'g'ri auditoriyaga yeting.",
-    f3h: "Jonli tahlil", f3p: "Telegramdan chiqmasdan kampaniya statistikasini oling.",
-    f4h: "Byudjet nazorati", f4p: "Kunlik byudjet belgilang. Istalgan vaqtda to'xtating yoki kengaytiring.",
-    f5h: "Global qamrov", f5p: "Istalgan mamlakatda reklama qiling — Qozog'iston, Rossiya, Yevropa, AQSh.",
-    f6h: "Xavfsizlik", f6p: "Ma'lumotlaringiz himoyalangan. Reklama hisobi ma'lumotlarini saqlamaymiz.",
-    about_label: "Luna Ads haqida", about_title: "Oddiy reklama",
-    about_p1: "Luna Ads — Facebook Marketing API bilan bevosita bog'langan Telegram boti. U biznes egalari va marketologlarga agentsiz reklama yuborishga imkon beradi.",
-    about_p2: "Reklama hammaga ochiq bo'lishi kerak deb ishonmaiz — Qozog'istondagi kichik biznesdan jahon brendlarigacha.",
-    about_tagline: "Shaxsiy reklama menejeringiz — 24/7 Telegramda.",
-    priv_h: "Maxfiyligingiz muhim",
-    priv_p: "Luna Ads faqat siz ruxsat bergan Facebook huquqlariga kiradi. Ma'lumotlaringizni sotmaymiz. Kirishni istalgan vaqtda bekor qilishingiz mumkin.",
-    priv_link: "Maxfiylik siyosati", terms_link: "Foydalanish shartlari", back: "Orqaga",
-    faq_label: 'FAQ', faq_title: "Ko'p so'raladigan savollar",
-    faq1q: "Luna Ads ishlatish uchun texnik bilim kerakmi?", faq1a: "Yo'q, tajriba shart emas. Luna Ads sizni Telegram chat orqali bosqichma-bosqich yo'naltiradi — bir necha savolga javob bering va reklama tayyor.",
-    faq2q: "Qaysi platformalarda reklama qilish mumkin?", faq2a: "Luna Ads Facebook va Instagram reklamalarini qo'llab-quvvatlaydi — ikkalasi ham Telegram orqali boshqariladi.",
-    faq3q: "Luna Ads qancha turadi?", faq3a: "Joriy narxlarni ko'rish uchun Telegramdagi botni oching. Reklama byudjeti to'g'ridan-to'g'ri Facebookga ketadi.",
-    faq4q: "Facebook hisobim xavfsizmi?", faq4a: "Ha. Luna Ads rasmiy Facebook API tokenlaridan foydalanadi. Biz sizning parolingizni hech qachon saqlamaymiz.",
-    faq5q: "Qancha byudjet bilan boshlash mumkin?", faq5a: "Kuniga $1–$5 dan boshlash mumkin. Luna Ads istalgan byudjet bilan ishlaydi.",
-    faq6q: "Luna Ads istalgan mamlakatdan ishlatish mumkinmi?", faq6a: "Ha! Luna Ads butun dunyoda ishlaydi — Qozog'iston, O'zbekiston, Rossiya, Yevropa, AQSh.",
-    faq7q: "Birinchi reklamani qancha vaqtda ishga tushirish mumkin?", faq7a: "Ko'pchilik foydalanuvchilar birinchi kampaniyani 5 daqiqadan kam vaqtda ishga tushiradi. Botni oching, Facebookni ulang, bir necha maydonni to'ldiring.",
-    price_label: "Narxlar", price_title: "Rejangizni tanlang", price_sub: "Barcha rejalar Luna Ads ga to'liq kirishni o'z ichiga oladi.",
-    plan1_tag: "Boshlang'ich", plan1_period: "oyiga / $50",
-    plan2_tag: "O'sish", plan2_period: "3 oy / $120 — 20% tejash", plan2_badge: "Mashhur",
-    plan3_tag: "Pro", plan3_period: "6 oy / $250 — 17% tejash",
-    pf1: "✦ Facebook va Instagram reklamalari", pf2: "✦ Telegramda to'liq kirish",
-    pf3: "✦ Jonli statistika", pf4: "✦ 24/7 qo'llab-quvvatlash",
-    pf5: "✦ Ustuvor ishlov berish", pf6: "✦ Eng yaxshi narx — 6 oy",
-    btn_buy: "Telegramda ochish",
+// NEURAL CANVAS
+const canvas=document.getElementById('neural'),ctx=canvas.getContext('2d');
+let W=canvas.width=window.innerWidth,H=canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight});
+
+const NODES=[];
+const COLORS=['#B8FF00','#7B61FF','#00D4FF'];
+class Node{
+  constructor(){this.reset()}
+  reset(){
+    this.x=Math.random()*W;this.y=Math.random()*H;
+    this.vx=(Math.random()-.5)*0.6;this.vy=(Math.random()-.5)*0.6;
+    this.r=Math.random()*2+1;
+    this.col=COLORS[Math.floor(Math.random()*COLORS.length)];
+    this.pulse=Math.random()*Math.PI*2;
+    this.pulseSpeed=.01+Math.random()*.02;
   }
-};
+  update(){
+    this.x+=this.vx;this.y+=this.vy;
+    this.pulse+=this.pulseSpeed;
+    if(this.x<-50||this.x>W+50||this.y<-50||this.y>H+50)this.reset();
+  }
+}
+for(let i=0;i<120;i++)NODES.push(new Node());
 
-const langLabels = { en: 'EN', ru: 'RU', kz: 'KZ', uz: 'UZ' };
-let currentLang = 'en';
-
-function setLang(lang) {
-  currentLang = lang;
-  document.getElementById('currentLangLabel').textContent = langLabels[lang];
-  document.querySelectorAll('.lang-option').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.lang-option').forEach(el => {
-    if (el.querySelector('.lang-code').textContent === langLabels[lang]) el.classList.add('active');
-  });
-  document.getElementById('langSwitcher').classList.remove('open');
-  const t = i18n[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key]) el.textContent = t[key];
-  });
+// Shooting signals
+const SIGNALS=[];
+class Signal{
+  constructor(from,to){
+    this.from=from;this.to=to;this.t=0;this.speed=.008+Math.random()*.012;
+    this.col=from.col;this.size=2;
+  }
+  update(){this.t+=this.speed;return this.t<1}
+  draw(){
+    const x=this.from.x+(this.to.x-this.from.x)*this.t;
+    const y=this.from.y+(this.to.y-this.from.y)*this.t;
+    ctx.save();
+    ctx.shadowColor=this.col;ctx.shadowBlur=8;
+    ctx.beginPath();ctx.arc(x,y,this.size,0,Math.PI*2);
+    ctx.fillStyle=this.col;ctx.fill();
+    ctx.restore();
+  }
 }
 
-// Init
-setLang('en');
-</script>
+let frame=0;
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  frame++;
+  // Connections
+  for(let i=0;i<NODES.length;i++){
+    for(let j=i+1;j<NODES.length;j++){
+      const dx=NODES[i].x-NODES[j].x,dy=NODES[i].y-NODES[j].y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<140){
+        const alpha=(1-d/140)*.12;
+        const g=ctx.createLinearGradient(NODES[i].x,NODES[i].y,NODES[j].x,NODES[j].y);
+        g.addColorStop(0,NODES[i].col.replace(')',`,${alpha})`).replace('#','rgba(').replace(/^rgba\(([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i,(_,r,g2,b)=>`rgba(${parseInt(r,16)},${parseInt(g2,16)},${parseInt(b,16)}`));
+        g.addColorStop(1,NODES[j].col.replace(')',`,${alpha})`).replace('#','rgba(').replace(/^rgba\(([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i,(_,r,g2,b)=>`rgba(${parseInt(r,16)},${parseInt(g2,16)},${parseInt(b,16)}`));
+        ctx.beginPath();
+        ctx.moveTo(NODES[i].x,NODES[i].y);ctx.lineTo(NODES[j].x,NODES[j].y);
+        const col=hexToRgba(NODES[i].col,alpha);
+        ctx.strokeStyle=col;ctx.lineWidth=.5;ctx.stroke();
+        // Random spawn signals
+        if(frame%60===0&&Math.random()<.04){
+          SIGNALS.push(new Signal(NODES[i],NODES[j]));
+        }
+      }
+    }
+  }
+  // Draw nodes
+  NODES.forEach(n=>{
+    n.update();
+    const glow=.5+Math.sin(n.pulse)*.5;
+    ctx.save();
+    ctx.shadowColor=n.col;ctx.shadowBlur=8*glow;
+    ctx.beginPath();ctx.arc(n.x,n.y,n.r*(0.8+glow*.4),0,Math.PI*2);
+    ctx.fillStyle=hexToRgba(n.col,0.5+glow*.3);ctx.fill();
+    ctx.restore();
+  });
+  // Draw signals
+  for(let i=SIGNALS.length-1;i>=0;i--){
+    SIGNALS[i].draw();
+    if(!SIGNALS[i].update())SIGNALS.splice(i,1);
+  }
+  requestAnimationFrame(draw);
+}
+function hexToRgba(hex,alpha){
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+draw();
 
+// MODAL
+function openM(){document.getElementById('modal').classList.add('open');document.body.style.overflow='hidden'}
+function closeM(){document.getElementById('modal').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeM()});
+document.getElementById('sendBtn').addEventListener('click',function(){
+  this.textContent='✓ Заявка отправлена!';this.style.background='#25D366';
+});
+document.getElementById('mSendBtn').addEventListener('click',function(){
+  this.textContent='✓ Отправлено! Свяжемся скоро';this.style.background='#25D366';
+  setTimeout(closeM,1800);
+});
+
+// SCROLL ANIMATIONS
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting)setTimeout(()=>e.target.classList.add('vis'),e.target.dataset.d||0);
+  });
+},{threshold:.1});
+document.querySelectorAll('.fu').forEach((el,i)=>{el.dataset.d=(i%5)*80;obs.observe(el)});
+
+// CHAT ANIMATION
+const msgs=[
+  {type:'ai',text:'Для компании 50+ сотрудников подойдёт тариф «Цифровой офис». HR-агент обработает 200+ резюме/день и сократит время найма с 3 недель до 5 дней. Хотите — назначу демо?'},
+  {type:'in',text:'Да, хочу демо! Когда удобно?'},
+  {type:'ai',text:'Отлично! 🎉 Ближайшее свободное время — завтра в 11:00 или послезавтра в 15:00. Оставьте номер — менеджер подтвердит встречу.'},
+];
+let mi=0;
+function addMsg(){
+  if(mi>=msgs.length)return;
+  const m=msgs[mi];
+  const div=document.createElement('div');
+  div.className='msg '+m.type;
+  const now=new Date();
+  div.innerHTML=m.text+'<span class="msg-time">'+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes()+'</span>';
+  const container=document.getElementById('chatMsgs');
+  // Add typing
+  const typing=document.createElement('div');
+  typing.className='typing';
+  typing.innerHTML='<span></span><span></span><span></span>';
+  container.appendChild(typing);
+  setTimeout(()=>{
+    container.removeChild(typing);
+    container.appendChild(div);
+    container.scrollTop=container.scrollHeight;
+    mi++;
+    setTimeout(addMsg,3500);
+  },1200);
+}
+setTimeout(addMsg,3000);
+</script>
 </body>
 </html>
